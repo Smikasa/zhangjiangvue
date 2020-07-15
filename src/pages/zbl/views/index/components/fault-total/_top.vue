@@ -1,0 +1,210 @@
+<template>
+  <div>
+    <div class="main-center-contain-left fl">
+      <ul
+        class="zcl"
+      >
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON1.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">告警总数</span>
+            <span class="list-data">12321</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON2.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">已消除告警数</span>
+            <span class="list-data">13123%</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON3.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">已派单告警数</span>
+            <span class="list-data">123120</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON3.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">已派单告警数</span>
+            <span class="list-data">5655</span>
+          </p>
+        </li>
+      </ul>
+      <ul class="zcl">
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON4.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">无线网告警数</span>
+            <span class="list-data">12321</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON5.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">核心网告警数</span>
+            <span class="list-data">99%</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON6.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">传输告警数</span>
+            <span class="list-data">99%</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON7.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">家宽告警数</span>
+            <span class="list-data">99%</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON8.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">动环告警数</span>
+            <span class="list-data">99%</span>
+          </p>
+        </li>
+      </ul>
+      <ul class="zcl">
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON7.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">一级告警数</span>
+            <span class="list-data">99%</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON8.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">二级告警数</span>
+            <span class="list-data">99%</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON8.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">三级告警数</span>
+            <span class="list-data">99%</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/ICON8.png"
+          >
+          <p class="zl-box">
+            <span class="list-name">四级告警数</span>
+            <span class="list-data">99%</span>
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style scoped>
+.main-center-contain-left ul.zcl {
+  list-style-type: none;
+  background: url("~@/assets/img/1-2.png");
+  background-size: 100%;
+  width: 475px;
+  height: 330px;
+  margin-bottom: 40px;
+  padding: 20px 0;
+  box-sizing: border-box;
+  float: left;
+  margin-top: 52px;
+}
+.main-center-contain-left ul.zcl > li {
+  height: 50px;
+  padding-left: 15px;
+  margin-bottom: 15px;
+  display: block;
+  overflow: hidden;
+}
+.main-center-contain-left ul.zcl > li:last-child {
+  margin-bottom: 0;
+}
+.main-center-contain-left ul.zcl > li span {
+  display: inline-block;
+}
+.main-center-contain-left ul.zcl > li .list-icon {
+  width: 46px;
+  height: 46px;
+  float: left;
+  vertical-align: middle;
+}
+
+.zl-box{
+    float:left;
+    width:395px;
+    height: 46px;
+    line-height: 20px;
+    background: url("~@/assets/img/zllbg.png") no-repeat;
+    background-size: 100%;
+    margin-left: 15px;
+    vertical-align: middle;
+    margin-top: 5px;
+    padding:10px 0 10px 8px;
+    box-sizing: border-box;
+}
+
+.list-name{
+    font-size:25px;
+    color:#abadc1;
+}
+.list-data{
+    font-size:25px;
+    color:#fff;
+    font-weight: 700;
+    float: right;
+    margin-right: 42px;
+}
+</style>
