@@ -1,25 +1,25 @@
 <template>
   <div class="main__div">
-    <main-time class="main-time__div"></main-time>
+    <main-time class="main-time__div" />
     <main-nav
       class="main-nav__div"
       @changView="changView"
-    ></main-nav>
+    />
     <!-- 小区告警总数 -->
     <template v-if="curNav === 'communitiesTotal'">
-      <main-center class="main-center__div"></main-center>
-      <main-bottom class="main-bottom__div"></main-bottom>
+      <main-center class="main-center__div" />
+      <main-bottom class="main-bottom__div" />
     </template>
     <!-- 故障告警总数 -->
     <template v-else-if="curNav === 'faultTotal'">
-      <fault-total></fault-total>
+      <fault-total />
     </template>
     <!-- 性能预警数 -->
     <template v-else-if="curNav === 'performance'">
-      <performance></performance>
+      <performance />
     </template>
     <template v-else-if="curNav === 'workOrder'">
-      <work-order></work-order>
+      <work-order />
     </template>
     <template v-else-if="curNav === 'duty'">
       <div>4</div>

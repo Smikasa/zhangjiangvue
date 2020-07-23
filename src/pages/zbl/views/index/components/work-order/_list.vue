@@ -65,11 +65,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .title__zj {
     color: white;
     font-size: 26px;
     margin: 10px 0;
+    margin-bottom: 42px;
 }
 .el-table__zj .el-table {
   background-color: transparent;

@@ -3,9 +3,6 @@ import App from './App.vue';
 import router from './router';
 
 import '@/assets/css/reset.css';
-import '@/pages/zbr/assets/css/zbr.css';
-
-
 
 Vue.config.productionTip = false;
 

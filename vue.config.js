@@ -15,11 +15,11 @@ module.exports = {
             template:"src/pages/zbl/zbl.html",
             filename:"zbl.html"
         },
-        // zbr:{
-        //     entry:'src/pages/zbr/zbr.js',
-        //     template:"src/pages/zbr/zbr.html",
-        //     filename:"zbr.html"
-        // }
+        zbr:{
+            entry:'src/pages/zbr/zbr.js',
+            template:"src/pages/zbr/zbr.html",
+            filename:"zbr.html"
+        }
     },
     publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
     outputDir: 'dist',
@@ -53,7 +53,10 @@ module.exports = {
         plugins: [
             new webpack.ProvidePlugin({
                 // _: 'lodash',
-                Axios: 'axios'
+                Axios: 'axios',
+                $:"jquery",
+                jQuery:"jquery",
+                "window.jQuery":"jquery"
             })
         ]
     },

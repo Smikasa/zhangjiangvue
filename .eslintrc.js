@@ -25,6 +25,8 @@ module.exports = {
         //     "svg": "always",
         //     "math": "always"
         // }], 
+        "no-undef": 0,
+        "vue/html-self-closing":"off"
         // 关闭标签内无内容使用单标签闭合的警告
         // "vue/max-attributes-per-line": [2, {
         //     "singleline": 10,
@@ -145,7 +147,7 @@ module.exports = {
         // 'no-this-before-super': 2,
         // 'no-throw-literal': 2,
         // 'no-trailing-spaces': 2,
-        // 'no-undef': 2,
+      
         // 'no-undef-init': 2,
         // 'no-unexpected-multiline': 2,
         // 'no-unmodified-loop-condition': 2,
