@@ -2,8 +2,8 @@
   <div class="main-bottom">
     <div class="main-bottom-title">
       <ul
-        class="clearfix"
         id="zlbb"
+        class="clearfix"
       >
         <li>PRB上行利用率</li>
         <li>
@@ -11,23 +11,31 @@
             <div
               class="select-name"
               @click="controlSelctBottom"
-            >2F</div>
+            >
+              2F
+            </div>
             <div
-              class="select-ul"
               v-show="isShowSelectBottom"
+              class="select-ul"
             >
               <div
                 class="select-li"
                 @click="controlSelctBottom"
-              >1F</div>
+              >
+                1F
+              </div>
               <div
                 class="select-li"
                 @click="controlSelctBottom"
-              >2F</div>
+              >
+                2F
+              </div>
               <div
                 class="select-li"
                 @click="controlSelctBottom"
-              >3F</div>
+              >
+                3F
+              </div>
             </div>
           </div>
         </li>
@@ -36,8 +44,8 @@
     <div class="main-bottom-contain clearfix">
       <div class="fl">
         <div
-          class="chart"
           id="chartPIE1"
+          class="chart"
         ></div>
         <div class="bbm">
           <img src="@/assets/img/bb1.png" />
@@ -46,8 +54,8 @@
       </div>
       <div class="fl">
         <div
-          class="chart"
           id="chartPIE2"
+          class="chart"
         ></div>
         <div class="bbm">
           <img src="@/assets/img/bb5.png" />
@@ -56,8 +64,8 @@
       </div>
       <div class="fl">
         <div
-          class="chart"
           id="chartPIE3"
+          class="chart"
         ></div>
         <div class="bbm">
           <img src="@/assets/img/bb2.png" />
@@ -66,8 +74,8 @@
       </div>
       <div class="fl">
         <div
-          class="chart"
           id="chartPIE4"
+          class="chart"
         ></div>
         <div class="bbm">
           <img src="@/assets/img/bb3.png" />
@@ -76,8 +84,8 @@
       </div>
       <div class="fl">
         <div
-          class="chart"
           id="chartPIE5"
+          class="chart"
         ></div>
         <div class="bbm">
           <img src="@/assets/img/bb1.png" />
@@ -86,8 +94,8 @@
       </div>
       <div class="fl">
         <div
-          class="chart"
           id="chartPIE6"
+          class="chart"
         ></div>
         <div class="bbm">
           <img src="@/assets/img/bb1.png" />
@@ -100,7 +108,8 @@
 
 <script>
 import echarts from 'echarts'
-import {  chartData, chartDataX,chartDataX1, pie1,
+import {
+  chartData, chartDataX, chartDataX1, pie1,
   pie2,
   pie3,
   pie4,
@@ -125,10 +134,10 @@ export default {
   },
   mounted() {
     this.initChartPIE();
-    this.$nextTick(()=>{
+    this.$nextTick(() => {
       this.axiosChartPIE();
     })
-  
+
   },
   methods: {
     /**
@@ -433,8 +442,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .select {
   width: 160px;
   display: inline-block;
@@ -461,32 +468,32 @@ export default {
 }
 
 .main-bottom .select {
-    width: 160px;
-    display: inline-block;
-    height: 80px;
-    position: relative;
+  width: 160px;
+  display: inline-block;
+  height: 80px;
+  position: relative;
 }
 .main-bottom .select-name {
-    cursor: pointer;
-    height: 80px;
-    color: #d19328;
+  cursor: pointer;
+  height: 80px;
+  color: #d19328;
 }
 .main-bottom .select-ul {
-    position: absolute;
-    left: 0;
-    top: 80px;
-    border: 1px solid black;
-    /* width: 160px; */
-    text-align: left;
+  position: absolute;
+  left: 0;
+  top: 80px;
+  border: 1px solid black;
+  /* width: 160px; */
+  text-align: left;
 }
 .main-bottom .select-ul .select-li {
-    font-size: 14px;
-    padding: 8px 14px;
-    cursor: pointer;
+  font-size: 14px;
+  padding: 8px 14px;
+  cursor: pointer;
 }
 
 .main-bottom .select-ul .select-li:hover {
-    color: white;
+  color: white;
 }
 
 .select-ul .select-li:hover {
@@ -494,49 +501,49 @@ export default {
 }
 
 .main-bottom-contain .chart {
-    width: 195px;
-    height: 195px;
+  width: 195px;
+  height: 195px;
 }
-.bbm{
-    overflow: hidden;
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
+.bbm {
+  overflow: hidden;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
 }
-.bbm img{
-    vertical-align: middle;
+.bbm img {
+  vertical-align: middle;
 }
-.bbm span{
-    display: inline-block;
-    font-size: 30px;
-    color:#175773;
-    vertical-align: middle;
-    margin-left:12px;
+.bbm span {
+  display: inline-block;
+  font-size: 30px;
+  color: #175773;
+  vertical-align: middle;
+  margin-left: 12px;
 }
-.main-bottom-contain .fl{
-    margin-right:110px;
+.main-bottom-contain .fl {
+  margin-right: 110px;
 }
-.main-bottom-contain .fl:last-child{
-    margin-right: 0;
+.main-bottom-contain .fl:last-child {
+  margin-right: 0;
 }
 
-#zlbb{
-    width: 100%;
-    list-style-type: none;
-    background: url("~@/assets/img/all6.png") no-repeat;
-    /* background-size: 100%; */
-    padding-left:65px;
-    height:80px;
-    margin-bottom: 80px;
-    line-height: 80px;
-    /* overflow: hidden; */
+#zlbb {
+  width: 100%;
+  list-style-type: none;
+  background: url("~@/assets/img/all6.png") no-repeat;
+  /* background-size: 100%; */
+  padding-left: 65px;
+  height: 80px;
+  margin-bottom: 80px;
+  line-height: 80px;
+  /* overflow: hidden; */
 }
-#zlbb >li{
-    font-size:30px;
-    color:#d19328;
-    font-weight: 700;
-    margin-right: 163px;
-    display: inline-block;
-    float:left;
+#zlbb > li {
+  font-size: 30px;
+  color: #d19328;
+  font-weight: 700;
+  margin-right: 163px;
+  float: left;
+  display: inline-block;
 }
 </style>

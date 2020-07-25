@@ -7,9 +7,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 import '@/assets/css/reset.css';
-// import '@/pages/zbl/assets/css/zbl.css';
 
+import '@/pages/zbl/assets/css/zbl.css';
 
+import * as Api from './api/index'
+
+Vue.prototype.$api = Api;
 
 
 Vue.config.productionTip = false;

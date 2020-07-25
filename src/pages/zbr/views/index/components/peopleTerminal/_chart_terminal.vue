@@ -12,39 +12,36 @@ export default {
   data() {
     return {
       charTerminal: '',
-      PeopleModelType: {
-        success: true,
-        code: 1000,
-        data: [{
-          Name: '华为Mate30',
-          Num: 15
-        }, {
-          Name: 'oppor17',
-          Num: 13
-        }, {
-          Name: 'iphone11',
-          Num: 14
-        }, {
-          Name: '三星S20',
-          Num: 15
-        }, {
-          Name: 'iphoneX',
-          Num: 12
-        }]
-      }
+      params: {
+        projectId: 132,
+        studioId: 20,
+      },
+      // 缓存
+      indicator: [{
+        name: '--', max: 100,
+      }, {
+        name: '--', max: 100,
+      }, {
+        name: '--', max: 100,
+      }, {
+        name: '--', max: 100,
+      }, {
+        name: '--', max: 100
+      }]
     }
   },
   mounted() {
-    this.initChartPeopleTerminal();
-    this.axiosPeopleTerminal();
+    this.initChartPhoneModelList();
+    this.axiosPhoneModelList(this.params);
   },
   methods: {
     /**
      * @description 终端型号图
      */
-    initChartPeopleTerminal() {
+    initChartPhoneModelList() {
       this.charTerminal = echarts.init(document.getElementById('terminal'));
       // 指定图表的配置项和数据
+      let indicator = this.indicator;
       let option = {
         title: {
           text: ''
@@ -52,7 +49,16 @@ export default {
         textStyle: {
           fontFamily: 'SimHei'
         },
-        tooltip: {},
+        tooltip: {
+          formatter: function (obj) {
+            let indicator = indicator;
+            var el = '';
+            for (var i = 0; i < indicator.length; i++) {
+              el += indicator[i].name + ':' + obj.value[i] + '%</br> '
+            }
+            return el
+          }
+        },
         legend: {
           data: []
         },
@@ -84,17 +90,7 @@ export default {
               color: '#0c4188'
             }
           },
-          indicator: [{
-            name: 'null', max: 100,
-          }, {
-            name: 'null', max: 100,
-          }, {
-            name: 'null', max: 100,
-          }, {
-            name: 'null', max: 100,
-          }, {
-            name: 'null', max: 100
-          }]
+          indicator: this.indicator
         },
         series: [{
           name: '',
@@ -123,7 +119,7 @@ export default {
           // areaStyle: {normal: {}},
           data: [
             {
-              value: [0, 0, 0],
+              value: [0, 0, 0, 0, 0],
               name: '',
               symbol: 'none'
             },
@@ -133,46 +129,39 @@ export default {
       this.charTerminal.setOption(option);
     },
     /**
-         * 获取数据-终端型号图
-         */
-    axiosPeopleTerminal(params) {
-      // axios.post('/app/queryPeopleModelType', params)
-      //   .then(function (response) {
-      //     let res = response.data 
-      //     let indicator = this.handleCharTerminalData(res).indicator;
-      //     let seriesData = this.handleCharTerminalData(res).seriesData;
-      //     this.charTerminal.setOption({
-      //         radar: {
-      //             indicator:indicator
-      //         },
-      //         series: [{
-      //             data: [
-      //                 {
-      //                     value:seriesData,
-      //                     name: ''
-      //                 }
-      //             ]
-      //         }]
-      //     })
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
-      let res = this.PeopleModelType.data
-      let indicator = this.handleTerminalData(res).indicator;
-      let seriesData = this.handleTerminalData(res).seriesData;
-      this.charTerminal.setOption({
-        radar: {
-          indicator: indicator
-        },
-        series: [{
-          data: [
-            {
-              value: seriesData,
-              name: ''
-            }
-          ]
-        }]
+     * 获取数据-终端型号图
+     */
+    axiosPhoneModelList(params) {
+      this.$api.getPhoneModelList(params).then((resp) => {
+        if (resp.code === 10000) {
+          let curData = resp.data
+          let seriesData = this.handleTerminalData(curData).seriesData;
+          let indicator = this.handleTerminalData(curData).indicator;
+          if (seriesData.length && indicator.length) {
+            this.charTerminal.setOption({
+              tooltip: {
+                formatter: function (obj) {
+                  var el = '';
+                  for (var i = 0; i < indicator.length; i++) {
+                    el += indicator[i].name + '：' + obj.value[i] + '%</br> '
+                  }
+                  return el
+                }
+              },
+              radar: {
+                indicator: indicator
+              },
+              series: [{
+                data: [
+                  {
+                    value: seriesData,
+                    name: ''
+                  }
+                ]
+              }]
+            })
+          }
+        }
       })
     },
     /**
@@ -183,18 +172,13 @@ export default {
       let max = 0;
       let indicator = [];
       let seriesData = []
-      // 获取最大值
-      array.filter(function (value) {
-        num.push(value.Num)
-      })
-      max = Math.max.apply(null, num);
       // 获取数据
       array.filter(function (value) {
         let obj = {
-          name: value.Name,
-          max: max
+          name: value.model,
+          max: 100
         }
-        seriesData.push(value.Num)
+        seriesData.push(parseInt(value.percentage))
         indicator.push(obj)
       })
       return {

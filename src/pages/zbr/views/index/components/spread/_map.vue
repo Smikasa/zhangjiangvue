@@ -524,13 +524,13 @@ export default {
       return res;
     },
     /**
-        * 数据处理-地图数据-获取坐标点 名称+坐标
-        * 数据格式:
-        * {
-        *  台湾:[121.509062, 24.044332]
-        *  河北:[114.502461, 38.045474]
-        *  }
-        */
+    * 数据处理-地图数据-获取坐标点 名称+坐标
+    * 数据格式:
+    * {
+    *  台湾:[121.509062, 24.044332]
+    *  河北:[114.502461, 38.045474]
+    *  }
+    */
     getMapFeatures(area) {
       let mapFeatures = echarts.getMap(area).geoJson.features;
       let geoCoordMap = {};

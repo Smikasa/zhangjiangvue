@@ -2,47 +2,59 @@
   <div class="main-center-contain clearfix five-g">
     <div class="clearfix five-g-contain-top">
       <div class="fl chart-left-contain-top">
-        <div class="chart-title">5G用户量</div>
+        <div class="chart-title">
+          5G用户量
+        </div>
         <div
-          class="chart"
           id="chart5G"
+          class="chart"
         ></div>
       </div>
       <div class="fl ">
-        <div class="chart-title">上下行流量+无线利用率</div>
+        <div class="chart-title">
+          上下行流量+无线利用率
+        </div>
         <div
-          class="chart"
           id="chartTB"
+          class="chart"
         ></div>
       </div>
       <div class="fl ">
-        <div class="chart-title">PRC连接数+峰值用户数+无线接通率</div>
+        <div class="chart-title">
+          PRC连接数+峰值用户数+无线接通率
+        </div>
         <div
-          class="chart"
           id="chartPRC2"
+          class="chart"
         ></div>
       </div>
     </div>
     <div class="clearfix">
       <div class="fl chart-left-contain-top">
-        <div class="chart-title">上下PUSCH行流量+下行PDCCH利用率</div>
+        <div class="chart-title">
+          上下PUSCH行流量+下行PDCCH利用率
+        </div>
         <div
-          class="chart"
           id="chartPUPD"
+          class="chart"
         ></div>
       </div>
       <div class="fl ">
-        <div class="chart-title">无线掉线率+切换成功率+上行干扰电平</div>
+        <div class="chart-title">
+          无线掉线率+切换成功率+上行干扰电平
+        </div>
         <div
-          class="chart"
           id="chartWXQHSX"
+          class="chart"
         ></div>
       </div>
       <div class="fl ">
-        <div class="chart-title">PRB上下行利用率</div>
+        <div class="chart-title">
+          PRB上下行利用率
+        </div>
         <div
-          class="chart"
           id="chartPRB2"
+          class="chart"
         ></div>
       </div>
     </div>
@@ -51,7 +63,8 @@
 
 <script>
 import echarts from 'echarts'
-import {  chartData, chartDataX,chartDataX1, chartData1,
+import {
+  chartData, chartDataX, chartDataX1, chartData1,
   chartData2,
   chartData3,
   chartData4,
@@ -65,7 +78,8 @@ import {  chartData, chartDataX,chartDataX1, chartData1,
   chartData12,
   chartData13,
   chartData14,
-  chartData15,} from '../../../data/data.js';
+  chartData15,
+} from '../../../data/data.js';
 export default {
   data() {
     return {

@@ -1,9 +1,7 @@
 <template>
   <div class="clearfix">
     <div class="main-center-contain-left fl">
-      <ul
-        class="zcl"
-      >
+      <ul class="zcl">
         <li>
           <img
             class="list-icon"
@@ -118,7 +116,6 @@ export default {
   padding-top: 54px;
 }
 
-
 .main-center-contain-left ul.zcl > li {
   height: 50px;
   padding-left: 15px;
@@ -139,29 +136,29 @@ export default {
   vertical-align: middle;
 }
 
-.zl-box{
-    float:left;
-    width:395px;
-    height: 46px;
-    line-height: 20px;
-    background: url("~@/assets/img/zllbg.png") no-repeat;
-    background-size: 100%;
-    margin-left: 15px;
-    vertical-align: middle;
-    margin-top: 5px;
-    padding:10px 0 10px 8px;
-    box-sizing: border-box;
+.zl-box {
+  float: left;
+  width: 395px;
+  height: 46px;
+  line-height: 20px;
+  background: url("~@/assets/img/zllbg.png") no-repeat;
+  background-size: 100%;
+  margin-left: 15px;
+  vertical-align: middle;
+  margin-top: 5px;
+  padding: 10px 0 10px 8px;
+  box-sizing: border-box;
 }
 
-.list-name{
-    font-size:25px;
-    color:#abadc1;
+.list-name {
+  font-size: 25px;
+  color: #abadc1;
 }
-.list-data{
-    font-size:25px;
-    color:#fff;
-    font-weight: 700;
-    float: right;
-    margin-right: 42px;
+.list-data {
+  font-size: 25px;
+  color: #fff;
+  font-weight: 700;
+  float: right;
+  margin-right: 42px;
 }
 </style>

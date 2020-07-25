@@ -1,6 +1,6 @@
 module.exports = {
-    // '/': {
-    //     target: 'http://172.25.21.34:30095',
-    //     changeOrigin: false
-    // }
+    '/': {
+        target: 'http://218.77.106.72:1029',
+        changeOrigin: false
+    }
 };

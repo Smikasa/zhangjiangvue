@@ -9,10 +9,11 @@
         <div class="total-info">
           <div class="am_num">
             <div id="total-text">
-              <span class="t_num t_num1"></span>
+              <span class="t_num t_num1">
+                00000
+              </span>
             </div>
           </div>
-          <!-- <span class="total-number">{{allNum.number}}</span> -->
         </div>
       </div>
     </div>
@@ -27,20 +28,16 @@
         </div>
         <div class="spread-info">
           <div class="am_num">
-            <div
-              :id="'total'+index"
-              style="overflow: hidden;"
-            >
-              <span class="t_num t_num1"></span>
-              <span class="spread-per t_text">({{ item.Ratio }})</span>
+            <!-- style="overflow: hidden;" -->
+            <div :id="'total'+index">
+              <span class="t_num t_num1">00000</span>
+              <span class="spread-per t_text">({{ item.percentage }})</span>
             </div>
           </div>
-          <!-- <span class="spread-number">{{item.Num}}</span> -->
         </div>
-
-        <div v-if="item.hasOwnProperty('Yesterday') && item.Yesterday">
+        <div v-if="item.hasOwnProperty('comparedWithYesterday') && item.comparedWithYesterday">
           <span class="spread-yes">昨日</span>
-          <span class="spread-diff">{{ item.Yesterday }}</span>
+          <span class="spread-diff">{{ item.comparedWithYesterday }}</span>
         </div>
       </div>
     </div>
@@ -56,52 +53,70 @@ export default {
         name: '实时总人数',
         number: 0,
       },
-      spread: [
-        {
-          id: 'venueIn',
+      spread: {
+        insideVenue: {
+          id: 'insideVenue',
           name: '今日馆内人数',
           Num: 0,
-          Ratio: '0%',
-          Yesterday: "-0"
-        }, {
-          id: 'venueOut',
+          percentage: '0%',
+          comparedWithYesterday: "-0"
+        },
+        outVenue: {
+          id: 'outVenue',
           name: '今日馆外人数',
           Num: 0,
-          Ratio: '0%',
-          Yesterday: "-0"
-        }, {
-          id: 'churchyard',
+          percentage: '0%',
+          comparedWithYesterday: "-0"
+        },
+        chinese: {
+          id: 'chinese',
           name: '今日境内人数',
           Num: 0,
-          Ratio: '0%',
-          Yesterday: "-0"
-        }, {
-          id: 'overseas',
+          percentage: '0%',
+          comparedWithYesterday: "-0"
+        },
+        abroad: {
+          id: 'abroad',
           name: '今日境外人数',
           Num: 0,
-          Ratio: '0%',
-          Yesterday: "-10"
+          percentage: '0%',
+          comparedWithYesterday: "-10"
         },
-      ],
+      },
     }
   },
   mounted() {
-    this.$nextTick(()=>{
-        this.show_num1(9785676, '#total-text');
-        this.show_num1(34678, '#total0');
-        this.show_num1(872970, '#total1');
-        this.show_num1(169690, '#total2');
-        this.show_num1(27234, '#total3');
-    })
+    this.axiosTotal();
   },
   methods: {
-    show_num1: function (n, ele) {
-      var it = $(ele + " .t_num1 i");
-      var len = String(n).length;
-      for (var i = 0; i < len; i++) {
-        if (it.length <= i) {
-          $(ele + " .t_num1").append("<i></i>");
+    axiosTotal() {
+      this.$api.getTotalList().then((resp) => {
+        if (resp.code === 10000) {
+          let data = resp.data;
+          this.spread = _.merge({}, this.spread, data);
+          _.forIn(this.spread, (item, index) => {
+            if (index === 'insideVenue') {
+              this.show_num1(Number(item.insideVenuePeople), '#total' + index);
+              this.show_num1(Number(item.allVenuePeople), '#total-text');
+            }
+            if (index === 'outVenue') {
+              this.show_num1(Number(item.outVenuePeople), '#total' + index);
+            }
+            if (index === 'chinese') {
+              this.show_num1(Number(item.chinese), '#total' + index);
+            }
+            if (index === 'abroad') {
+              this.show_num1(Number(item.abroadPeople), '#total' + index);
+            }
+          })
         }
+      })
+    },
+    show_num1: function (n, ele) {
+      var len = String(n).length;
+      $(ele + " .t_num1").html('');
+      for (var i = 0; i < len; i++) {
+        $(ele + " .t_num1").append("<i></i>");
         var num = String(n).charAt(i);
         //根据数字图片的高度设置相应的值
         var y = parseInt(num) ? -(56 + (parseInt(num) - 1) * 81.7) : "-793";
@@ -111,9 +126,9 @@ export default {
         // }, 'slow', 'swing', function () {
         //   console.log('a')
         // });
-        obj.css({ 'backgroundPosition': '-148px ' + String(y) + 'px'})
+        obj.css({ 'backgroundPosition': '-148px ' + String(y) + 'px' })
       }
-    },
+    }
   }
 }
 </script>
@@ -194,6 +209,8 @@ export default {
   display: block;
   height: 50px;
   float: left;
+  font-size: 46px;
+  color: white;
 }
 .t_text {
   display: block;

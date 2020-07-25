@@ -4,7 +4,11 @@ import router from './router';
 
 import '@/assets/css/reset.css';
 
+import * as Api from './api/index'
+
 Vue.config.productionTip = false;
+
+Vue.prototype.$api = Api;
 
 new Vue({
     router,

@@ -52,7 +52,7 @@ module.exports = {
         },
         plugins: [
             new webpack.ProvidePlugin({
-                // _: 'lodash',
+                _: 'lodash',
                 Axios: 'axios',
                 $:"jquery",
                 jQuery:"jquery",

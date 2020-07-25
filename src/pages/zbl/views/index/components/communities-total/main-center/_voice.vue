@@ -94,44 +94,52 @@
     <div class="main-center-contain-right fr">
       <div class="clearfix">
         <div class="fl chart-left-contain-top">
-          <div class="chart-title">语音接通率+视频接通率</div>
+          <div class="chart-title">
+            语音接通率+视频接通率
+          </div>
           <div
-            class="chart"
             id="chartAV"
+            class="chart"
           ></div>
         </div>
         <div class="fr">
-          <div class="chart-title">语音掉线率+视频掉线率</div>
+          <div class="chart-title">
+            语音掉线率+视频掉线率
+          </div>
           <div
-            class="chart"
             id="chartAV1"
+            class="chart"
           ></div>
         </div>
       </div>
       <div class="clearfix">
         <div class="fl chart-left-contain">
-          <div class="chart-title">SRVCC切换成功率</div>
+          <div class="chart-title">
+            SRVCC切换成功率
+          </div>
           <div
-            class="chart"
             id="chartSRVCC"
+            class="chart"
           ></div>
         </div>
         <div class="fr">
-          <div class="chart-title">上行丢包率</div>
+          <div class="chart-title">
+            上行丢包率
+          </div>
           <div
-            class="chart"
             id="chartLOSS"
+            class="chart"
           ></div>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
 import echarts from 'echarts'
-import { chartData,chartDataX,chartDataX1,chartData1,
+import {
+  chartData, chartDataX, chartDataX1, chartData1,
   chartData2,
   chartData3,
   chartData4,
@@ -145,7 +153,8 @@ import { chartData,chartDataX,chartDataX1,chartData1,
   chartData12,
   chartData13,
   chartData14,
-  chartData15,} from '../../../data/data.js';
+  chartData15,
+} from '../../../data/data.js';
 export default {
   data() {
     return {

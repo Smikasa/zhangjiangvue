@@ -49,7 +49,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -65,7 +65,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -81,7 +81,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -97,7 +97,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -113,7 +113,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -129,7 +129,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -145,7 +145,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -161,7 +161,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -177,7 +177,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -193,7 +193,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -209,7 +209,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -225,7 +225,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -241,7 +241,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -257,7 +257,7 @@ export default {
         date: '2016-05-03',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1516 弄'
-      },{
+      }, {
         date: '2016-05-02',
         name: '王小虎',
         address: '上海市普陀区金沙江路 1518 弄'
@@ -281,50 +281,8 @@ export default {
 
 <style scoped>
 .title__zj {
-    color: white;
-    font-size: 26px;
-    margin-bottom: 42px;
-}
-
-.el-table__zj /deep/ .el-table {
-  background-color: transparent;
-  color: #5b6b8e;
-}
-.el-table__zj /deep/ .el-table thead {
-  color: #5b6b8e;
-}
-.el-table__zj /deep/  .el-table__header-wrapper tr {
-  background-image: url('~@/assets/img/1-2.png');
-  background-size: 100%;
-}
-.el-table__zj /deep/ .el-table__header-wrapper th {
-  background-color: transparent;
-}
-
-.el-table__zj /deep/ .el-table .el-table__body-wrapper th:hover {
-  background-color: transparent;
-}
-
-.el-table__zj /deep/ .el-table .el-table__body-wrapper tr:hover {
-  background-color: transparent;
-}
-
-.el-table__zj /deep/ .el-table .el-table__body-wrapper th,
-.el-table__zj /deep/ .el-table .el-table__body-wrapper tr {
-  background-color: transparent;
-}
-
-.el-table__zj /deep/ .el-table--enable-row-hover .el-table__body tr:hover > td {
-  background-color: transparent;
-}
-
-.el-table__zj /deep/ .el-table td,
-.el-table__zj /deep/ .el-table th.is-leaf {
-  border-color: transparent;
-}
-.el-table__zj /deep/ .el-table--border::after,
-.el-table__zj /deep/ .el-table--group::after,
-.el-table__zj /deep/ .el-table::before {
-  background-color: transparent;
+  color: white;
+  font-size: 26px;
+  margin-bottom: 42px;
 }
 </style>

@@ -72,40 +72,4 @@ export default {
     margin: 10px 0;
     margin-bottom: 42px;
 }
-.el-table__zj .el-table {
-  background-color: transparent;
-}
-.el-table__zj .el-table thead {
-  color: white;
-}
-.el-table__zj .el-table__header-wrapper th {
-  background-color: #248ecc;
-}
-
-.el-table__zj .el-table .el-table__body-wrapper th:hover {
-  background-color: transparent;
-}
-
-.el-table__zj .el-table .el-table__body-wrapper tr:hover {
-  background-color: transparent;
-}
-
-.el-table__zj .el-table .el-table__body-wrapper th,
-.el-table__zj .el-table .el-table__body-wrapper tr {
-  background-color: transparent;
-}
-
-.el-table__zj .el-table--enable-row-hover .el-table__body tr:hover > td {
-  background-color: transparent;
-}
-
-.el-table__zj .el-table td,
-.el-table__zj .el-table th.is-leaf {
-  border-color: transparent;
-}
-.el-table__zj .el-table--border::after,
-.el-table__zj .el-table--group::after,
-.el-table__zj .el-table::before {
-  background-color: transparent;
-}
 </style>

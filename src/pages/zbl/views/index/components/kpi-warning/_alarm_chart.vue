@@ -1,6 +1,8 @@
 <template>
   <div class="chart-contain">
-    <div class="chart-title">实时新增告警曲线</div>
+    <div class="chart-title">
+      分钟级新增预警曲线
+    </div>
     <div
       id="chartAlarm"
       class="chart"
@@ -10,7 +12,7 @@
 
 <script>
 import echarts from 'echarts'
-import { chartData9, chartDataX, chartData10 } from '../../data/data.js';
+import { chartData17, chartDataX2, chartData16 } from '../../data/data.js';
 export default {
   data() {
     return {
@@ -32,6 +34,13 @@ export default {
           text: '',//标题
           subtext: ''// 副标题
         },
+        grid: {
+          left: '4%',
+          right: 0,
+          bottom: '24px'
+          // width:'1800px',
+          // height:'262px'
+        },
         textStyle: {
           fontFamily: 'SimHei'
         },
@@ -49,7 +58,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上行', '下行', '无线利用率']
+          data: ['上行', '下行']
         },
         xAxis: [
           {
@@ -89,8 +98,8 @@ export default {
           {
             name: '上行',
             type: 'line',
-            itemStyle: { // 柱条
-              color: '#3b97cc'
+            lineStyle: {
+              color: '#3d829e'
             },
             areaStyle: {
               color: {
@@ -100,23 +109,23 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#4c94ae' // 0% 处的颜色
+                  offset: 0, color: '#1b7499' // 0% 处的颜色
+                }, {
+                  offset: 0.6, color: '#1b7499' // 100% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
                 global: false // 缺省为 false
               }
             },
+            smooth: true,
             data: []
           },
           {
-            name: '无线利用率',
+            name: '下行',
             type: 'line',
-            itemStyle: { // 折线拐点
-              color: '#09b395'
-            },
             lineStyle: {// 折线
-              color: '#09b395'
+              color: '#5aa096'
             },
             areaStyle: {
               color: {
@@ -126,13 +135,16 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#4c94ae' // 0% 处的颜色
+                  offset: 0, color: '#29857e' // 0% 处的颜色
+                }, {
+                  offset: 0.3, color: '#29857e' // 100% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
                 global: false // 缺省为 false
               }
             },
+            smooth: true,
             symbol: "circle",// 实心圆
             data: []
           }
@@ -147,14 +159,14 @@ export default {
       this.chartAlarm.setOption({
         xAxis: [
           {
-            data: chartDataX
+            data: chartDataX2
           }
         ],
         series: [{
-          data: chartData9
+          data: chartData17
         },
         {
-          data: chartData10
+          data: chartData16
         }]
       })
     },
@@ -163,16 +175,12 @@ export default {
 </script>
 
 <style scoped>
-/* .chart-contain {
-  dis
-} */
 .chart-title {
   color: white;
   font-size: 26px;
-  margin: 10px 0;
 }
 .chart {
-  width: 1540px;
-  height: 300px;
+  width: 1800px;
+  height: 312px;
 }
 </style>
