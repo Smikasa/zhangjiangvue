@@ -28,9 +28,6 @@ export default {
 .top__div {
   height: 430px;
 }
-.alarm-list__div {
-  height: 400px;
-}
 .alarm-chart__div {
   height: 400px;
 }

@@ -21,7 +21,7 @@ export default {
   },
   mounted() {
     this.initChartAlarm();
-    this.axiosChartAlarm()
+    this.getAddAlarmList()
   },
   methods: {
     /**
@@ -34,15 +34,24 @@ export default {
           text: '',//标题
           subtext: ''// 副标题
         },
+        grid: {
+          left: '4%',
+          right: 0,
+          bottom: '24px'
+          // width:'1800px',
+          // height:'262px'
+        },
         textStyle: {
           fontFamily: 'SimHei'
         },
         tooltip: {
           trigger: 'axis',
+          minInterval: 1,// 数值取整
           axisPointer: {
             type: 'cross',
             label: {
-              backgroundColor: '#283b56'
+              backgroundColor: '#283b56',
+                    precision:0
             }
           }
         },
@@ -51,7 +60,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上行', '下行', '无线利用率']
+          data: ['故障告警']
         },
         xAxis: [
           {
@@ -74,26 +83,16 @@ export default {
             splitLine: {
               show: false     //去掉网格线
             },
-          },
-          {
-            type: 'value',
-            axisLabel: {
-              color: '#575b61'
-            },
-            minInterval: 1,// 数值取整
-            scale: true,
-            splitLine: {
-              show: false     //去掉网格线
-            },
           }
         ],
         series: [
           {
-            name: '上行',
+            name: '告警',
             type: 'line',
             itemStyle: { // 柱条
               color: '#3b97cc'
             },
+            smooth: true,
             areaStyle: {
               color: {
                 type: 'linear',
@@ -109,33 +108,6 @@ export default {
                 global: false // 缺省为 false
               }
             },
-            data: []
-          },
-          {
-            name: '无线利用率',
-            type: 'line',
-            itemStyle: { // 折线拐点
-              color: '#09b395'
-            },
-            lineStyle: {// 折线
-              color: '#09b395'
-            },
-            areaStyle: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: '#4c94ae' // 0% 处的颜色
-                }, {
-                  offset: 1, color: 'transparent' // 100% 处的颜色
-                }],
-                global: false // 缺省为 false
-              }
-            },
-            symbol: "circle",// 实心圆
             data: []
           }
         ]
@@ -145,20 +117,45 @@ export default {
     /**
     * @description 获取数据-实时新增告警曲线
     */
-    axiosChartAlarm(params) {
-      this.chartAlarm.setOption({
-        xAxis: [
-          {
-            data: chartDataX
-          }
-        ],
-        series: [{
-          data: chartData9
-        },
-        {
-          data: chartData10
-        }]
+    getAddAlarmList(params) {
+      this.$api.getAddAlarmList(params).then((resp) => {
+        if (resp.code === 1000) {
+          let curdata = resp.data;
+          curdata ? this.tableData = curdata : this.tableData = [];
+          this.chartAlarm.setOption({
+            xAxis: [
+              {
+                data: this.getXYData(curdata).x
+              }
+            ],
+            series: [{
+              data: this.getXYData(curdata).y
+            }]
+          })
+        } else {
+          this.$message({
+            message: resp.message,
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
       })
+
+    },
+    /**
+     * 获取x y轴数值
+     */
+    getXYData(array) {
+      let x = []
+      let y = [];
+      array.filter(function (value) {
+        x.push(value.time)
+        y.push(Number(value.alarmNum))
+      })
+      return {
+        x: x,
+        y: y
+      }
     },
   }
 }
@@ -171,7 +168,7 @@ export default {
   margin: 10px 0;
 }
 .chart {
-  width: 1540px;
+  width: 1800px;
   height: 300px;
 }
 </style>

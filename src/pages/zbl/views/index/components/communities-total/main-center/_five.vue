@@ -1,5 +1,5 @@
 <template>
-  <div class="main-center-contain clearfix five-g">
+  <div class="clearfix five-g">
     <div class="clearfix five-g-contain-top">
       <div class="fl chart-left-contain-top">
         <div class="chart-title">

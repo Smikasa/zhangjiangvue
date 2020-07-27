@@ -35,6 +35,7 @@
           <div class="select">
             <div
               class="select-name"
+              :class="[!isShowSelect ? 'select-open' : 'select-close']"
               @click="controlSelct"
             >
               颗粒度选择
@@ -67,13 +68,25 @@
       </ul>
     </div>
     <!-- 4G性能 -->
-    <four v-show="curTabsName === '0'"></four>
+    <four
+      v-show="curTabsName === '0'"
+      class="main-center-contain"
+    ></four>
     <!-- 5G性能 -->
-    <five v-show="curTabsName === '1'"></five>
+    <five
+      v-show="curTabsName === '1'"
+      class="main-center-contain"
+    ></five>
     <!-- 数据感知 -->
-    <record v-show="curTabsName === '2'"></record>
+    <record
+      v-show="curTabsName === '2'"
+      class="main-center-contain"
+    ></record>
     <!-- 语音感知 -->
-    <voice v-show="curTabsName === '3'"></voice>
+    <voice
+      v-show="curTabsName === '3'"
+      class="main-center-contain"
+    ></voice>
   </div>
 </template>
 
@@ -111,6 +124,9 @@ export default {
 </script>
 
 <style scoped>
+.main-center-contain {
+  overflow: hidden;
+}
 .main-center-title {
   background: url("~@/assets/img/all6.png");
   background-size: 100%;
@@ -160,36 +176,5 @@ export default {
   display: block;
   position: absolute;
   bottom: 6px;
-}
-.select {
-  width: 160px;
-  display: inline-block;
-  height: 40px;
-  position: relative;
-}
-.select-name {
-  cursor: pointer;
-  height: 80px;
-  color: #d19328;
-}
-.select-ul {
-  position: absolute;
-  left: 0;
-  top: 80px;
-  border: 1px solid black;
-  /* width: 160px; */
-  text-align: left;
-  background-color: #101b31;
-}
-.select-ul .select-li {
-  font-size: 14px;
-  padding: 8px 14px;
-  cursor: pointer;
-  color: #6a6a6a;
-  line-height: 1;
-}
-
-.select-ul .select-li:hover {
-  color: white;
 }
 </style>

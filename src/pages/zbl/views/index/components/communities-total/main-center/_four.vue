@@ -1,5 +1,5 @@
 <template>
-  <div class="main-center-contain clearfix">
+  <div class="clearfix">
     <div class="main-center-contain-left fl">
       <ul
         class="zcl"

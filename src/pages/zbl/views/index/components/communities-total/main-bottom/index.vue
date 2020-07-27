@@ -10,12 +10,13 @@
           <div class="select">
             <div
               class="select-name"
+              :class="[!isShowSelect ? 'select-open' : 'select-close']"
               @click="controlSelctBottom"
             >
               2F
             </div>
             <div
-              v-show="isShowSelectBottom"
+              v-show="isShowSelect"
               class="select-ul"
             >
               <div
@@ -123,7 +124,7 @@ import {
 export default {
   data() {
     return {
-      isShowSelectBottom: false,
+      isShowSelect: false,
       chartPIE1: '',
       chartPIE2: '',
       chartPIE3: '',
@@ -435,71 +436,13 @@ export default {
      * 点击其他区域select收起公共事件
      */
     controlSelctBottom() {
-      this.isShowSelectBottom = !this.isShowSelectBottom;
+      this.isShowSelect = !this.isShowSelect;
     },
   }
 }
 </script>
 
 <style scoped>
-.select {
-  width: 160px;
-  display: inline-block;
-  height: 80px;
-  position: relative;
-}
-.select-name {
-  cursor: pointer;
-  height: 80px;
-  color: #d19328;
-}
-.select-ul {
-  position: absolute;
-  left: 0;
-  top: 80px;
-  border: 1px solid black;
-  /* width: 160px; */
-  text-align: left;
-}
-.select-ul .select-li {
-  font-size: 14px;
-  padding: 8px 14px;
-  cursor: pointer;
-}
-
-.main-bottom .select {
-  width: 160px;
-  display: inline-block;
-  height: 80px;
-  position: relative;
-}
-.main-bottom .select-name {
-  cursor: pointer;
-  height: 80px;
-  color: #d19328;
-}
-.main-bottom .select-ul {
-  position: absolute;
-  left: 0;
-  top: 80px;
-  border: 1px solid black;
-  /* width: 160px; */
-  text-align: left;
-}
-.main-bottom .select-ul .select-li {
-  font-size: 14px;
-  padding: 8px 14px;
-  cursor: pointer;
-}
-
-.main-bottom .select-ul .select-li:hover {
-  color: white;
-}
-
-.select-ul .select-li:hover {
-  color: white;
-}
-
 .main-bottom-contain .chart {
   width: 195px;
   height: 195px;
@@ -531,19 +474,23 @@ export default {
   width: 100%;
   list-style-type: none;
   background: url("~@/assets/img/all6.png") no-repeat;
-  /* background-size: 100%; */
   padding-left: 65px;
   height: 80px;
   margin-bottom: 80px;
   line-height: 80px;
-  /* overflow: hidden; */
 }
 #zlbb > li {
   font-size: 30px;
   color: #d19328;
   font-weight: 700;
   margin-right: 163px;
-  float: left;
   display: inline-block;
+}
+
+.select {
+  width: 85px;
+}
+.select-ul {
+  width: 120px;
 }
 </style>

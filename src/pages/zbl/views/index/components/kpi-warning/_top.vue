@@ -9,7 +9,7 @@
           >
           <p class="zl-box">
             <span class="list-name">预警总数</span>
-            <span class="list-data">12321</span>
+            <span class="list-data">{{ kpiWarningTotal }}</span>
           </p>
         </li>
         <li>
@@ -19,7 +19,7 @@
           >
           <p class="zl-box">
             <span class="list-name">已派单目消除预警数</span>
-            <span class="list-data">99%</span>
+            <span class="list-data">{{ kpiWarningSolved }}</span>
           </p>
         </li>
         <li>
@@ -29,7 +29,7 @@
           >
           <p class="zl-box">
             <span class="list-name">已派单未消除预警数</span>
-            <span class="list-data">99%</span>
+            <span class="list-data">{{ kpiWarningTask }}</span>
           </p>
         </li>
       </ul>
@@ -41,7 +41,7 @@
           >
           <p class="zl-box">
             <span class="list-name">4G性能预警数</span>
-            <span class="list-data">12321</span>
+            <span class="list-data">{{ KpiWarning4G }}</span>
           </p>
         </li>
         <li>
@@ -51,7 +51,7 @@
           >
           <p class="zl-box">
             <span class="list-name">5G性能预警数</span>
-            <span class="list-data">1341</span>
+            <span class="list-data">{{ KpiWarning5G }}</span>
           </p>
         </li>
       </ul>
@@ -62,8 +62,8 @@
             src="@/assets/img/7.png"
           >
           <p class="zl-box">
-            <span class="list-name">SRVCC切换成功率</span>
-            <span class="list-data">99%</span>
+            <span class="list-name">volte语音感知预警数</span>
+            <span class="list-data">{{ KpiWarning4GDataAware }}</span>
           </p>
         </li>
         <li>
@@ -72,8 +72,8 @@
             src="@/assets/img/8.png"
           >
           <p class="zl-box">
-            <span class="list-name">PDCCH信道CCE利用率</span>
-            <span class="list-data">99%</span>
+            <span class="list-name">4G数据感知预警数</span>
+            <span class="list-data">{{ KpiWarning4GDataAware }}</span>
           </p>
         </li>
       </ul>
@@ -83,7 +83,48 @@
 
 <script>
 export default {
-
+  data() {
+    return {
+      kpiWarningTotal: '',//预警总数,
+      kpiWarningSolved: '',//已派单消除预警数,
+      kpiWarningTask: '',// 已派单未消除预警数
+      KpiWarning4G: '', //4G性能预警数
+      KpiWarning5G: '', //5G性能预警数
+      KpiWarning4GDataAware: '', //4G数据感知预警数
+      KpiWarningVolte: '', //volte语音感知预警数
+      params: {
+        projectId: 132, //项目id
+      }
+    }
+  },
+  mounted() {
+    this.getPerformanceWarningTypeCounts(this.params);
+  },
+  methods: {
+    /**
+     * 获取总览数据
+    */
+    getPerformanceWarningTypeCounts(params) {
+      this.$api.getPerformanceWarningTypeCounts(params).then((resp) => {
+        if (resp.code === 1000) {
+          let curdata = resp.data;
+          this.kpiWarningTotal = curdata.kpiWarningTotal;//预警总数;
+          this.kpiWarningSolved = curdata.kpiWarningSolved;//已派单消除预警数;
+          this.kpiWarningTask = curdata.kpiWarningTask;// 已派单未消除预警数
+          this.KpiWarning4G = curdata.KpiWarning4G; //4G性能预警数
+          this.KpiWarning5G = curdata.KpiWarning5G; //5G性能预警数
+          this.KpiWarning4GDataAware = curdata.KpiWarning4GDataAware; //4G数据感知预警数
+          this.KpiWarningVolte = curdata.KpiWarningVolte; //volte语音感知预警数
+        } else {
+          this.$message({
+            message: resp.message,
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+      })
+    }
+  }
 }
 </script>
 

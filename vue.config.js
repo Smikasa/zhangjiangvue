@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 // 开启 gzip 
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 const path = require('path');
 const proxy = require('./vue.proxy.config');
 
@@ -40,7 +41,7 @@ module.exports = {
         port: 8080,
         host: '0.0.0.0',
         https: false,
-        open: true,
+        // open: true,
         // proxy: proxy
     },
     configureWebpack: {
@@ -51,6 +52,7 @@ module.exports = {
             }
         },
         plugins: [
+            new MomentLocalesPlugin(),
             new webpack.ProvidePlugin({
                 _: 'lodash',
                 Axios: 'axios',

@@ -35,3 +35,80 @@
   .el-table__zj .el-table::before {
     background-color: transparent;
   }
+
+  /* select */
+
+  .select {
+    width: 160px;
+    display: inline-block;
+    height: 100%;
+    position: relative;
+    box-sizing: content-box;
+    padding-right: 40px;
+  }
+  .select-name {
+    cursor: pointer;
+    height: 100%;
+    color: #d19328;
+    position: relative;
+  }
+
+  .select-name.select-close::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 16px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 16px solid #d19328;
+    border-left: 15px solid transparent;
+    bottom: 30px;
+    right: -30px;
+    transition: ease-in;
+  }
+
+  
+  .select-name.select-open::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-bottom: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 14px solid #d19328;
+    border-left: 14px solid transparent;
+    top: 34px;
+    right: -30px;
+    transition: ease-in;
+  }
+
+  .select-ul {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 80px;
+    border: 1px solid black;
+    text-align: left;
+    background-color: #101b31;
+    z-index: 9999;
+  }
+  .select-ul .select-li {
+    line-height: 1;
+    font-size: 18px;
+    padding: 6px 20px;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #606266;
+    height: 34px;
+    line-height: 34px;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-sizing: content-box;
+  }
+  
+  .select-ul .select-li:hover {
+    color: #d19328;
+    /* background-color: #f5f7fa; */
+  }
