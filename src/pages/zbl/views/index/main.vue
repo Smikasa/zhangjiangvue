@@ -47,11 +47,12 @@ export default {
     mainBottom,
     alarmTotal,
     kpiWarning,
-    workOrder
+    workOrder,
+    userTotal
   },
   data() {
     return {
-      curNav: "cellTotal"
+      curNav: "userTotal"
     };
   },
   created() {

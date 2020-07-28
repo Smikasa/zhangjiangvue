@@ -12,7 +12,6 @@
 
 <script>
 import echarts from 'echarts'
-import { chartData17, chartDataX2, chartData16 } from '../../data/data.js';
 export default {
   data() {
     return {
@@ -21,11 +20,11 @@ export default {
   },
   mounted() {
     this.initChartAlarm();
-    this.axiosChartAlarm()
+    this.getMinutePerformanceAddCounts()
   },
   methods: {
     /**
-       * @description 初始化-实时新增告警曲线
+       * @description 初始化-分钟级新增预警曲线
        */
     initChartAlarm() {
       this.chartAlarm = echarts.init(document.getElementById('chartAlarm'));
@@ -49,7 +48,8 @@ export default {
           axisPointer: {
             type: 'cross',
             label: {
-              backgroundColor: '#283b56'
+              backgroundColor: '#283b56',
+              precision:0
             }
           }
         },
@@ -58,7 +58,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上行', '下行']
+          data: ['告警数']
         },
         xAxis: [
           {
@@ -96,7 +96,7 @@ export default {
         ],
         series: [
           {
-            name: '上行',
+            name: '告警数',
             type: 'line',
             lineStyle: {
               color: '#3d829e'
@@ -120,55 +120,52 @@ export default {
             },
             smooth: true,
             data: []
-          },
-          {
-            name: '下行',
-            type: 'line',
-            lineStyle: {// 折线
-              color: '#5aa096'
-            },
-            areaStyle: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: '#29857e' // 0% 处的颜色
-                }, {
-                  offset: 0.3, color: '#29857e' // 100% 处的颜色
-                }, {
-                  offset: 1, color: 'transparent' // 100% 处的颜色
-                }],
-                global: false // 缺省为 false
-              }
-            },
-            smooth: true,
-            symbol: "circle",// 实心圆
-            data: []
           }
         ]
       };
       this.chartAlarm.setOption(option);
     },
     /**
-    * @description 获取数据-实时新增告警曲线
+    * @description 获取数据-分钟级新增预警曲线
     */
-    axiosChartAlarm(params) {
-      this.chartAlarm.setOption({
-        xAxis: [
-          {
-            data: chartDataX2
-          }
-        ],
-        series: [{
-          data: chartData17
-        },
-        {
-          data: chartData16
-        }]
+    getMinutePerformanceAddCounts(params) {
+       this.$api.getMinutePerformanceAddCounts(params).then((resp) => {
+        if (resp.code === 1000) {
+          let curdata = resp.data;
+          curdata ? this.tableData = curdata : this.tableData = [];
+          this.chartAlarm.setOption({
+            xAxis: [
+              {
+                data: this.getXYData(curdata).x
+              }
+            ],
+            series: [{
+              data: this.getXYData(curdata).y
+            }]
+          })
+        } else {
+          this.$message({
+            message: resp.message,
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
       })
+    },
+    /**
+     * 获取x y轴数值
+     */
+    getXYData(array) {
+      let x = []
+      let y = [];
+      array.filter(function (value) {
+        x.push(value.time)
+        y.push(Number(value.kpiWarningNum))
+      })
+      return {
+        x: x,
+        y: y
+      }
     },
   }
 }

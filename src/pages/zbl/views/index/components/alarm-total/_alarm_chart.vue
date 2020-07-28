@@ -51,7 +51,7 @@ export default {
             type: 'cross',
             label: {
               backgroundColor: '#283b56',
-                    precision:0
+              precision:0
             }
           }
         },
@@ -90,7 +90,7 @@ export default {
             name: '告警',
             type: 'line',
             itemStyle: { // 柱条
-              color: '#3b97cc'
+              color: '#29857e'
             },
             smooth: true,
             areaStyle: {
@@ -101,8 +101,10 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#4c94ae' // 0% 处的颜色
+                  offset: 0, color: '#29857e' // 0% 处的颜色
                 }, {
+                  offset: 0.3, color: '#29857e' // 100% 处的颜色
+                } ,{
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
                 global: false // 缺省为 false

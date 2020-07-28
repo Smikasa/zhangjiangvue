@@ -11,7 +11,7 @@
       background-color: transparent;
   }
   .el-table__zj .el-table thead tr  {
-    background:linear-gradient(to right, rgba(6, 43, 87), transparent);
+    background:linear-gradient(to right, rgba(6, 43, 87) 90%, transparent);
  };
 
   .el-table__zj .el-table .el-table__body-wrapper th:hover {

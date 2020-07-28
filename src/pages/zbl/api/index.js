@@ -95,9 +95,6 @@ export function getMinutePerformanceAddCounts(params) {
     return request.get('/performanceWarning/getMinutePerformanceAddCounts',{'params':queryParams});
 }
 
-
-
-
 /**
  * @description  获取性能预警 - 所有性能预警信息列表
  */
@@ -111,4 +108,17 @@ export function getPerformanceList(params) {
     }
     let queryParams = Object.assign({}, defaultParams, params)
     return request.get('/performanceWarning/getPerformanceList',{'params':queryParams});
+}
+
+/**
+ * @description  获取到岗人员数 - 场馆重保人员列表
+ */
+export function getUsers(params) {
+    let defaultParams = {
+        projectId: 132, //项目id
+        page : 1, //第几页 page不传默认为1
+        size : 10 ,//每页显示数  size 不传默认为10 page,size都不传查所有
+    }
+    let queryParams = Object.assign({}, defaultParams, params)
+    return request.get('/testInstructions/getUsers',{'params':queryParams});
 }
