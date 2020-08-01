@@ -82,7 +82,7 @@ export default {
     return {
       tableData: [],
       params: {
-        projectId: 132, //项目id
+        projectId: 136, //项目id
         studioId: 20, //场馆ID
         userId: 12,  //用户id
         page: 1, //第几页 page不传默认为1

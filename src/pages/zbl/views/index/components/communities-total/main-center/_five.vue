@@ -1,7 +1,7 @@
 <template>
-  <div class="clearfix five-g">
-    <div class="clearfix five-g-contain-top">
-      <div class="fl chart-left-contain-top">
+  <div class="clearfix chart__main">
+    <div class="clearfix">
+      <div class="fl chart-contain">
         <div class="chart-title">
           5G用户量
         </div>
@@ -10,7 +10,7 @@
           class="chart"
         ></div>
       </div>
-      <div class="fl ">
+      <div class="fl chart-contain">
         <div class="chart-title">
           上下行流量+无线利用率
         </div>
@@ -19,7 +19,7 @@
           class="chart"
         ></div>
       </div>
-      <div class="fl ">
+      <div class="fl">
         <div class="chart-title">
           PRC连接数+峰值用户数+无线接通率
         </div>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="clearfix">
-      <div class="fl chart-left-contain-top">
+      <div class="fl chart-contain">
         <div class="chart-title">
           上下PUSCH行流量+下行PDCCH利用率
         </div>
@@ -39,7 +39,7 @@
           class="chart"
         ></div>
       </div>
-      <div class="fl ">
+      <div class="fl chart-contain">
         <div class="chart-title">
           无线掉线率+切换成功率+上行干扰电平
         </div>
@@ -48,7 +48,7 @@
           class="chart"
         ></div>
       </div>
-      <div class="fl ">
+      <div class="fl">
         <div class="chart-title">
           PRB上下行利用率
         </div>
@@ -63,26 +63,18 @@
 
 <script>
 import echarts from 'echarts'
-import {
-  chartData, chartDataX, chartDataX1, chartData1,
-  chartData2,
-  chartData3,
-  chartData4,
-  chartData5,
-  chartData6,
-  chartData7,
-  chartData8,
-  chartData9,
-  chartData10,
-  chartData11,
-  chartData12,
-  chartData13,
-  chartData14,
-  chartData15,
-} from '../../../data/data.js';
 export default {
   data() {
     return {
+      kpiParams: {
+        projectId: 136,
+        kpiType: 2, //指标类型(1:4G 2:5G 3:数据感知 4：语音感知)不传查所有类型
+      },
+      chartParams: {
+        projectId: 136,  //项目id  
+        kpiIdList: '',// 指标编号 ，由逗号隔开
+        kpiType: 2, // 指标类型, (1:4G  2:5G  3:数据感知 4:Votle语音)
+      },
       // 5g
       chart5G: '',
       chartTB: '',
@@ -90,24 +82,102 @@ export default {
       chartPUPD: '',
       chartWXQHSX: '',
       chartPRB2: '',
+      chart5G_kpiNameList: ['上行数据流量', '下行数据流量', '无线利用率'], //5G用户量
+      chartTB_kpiNameList: ['平均RRC连接数', '小区最大用户数', '无线接通率'],//上下行流量+无线利用率
+      chartPRC2_kpiNameList: ['无线掉线率', '切换成功率', '上行干扰平均电平'],//PRC连接数+峰值用户数+无线接通率
+      chartPUPD_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//上下PUSCH行流量+下行PDCCH利用率
+      chartWXQHSX_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//无线掉线率+切换成功率+上行干扰电平
+      chartPRB2_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//PRB上下行利用率
     }
   },
   mounted() {
+    // 获取左侧列表数据
+    this.getKpiList(this.kpiParams);
     // 5g
     this.initChart5G();
-    this.axiosChart5G();
     this.initChartTB();
-    this.axiosChartTB();
     this.initChartPRC2();
-    this.axiosChartPRC2();
     this.initChartPUPD();
-    this.axiosChartPUPD();
     this.initChartWXQHSX();
-    this.axiosChartWXQHSX();
     this.initChartPRB2();
-    this.axiosChartPRB2();
   },
   methods: {
+    /**
+     * 获取图表名称列表
+     */
+    getKpiList(params) {
+      this.$api.getKpiList(params).then((resp) => {
+        let curData = resp.data;
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChart5G(xyData);
+        })
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChartTB(xyData);
+        })
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChartPRC2(xyData);
+        })
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChartPUPD(xyData);
+        })
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChartWXQHSX(xyData);
+        })
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChartPRB2(xyData);
+        })
+      })
+    },
+    /**
+     * 获取图表数据
+     */
+    getKpiChartData(curKpiNames, allKpiNames, callback) {
+      let kpiIds = [];
+      let params = {};
+      let chartDataY = [];
+      let chartDataX = [];
+      curKpiNames.filter((value) => {
+        allKpiNames.filter((item) => {
+          if (value === item.kpi_name) {
+            kpiIds.push(item.kpi_num)
+          }
+        })
+      })
+      params = Object.assign({}, this.chartParams, { kpiIdList: kpiIds.join(',') })
+      this.$api.getEchartData(params).then((resp) => {
+        let curData = resp.data;
+        curKpiNames.filter((value, index) => {
+          let y = []
+          curData.filter((item) => {
+            let num = item['kpiData' + (index + 1)]
+            y.push(num)
+            if (index === 0) {
+              chartDataX.push(item['time'])
+            }
+          })
+          chartDataY.push(y)
+        })
+        callback({
+          x: chartDataX,
+          y: chartDataY
+        })
+      })
+    },
+    /**
+     * 数据处理-人数曲线图-获取x y 数据
+     */
+    geXYData(array) {
+      let x = []
+      let y = [];
+      array.filter(function (value) {
+        x.push(value.realTime)
+        y.push(Number(value.people))
+      })
+      return {
+        x: x,
+        y: y
+      }
+    },
     /**
     * @description 初始化-5g性能-5g用户量
     */
@@ -200,15 +270,15 @@ export default {
     /**
     * @description 获取数据-5g性能-5g用户量
     */
-    axiosChart5G(params) {
+    axiosChart5G(xyData) {
       this.chart5G.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData4
+          data: xyData.y[0]
         }]
       })
     },
@@ -326,19 +396,19 @@ export default {
     /**
      * @description 初始化-获取数据-上下行流量+无线利用率
      */
-    axiosChartTB(params) {
+    axiosChartTB(xyData) {
       this.chartTB.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData
+          data: xyData.y[0]
         }, {
-          data: chartData
+          data: xyData.y[1]
         }, {
-          data: chartData
+          data: xyData.y[2]
         }]
       })
     },
@@ -459,19 +529,19 @@ export default {
     /**
      * @description 获取数据-5g性能-PRC连接数+峰值用户数+无线接通率
      */
-    axiosChartPRC2(params) {
+    axiosChartPRC2(xyData) {
       this.chartPRC2.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData
+          data: xyData.y[0]
         }, {
-          data: chartData
+          data: xyData.y[1]
         }, {
-          data: chartData
+          data: xyData.y[2]
         }]
       })
     },
@@ -586,17 +656,17 @@ export default {
     /**
      * @description 获取数据-5g性能-上下PUSCH行流量+下行PDCCH利用率
      */
-    axiosChartPUPD(params) {
+    axiosChartPUPD(xyData) {
       this.chartPUPD.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData10
+          data: xyData.y[0]
         }, {
-          data: chartData11
+          data: xyData.y[1]
         }]
       })
     },
@@ -741,19 +811,19 @@ export default {
     /**
      * @description 获取数据-5g性能-无线掉线率+切换成功率+上行干扰电平
      */
-    axiosChartWXQHSX(params) {
+    axiosChartWXQHSX(xyData) {
       this.chartWXQHSX.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData9
+          data: xyData.y[0]
         }, {
-          data: chartData1
+          data: xyData.y[1]
         }, {
-          data: chartData7
+          data: xyData.y[2]
         }]
       })
     },
@@ -885,17 +955,17 @@ export default {
     /**
     * @description 初始化-5g性能-上行+下行
     */
-    axiosChartPRB2(params) {
+    axiosChartPRB2(xyData) {
       this.chartPRB2.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData5
+          data: xyData.y[0]
         }, {
-          data: chartData12
+          data: xyData.y[1]
         }]
       })
     },
@@ -904,73 +974,13 @@ export default {
 </script>
 
 <style scoped>
-.main-center .five-g-contain-top {
-  margin-bottom: 128px;
+.chart__main {
+  padding-top: 73px;
+  box-sizing: content-box;
 }
-
-.main-center-contain-left ul.zcl {
-  list-style-type: none;
-  background: url("~@/assets/img/1-2.png");
-  background-size: 100%;
-  width: 475px;
-  height: 247px;
-  margin-bottom: 88px;
-  padding: 20px 0;
-  box-sizing: border-box;
-}
-.main-center-contain-left ul.zcl > li {
-  height: 50px;
-  padding-left: 15px;
-  margin-bottom: 30px;
-  display: block;
-  overflow: hidden;
-}
-.main-center-contain-left ul.zcl > li:last-child {
-  margin-bottom: 0;
-}
-.main-center-contain-left ul.zcl > li span {
-  display: inline-block;
-}
-.main-center-contain-left ul.zcl > li .list-icon {
-  width: 46px;
-  height: 46px;
-  float: left;
-  vertical-align: middle;
-}
-
-.zl-box {
-  float: left;
-  width: 395px;
-  height: 46px;
-  line-height: 20px;
-  background: url("~@/assets/img/zllbg.png") no-repeat;
-  background-size: 100%;
-  margin-left: 15px;
-  vertical-align: middle;
-  margin-top: 5px;
-  padding: 10px 0 10px 8px;
-  box-sizing: border-box;
-}
-
-.list-name {
-  font-size: 25px;
-  color: #abadc1;
-}
-.list-data {
-  font-size: 25px;
-  color: #fff;
-  font-weight: 700;
-  float: right;
-  margin-right: 42px;
-}
-
-.main-center-contain-right .chart-left-contain-top {
-  margin-right: 100px;
-  margin-bottom: 135px;
-}
-
-.main-center-contain-right .chart-left-contain {
-  margin-right: 100px;
+.chart-contain {
+  margin-right: 143px;
+  margin-bottom: 136px;
 }
 
 .chart {
@@ -978,15 +988,9 @@ export default {
   height: 270px;
 }
 
-.main-center-contain-right .chart {
-  width: 495px;
-  height: 270px;
-  /* margin-bottom: 100px; */
-}
 .chart-title {
   color: #ffffff;
   font-size: 28px;
-  margin-bottom: 34px;
-  padding-top: 50px;
+  margin-bottom: 36px;
 }
 </style>

@@ -149,6 +149,7 @@ export default {
 }
 
 .spread-info {
+  height: 50px;
   margin-bottom: 18px;
 }
 

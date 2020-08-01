@@ -8,31 +8,31 @@
         <li>
           <img
             class="list-icon"
-            src="@/assets/img/ICON1.png"
+            src="@/assets/img/voice_ICON1.png"
+          />
+          <p class="zl-box">
+            <span class="list-name">VOLTE活跃用户数</span>
+            <span class="list-data">{{ volte_active_user_num }}</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/voice_ICON2.png"
           />
           <p class="zl-box">
             <span class="list-name">VOLTE语音话务量</span>
-            <span class="list-data">12321</span>
+            <span class="list-data">{{ volte_voice_erl }}</span>
           </p>
         </li>
         <li>
           <img
             class="list-icon"
-            src="@/assets/img/ICON2.png"
+            src="@/assets/img/voice_ICON3.png"
           />
           <p class="zl-box">
-            <span class="list-name">VOLTE语音话接通率</span>
-            <span class="list-data">99%</span>
-          </p>
-        </li>
-        <li>
-          <img
-            class="list-icon"
-            src="@/assets/img/ICON3.png"
-          />
-          <p class="zl-box">
-            <span class="list-name">VOLTE语音掉线率</span>
-            <span class="list-data">99%</span>
+            <span class="list-name">VOLTE视频话务量</span>
+            <span class="list-data">{{ volte_video_erl }}</span>
           </p>
         </li>
       </ul>
@@ -40,21 +40,43 @@
         <li>
           <img
             class="list-icon"
-            src="@/assets/img/ICON4.png"
+            src="@/assets/img/voice_ICON4.png"
           />
           <p class="zl-box">
-            <span class="list-name">VOLTE视频话务量</span>
-            <span class="list-data">12321</span>
+            <span class="list-name">接续时长（V-V）</span>
+            <span class="list-data">{{ volte_begin_call_time_vv }}</span>
           </p>
         </li>
         <li>
           <img
             class="list-icon"
-            src="@/assets/img/ICON5.png"
+            src="@/assets/img/voice_ICON4.png"
           />
           <p class="zl-box">
-            <span class="list-name">VOLTE视频接通率</span>
-            <span class="list-data">99%</span>
+            <span class="list-name">接续时长（V-A）</span>
+            <span class="list-data">{{ volte_begin_call_time_va }}</span>
+          </p>
+        </li>
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/voice_ICON4.png"
+          />
+          <p class="zl-box">
+            <span class="list-name">SRVVC切换时长</span>
+            <span class="list-data">{{ srvcc_switch_time }}</span>
+          </p>
+        </li>
+      </ul>
+      <ul class="zcl">
+        <li>
+          <img
+            class="list-icon"
+            src="@/assets/img/voice_ICON5.png"
+          />
+          <p class="zl-box">
+            <span class="list-name">MOS</span>
+            <span class="list-data">{{ mos_rtcp }}</span>
           </p>
         </li>
         <li>
@@ -63,30 +85,18 @@
             src="@/assets/img/ICON6.png"
           />
           <p class="zl-box">
-            <span class="list-name">VOLTE视频掉线率</span>
-            <span class="list-data">99%</span>
+            <span class="list-name">上行MOS</span>
+            <span class="list-data">{{ upload_mos_rtp }}</span>
           </p>
         </li>
-      </ul>
-      <ul class="zcl">
         <li>
           <img
             class="list-icon"
             src="@/assets/img/ICON7.png"
           />
           <p class="zl-box">
-            <span class="list-name">SRVCC切换成功率</span>
-            <span class="list-data">99%</span>
-          </p>
-        </li>
-        <li>
-          <img
-            class="list-icon"
-            src="@/assets/img/ICON8.png"
-          />
-          <p class="zl-box">
-            <span class="list-name">PDCCH信道CCE利用率</span>
-            <span class="list-data">99%</span>
+            <span class="list-name">下行MOS</span>
+            <span class="list-data">{{ download_mos_rtp }}</span>
           </p>
         </li>
       </ul>
@@ -158,6 +168,19 @@ import {
 export default {
   data() {
     return {
+      params: {
+        projectId:136,
+        type: 4
+      },
+      volte_voice_erl: '',  //VoLTE语音话务量
+      volte_begin_call_time_vv: '', //VoLTE始呼接续时长vv
+      volte_video_erl: '', //VoLTE视频话务量
+      download_mos_rtp: '',  //下行MOS值(RTP)
+      mos_rtcp: '',   //MOS值（RTCP）
+      volte_active_user_num: '', //VoLTE活跃用户数
+      volte_begin_call_time_va: '',  //Volte始呼接续时长va
+      upload_mos_rtp: '',  //下行MOS值(RTP)
+      srvcc_switch_time: '',    //SRVCC切换时长
       chartAV: '',
       chartAV1: '',
       chartSRVCC: '',
@@ -166,8 +189,9 @@ export default {
     }
   },
   mounted() {
+    // 获取kpi
+    this.getHourNewKpi(this.params);
     // 数据感知 
-
     this.initChartAV();
     this.axiosChartAV();
     this.initChartAV1();
@@ -178,7 +202,24 @@ export default {
     this.axiosChartLOSS();
   },
   methods: {
-
+    /**
+     * 获取左侧KPI
+     * 
+     */
+    getHourNewKpi(params) {
+      this.$api.getHourNewKpi(params).then((resp) => {
+        let curData = resp.data;
+        this.volte_voice_erl = curData.volte_voice_erl;
+        this.volte_begin_call_time_vv = curData.volte_begin_call_time_vv;
+        this.volte_video_erl = curData.volte_video_erl;
+        this.download_mos_rtp = curData.download_mos_rtp;
+        this.mos_rtcp = curData.mos_rtcp;
+        this.volte_active_user_num = curData.volte_active_user_num;
+        this.volte_begin_call_time_va = curData.volte_begin_call_time_va;
+        this.upload_mos_rtp = curData.upload_mos_rtp;
+        this.srvcc_switch_time = curData.srvcc_switch_time;
+      })
+    },
     /**
      * @description 初始化-语音感知-语音接通率+视频接通率
      */
@@ -715,7 +756,7 @@ export default {
 }
 
 .main-center-contain-right .chart {
-  width: 495px;
+  width: 540px;
   height: 270px;
   /* margin-bottom: 100px; */
 }

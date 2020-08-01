@@ -12,7 +12,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE语音话务量</span>
-            <span class="list-data">12321</span>
+            <span class="list-data">{{ volte_voice_erl }}</span>
           </p>
         </li>
         <li>
@@ -21,8 +21,8 @@
             src="@/assets/img/ICON2.png"
           >
           <p class="zl-box">
-            <span class="list-name">VOLTE语音话接通率</span>
-            <span class="list-data">99%</span>
+            <span class="list-name">VOLTE语音接通率</span>
+            <span class="list-data">{{ volte_voice_connect_ratio }}%</span>
           </p>
         </li>
         <li>
@@ -32,7 +32,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE语音掉线率</span>
-            <span class="list-data">99%</span>
+            <span class="list-data">{{ volte_voice_offline_ratio }}%</span>
           </p>
         </li>
       </ul>
@@ -44,7 +44,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE视频话务量</span>
-            <span class="list-data">12321</span>
+            <span class="list-data">{{ volte_video_erl }}</span>
           </p>
         </li>
         <li>
@@ -54,7 +54,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE视频接通率</span>
-            <span class="list-data">99%</span>
+            <span class="list-data">{{ volte_video_connect_ratio }}%</span>
           </p>
         </li>
         <li>
@@ -64,11 +64,14 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE视频掉线率</span>
-            <span class="list-data">99%</span>
+            <span class="list-data">{{ volte_video_offline_ratio }}%</span>
           </p>
         </li>
       </ul>
-      <ul class="zcl">
+      <ul
+        class="zcl"
+        style="padding-top: 55px;"
+      >
         <li>
           <img
             class="list-icon"
@@ -76,7 +79,7 @@
           >
           <p class="zl-box">
             <span class="list-name">SRVCC切换成功率</span>
-            <span class="list-data">99%</span>
+            <span class="list-data">{{ srvcc_switch }}%</span>
           </p>
         </li>
         <li>
@@ -86,7 +89,7 @@
           >
           <p class="zl-box">
             <span class="list-name">PDCCH信道CCE利用率</span>
-            <span class="list-data">99%</span>
+            <span class="list-data">{{ pdcch_channel_cee_occupancy }}%</span>
           </p>
         </li>
       </ul>
@@ -138,46 +141,139 @@
 
 <script>
 import echarts from 'echarts'
-import {
-  chartData, chartDataX, chartData1,
-  chartData2,
-  chartData3,
-  chartData4,
-  chartData5,
-  chartData6,
-  chartData7,
-  chartData8,
-  chartData9,
-  chartData10,
-  chartData11,
-  chartData12,
-  chartData13,
-  chartData14,
-  chartData15,
-} from '../../../data/data.js';
+import { chartDataX2 } from '../../../data/data';
 export default {
   data() {
     return {
-      chartSX: '',
-      chartPRC: '',
-      chartWX: '',
-      chartPRB: '',
+      params: {
+        projectId: 136,
+        type: 1 // (1.4G   4.Volte)
+      },
+      kpiParams: {
+        projectId: 136,
+        kpiType: 1, //指标类型(1:4G 2:5G 3:数据感知 4：语音感知)不传查所有类型
+      },
+      chartParams: {
+        projectId: 136,  //项目id  
+        kpiIdList: '',// 指标编号 ，由逗号隔开
+        kpiType: 1, // 指标类型, (1:4G  2:5G  3:数据感知 4:Votle语音)
+      },
+      volte_voice_erl: '',//VOLTE语音话务量 
+      volte_voice_offline_ratio: '',//VOLTE语音掉线率
+      volte_video_erl: '',//VOLTE视频话务量
+      volte_voice_connect_ratio: '',//VOLTE语音接通率
+      volte_video_connect_ratio: '',//VOLTE视频接通率
+      pdcch_channel_cee_occupancy: '',//PDCCH信道CCE利用率
+      srvcc_switch: '',//SRVCC切换成功率
+      volte_video_offline_ratio: '',//VOLTE视频掉线率
+      chart1_kpiNameList: ['上行数据流量', '下行数据流量', '无线利用率'], //上下行流量+无线利用率
+      chart2_kpiNameList: ['平均RRC连接数', '小区最大用户数', '无线接通率'],//PRC连接数+峰值用户数+无线接通率
+      chart3_kpiNameList: ['无线掉线率', '切换成功率', '上行干扰平均电平'],//无线掉线率+切换成功率+上行干扰电平
+      chart4_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//PRB上下行利用率
     }
   },
   mounted() {
-    // 4g图表
+    // 初始化 图表
     this.initChartSX();
-    this.axiosChartSX();
     this.initChartPRC();
-    this.axiosChartPRC();
     this.initChartWX();
-    this.axiosChartWX();
     this.initChartPRB();
-    this.axiosChartPRB();
-    // this.initChartPIE();
-    // this.axiosChartPIE();
+    // 获取kpi
+    this.getHourNewKpi(this.params);
+    // 获取左侧列表数据
+    this.getKpiList(this.kpiParams);
   },
   methods: {
+    /**
+     * 获取左侧KPI
+     * 
+     */
+    getHourNewKpi(params) {
+      this.$api.getHourNewKpi(params).then((resp) => {
+        let curData = resp.data;
+        this.volte_voice_erl = curData.volte_voice_erl;
+        this.volte_voice_offline_ratio = curData.volte_voice_offline_ratio;
+        this.volte_video_erl = curData.volte_video_erl;
+        this.volte_voice_connect_ratio = curData.volte_voice_connect_ratio;
+        this.volte_video_connect_ratio = curData.volte_video_connect_ratio;
+        this.pdcch_channel_cee_occupancy = curData.pdcch_channel_cee_occupancy;
+        this.srvcc_switch = curData.srvcc_switch;
+        this.volte_video_offline_ratio = curData.volte_video_offline_ratio;
+      })
+    },
+    /**
+     * 获取图表名称列表
+     */
+    getKpiList(params) {
+      this.$api.getKpiList(params).then((resp) => {
+        let curData = resp.data;
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChartSX(xyData);
+        })
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChartPRC(xyData);
+        })
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChartWX(xyData);
+        })
+        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+          this.axiosChartPRB(xyData);
+        })
+      })
+    },
+    /**
+     * 获取图表数据
+     */
+    getKpiChartData(curKpiNames, allKpiNames, callback) {
+      let kpiIds = [];
+      let params = {};
+      let chartDataY = [];
+      let chartDataX = [];
+      curKpiNames.filter((value) => {
+        allKpiNames.filter((item) => {
+          if (value === item.kpi_name) {
+            kpiIds.push(item.kpi_num)
+          }
+        })
+      })
+      params = Object.assign({}, this.chartParams, { kpiIdList: kpiIds.join(',') })
+      this.$api.getEchartData(params).then((resp) => {
+        let curData = resp.data;
+        curKpiNames.filter((value, index) => {
+          let y = []
+          curData.filter((item) => {
+            let num = item['kpiData' + (index + 1)]
+            y.push(num)
+            if (index === 0) {
+              chartDataX.push(item['time'])
+            }
+          })
+          chartDataY.push(y)
+        })
+        callback({
+          x: chartDataX,
+          y: chartDataY
+        })
+      })
+      // console.log(chartDataX)
+      // console.log(chartDataY)
+
+    },
+    /**
+     * 数据处理-人数曲线图-获取x y 数据
+     */
+    geXYData(array) {
+      let x = []
+      let y = [];
+      array.filter(function (value) {
+        x.push(value.realTime)
+        y.push(Number(value.people))
+      })
+      return {
+        x: x,
+        y: y
+      }
+    },
     /**
      * @description 初始化-4G性能-上下行流量+无线利用率
      */
@@ -204,7 +300,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上行', '下行', '无线利用率']
+          data: this.chart1_kpiNameList
         },
         xAxis: [
           {
@@ -225,7 +321,7 @@ export default {
             minInterval: 1,// 数值取整
             scale: true,
             splitLine: {
-              show: false     //去掉网格线
+              show: false //去掉网格线
             },
           },
           {
@@ -242,15 +338,16 @@ export default {
         ],
         series: [
           {
-            name: '上行',
+            name: this.chart1_kpiNameList[0],
             type: 'bar',
+            yAxisIndex: 1, // 对应坐标轴
             itemStyle: { // 柱条
               color: '#3b97cc'
             },
             data: []
           },
           {
-            name: '下行',
+            name: this.chart1_kpiNameList[1],
             type: 'bar',
             itemStyle: { // 柱条
               color: '#0076e3'
@@ -258,7 +355,7 @@ export default {
             data: []
           },
           {
-            name: '无线利用率',
+            name: this.chart1_kpiNameList[2],
             type: 'line',
             itemStyle: { // 折线拐点
               color: '#09b395'
@@ -276,19 +373,20 @@ export default {
     /**
     * @description 获取数据-4G性能-上下行流量+无线利用率
     */
-    axiosChartSX(params) {
+    axiosChartSX(xyData) {
+      console.log(xyData.x)
       this.chartSX.setOption({
         xAxis: [
           {
-            data: chartDataX
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData
+          data: xyData.y[0]
         }, {
-          data: chartData
+          data: xyData.y[1]
         }, {
-          data: chartData
+          data: xyData.y[2]
         }]
       })
     },
@@ -318,13 +416,8 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['RC连接数', '峰值用户数', '无限连通率']
+          data: this.chart2_kpiNameList
         },
-        // dataZoom: {
-        //     show: false,
-        //     start: 0,
-        //     end: 100
-        // },
         xAxis: [
           {
             type: 'category',
@@ -368,7 +461,7 @@ export default {
         ],
         series: [
           {
-            name: 'RC连接数',
+            name:  this.chart2_kpiNameList[0],
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             yAxisIndex: 1, // 对应坐标轴
@@ -378,7 +471,7 @@ export default {
             data: []
           },
           {
-            name: '峰值用户数',
+            name:  this.chart2_kpiNameList[1],
             type: 'bar',
             itemStyle: { // 折线拐点
               color: '#189896'
@@ -389,7 +482,7 @@ export default {
             data: []
           },
           {
-            name: '无限连通率',
+            name:  this.chart2_kpiNameList[2],
             type: 'line',
             areaStyle: {
               color: {
@@ -422,19 +515,19 @@ export default {
     /**
     * @description 获取数据-4G性能-PRC连接数+峰值用户数+无线接通率
     */
-    axiosChartPRC(params) {
+    axiosChartPRC(xyData) {
       this.chartPRC.setOption({
         xAxis: [
           {
-            data: chartDataX
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData
+          data: xyData.y[0]
         }, {
-          data: chartData
+          data: xyData.y[1]
         }, {
-          data: chartData
+          data: xyData.y[2]
         }]
       })
     },
@@ -464,7 +557,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['无线掉线率', '切换成功率', '上行干扰电平']
+          data:  this.chart3_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -528,7 +621,7 @@ export default {
         ],
         series: [
           {
-            name: '无线掉线率',
+            name: this.chart3_kpiNameList[0],
             type: 'line',
             // xAxisIndex: 1, // 对应坐标轴
             yAxisIndex: 1, // 对应坐标轴
@@ -542,7 +635,7 @@ export default {
             data: []
           },
           {
-            name: '切换成功率',
+            name: this.chart3_kpiNameList[1],
             type: 'line',
             areaStyle: {
               color: {
@@ -569,7 +662,7 @@ export default {
             data: []
           },
           {
-            name: '上行干扰电平',
+            name: this.chart3_kpiNameList[2],
             type: 'line',
             areaStyle: {
               color: {
@@ -602,19 +695,19 @@ export default {
     /**
     * @description 获取数据-4G性能-无线掉线率+切换成功率+ 上行干扰电平
     */
-    axiosChartWX(params) {
+    axiosChartWX(xyData) {
       this.chartWX.setOption({
         xAxis: [
           {
-            data: chartDataX
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData1
+          data: xyData.y[0]
         }, {
-          data: chartData2
+          data: xyData.y[1]
         }, {
-          data: chartData3
+          data: xyData.y[2]
         }]
       })
     },
@@ -644,7 +737,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上行', '下行']
+          data:this.chart4_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -694,7 +787,7 @@ export default {
         ],
         series: [
           {
-            name: '上行',
+            name: this.chart4_kpiNameList[0],
             type: 'line',
             // xAxisIndex: 1, // 对应坐标轴
             areaStyle: {
@@ -719,7 +812,7 @@ export default {
             data: []
           },
           {
-            name: '下行',
+            name: this.chart4_kpiNameList[1],
             type: 'line',
             areaStyle: {
               color: {
@@ -752,20 +845,21 @@ export default {
     /**
     * @description 获取数据-4G性能-PRB上下行利用率
     */
-    axiosChartPRB(params) {
+    axiosChartPRB(xyData) {
       this.chartPRB.setOption({
         xAxis: [
           {
-            data: chartDataX
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData1
+          data: xyData.y[0]
         }, {
-          data: chartData2
+          data: xyData.y[1]
         }]
       })
     },
+
   }
 }
 </script>
@@ -828,7 +922,7 @@ export default {
 }
 
 .main-center-contain-right .chart-left-contain-top {
-  margin-right: 100px;
+  margin-right: 137px;
   margin-bottom: 135px;
 }
 
@@ -837,15 +931,10 @@ export default {
 }
 
 .chart {
-  width: 495px;
+  width: 530px;
   height: 270px;
 }
 
-.main-center-contain-right .chart {
-  width: 495px;
-  height: 270px;
-  /* margin-bottom: 100px; */
-}
 .chart-title {
   color: #ffffff;
   font-size: 28px;

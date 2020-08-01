@@ -1,7 +1,7 @@
 <template>
   <div class=" clearfix">
-    <div class="clearfix five-g-contain-top">
-      <div class="fl chart-left-contain-top">
+    <div class="clearfix chart__main">
+      <div class="fl chart-contain">
         <div class="chart-title">
           HTTP业务成功率+HTTP平均响应延迟
         </div>
@@ -10,7 +10,7 @@
           class="chart"
         ></div>
       </div>
-      <div class="fl ">
+      <div class="fl chart-contain">
         <div class="chart-title">
           上行流量
         </div>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="clearfix">
-      <div class="fl chart-left-contain-top">
+      <div class="fl chart-contain">
         <div class="chart-title">
           下行速率+下行速率(>500k)
         </div>
@@ -39,7 +39,7 @@
           class="chart"
         ></div>
       </div>
-      <div class="fl ">
+      <div class="fl chart-contain">
         <div class="chart-title">
           TCP建立成功率+TCP建立平均延时
         </div>
@@ -824,69 +824,13 @@ export default {
 </script>
 
 <style scoped>
-.main-center-contain-left ul.zcl {
-  list-style-type: none;
-  background: url("~@/assets/img/1-2.png");
-  background-size: 100%;
-  width: 475px;
-  height: 247px;
-  margin-bottom: 88px;
-  padding: 20px 0;
-  box-sizing: border-box;
+.chart__main {
+  padding-top: 73px;
+  box-sizing: content-box;
 }
-.main-center-contain-left ul.zcl > li {
-  height: 50px;
-  padding-left: 15px;
-  margin-bottom: 30px;
-  display: block;
-  overflow: hidden;
-}
-.main-center-contain-left ul.zcl > li:last-child {
-  margin-bottom: 0;
-}
-.main-center-contain-left ul.zcl > li span {
-  display: inline-block;
-}
-.main-center-contain-left ul.zcl > li .list-icon {
-  width: 46px;
-  height: 46px;
-  float: left;
-  vertical-align: middle;
-}
-
-.zl-box {
-  float: left;
-  width: 395px;
-  height: 46px;
-  line-height: 20px;
-  background: url("~@/assets/img/zllbg.png") no-repeat;
-  background-size: 100%;
-  margin-left: 15px;
-  vertical-align: middle;
-  margin-top: 5px;
-  padding: 10px 0 10px 8px;
-  box-sizing: border-box;
-}
-
-.list-name {
-  font-size: 25px;
-  color: #abadc1;
-}
-.list-data {
-  font-size: 25px;
-  color: #fff;
-  font-weight: 700;
-  float: right;
-  margin-right: 42px;
-}
-
-.main-center-contain-right .chart-left-contain-top {
-  margin-right: 100px;
-  margin-bottom: 135px;
-}
-
-.main-center-contain-right .chart-left-contain {
-  margin-right: 100px;
+.chart-contain {
+  margin-right: 143px;
+  margin-bottom: 136px;
 }
 
 .chart {
@@ -894,15 +838,9 @@ export default {
   height: 270px;
 }
 
-.main-center-contain-right .chart {
-  width: 495px;
-  height: 270px;
-  /* margin-bottom: 100px; */
-}
 .chart-title {
   color: #ffffff;
   font-size: 28px;
-  margin-bottom: 34px;
-  padding-top: 50px;
+  margin-bottom: 36px;
 }
 </style>

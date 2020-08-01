@@ -159,7 +159,7 @@ export default {
       alarmLevel3: '--', //三级告警数
       alarmLevel4: '--', //四级告警数
       params: {
-        projectId: 132, //项目id
+        projectId: 136, //项目id
       }
     }
   },
@@ -172,7 +172,7 @@ export default {
     */
     getFaultAlarmCountsPandect(params) {
       this.$api.getFaultAlarmCountsPandect(params).then((resp) => {
-        if (resp.code === 1000) {
+        if (resp.code === 10000) {
           let curdata = resp.data;
           this.alarmTotal = curdata.alarmTotal; //告警总数
           this.alarmSolved = curdata.alarmSolved;  //已消除告警数

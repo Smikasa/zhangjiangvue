@@ -97,6 +97,9 @@ export default {
       ]
     }
   },
+  mounted(){
+    this.changSpreadMapTable('china')
+  },
   methods: {
     /**
    * @description 地图表格数据切换

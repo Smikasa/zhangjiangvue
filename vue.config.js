@@ -42,7 +42,7 @@ module.exports = {
         host: '0.0.0.0',
         https: false,
         // open: true,
-        // proxy: proxy
+        proxy: proxy
     },
     configureWebpack: {
         resolve: {

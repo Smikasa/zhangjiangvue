@@ -12,7 +12,6 @@
         :class="[value.class]"
       ></div>
       <div class="main-info-content clearfix">
-        <!-- style="overflow: hidden;" -->
         <div
           :id="'total'+index"
           class="main-info-num"
@@ -32,6 +31,10 @@
 export default {
   data() {
     return {
+      params: {
+        projectId: 136, //项目id
+        studioId: ''  //场馆ID 
+      },
       spread: {
         cellTotal: {
           id: 'cellTotal',
@@ -72,7 +75,7 @@ export default {
     }
   },
   mounted() {
-    this.getOverview();
+    this.getOverview(this.params);
   },
   methods: {
     /**
@@ -107,9 +110,9 @@ export default {
     /**
      * 获取总览数据
      */
-    getOverview() {
-      this.$api.getOverview().then((resp) => {
-        if (resp.code === 1000) {
+    getOverview(params) {
+      this.$api.getOverview(params).then((resp) => {
+        if (resp.code === 10000) {
           let curdata = resp.data;
           _.forIn(this.spread, (item, index) => {
             this.show_num1(Number(curdata[index]), '#total' + index);

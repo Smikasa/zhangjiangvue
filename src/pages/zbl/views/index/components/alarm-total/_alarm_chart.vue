@@ -12,16 +12,19 @@
 
 <script>
 import echarts from 'echarts'
-import { chartData9, chartDataX, chartData10 } from '../../data/data.js';
 export default {
   data() {
     return {
+      params: {
+        projectId: 136,
+        count: 17
+      },
       chartAlarm: ''
     }
   },
   mounted() {
     this.initChartAlarm();
-    this.getAddAlarmList()
+    this.getAddAlarmList(this.params)
   },
   methods: {
     /**
@@ -51,7 +54,7 @@ export default {
             type: 'cross',
             label: {
               backgroundColor: '#283b56',
-              precision:0
+              precision: 0
             }
           }
         },
@@ -104,7 +107,7 @@ export default {
                   offset: 0, color: '#29857e' // 0% 处的颜色
                 }, {
                   offset: 0.3, color: '#29857e' // 100% 处的颜色
-                } ,{
+                }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
                 global: false // 缺省为 false
@@ -121,7 +124,7 @@ export default {
     */
     getAddAlarmList(params) {
       this.$api.getAddAlarmList(params).then((resp) => {
-        if (resp.code === 1000) {
+        if (resp.code === 10000) {
           let curdata = resp.data;
           curdata ? this.tableData = curdata : this.tableData = [];
           this.chartAlarm.setOption({

@@ -50,6 +50,9 @@
           prop="activeStatus"
           label="告警状态"
         >
+          <template slot-scope="scope">
+            {{ Number(scope.row.activeStatus) === 1 ? '已消除' : '未消除' }}
+          </template>
         </el-table-column>
         <el-table-column
           prop="taskId"
@@ -72,7 +75,7 @@ export default {
     return {
       tableData: [],
       params: {
-        projectId: 132, //项目id
+        projectId: 136, //项目id
         studioId: 20, //场馆ID
         userId: 12,  //用户id
         page: 1, //第几页 page不传默认为1
@@ -91,7 +94,7 @@ export default {
     */
     getAlarmTable(params) {
       this.$api.getAlarmTable(params).then((resp) => {
-        if (resp.code === 1000) {
+        if (resp.code === 10000) {
           let curdata = resp.data;
           curdata ? this.tableData = curdata : this.tableData = [];
         } else {

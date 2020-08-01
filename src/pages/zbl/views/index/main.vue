@@ -52,7 +52,7 @@ export default {
   },
   data() {
     return {
-      curNav: "userTotal"
+      curNav: "cellTotal"
     };
   },
   created() {
@@ -83,8 +83,8 @@ export default {
 }
 
 .main-center__div {
-  height: 969px;
-  margin-bottom: 102px;
+  height: 1076px;
+  margin-top: -55px;
 }
 
 .main-bottom__div {

@@ -77,7 +77,7 @@ export default {
     */
     getPerformanceList(params) {
       this.$api.getPerformanceList(params).then((resp) => {
-        if (resp.code === 1000) {
+        if (resp.code === 10000) {
           let curdata = resp.data;
           curdata ? this.tableData = curdata : this.tableData = [];
         } else {

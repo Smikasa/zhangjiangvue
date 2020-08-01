@@ -93,7 +93,7 @@ export default {
       KpiWarning4GDataAware: '', //4G数据感知预警数
       KpiWarningVolte: '', //volte语音感知预警数
       params: {
-        projectId: 132, //项目id
+        projectId: 136, //项目id
       }
     }
   },
@@ -106,7 +106,7 @@ export default {
     */
     getPerformanceWarningTypeCounts(params) {
       this.$api.getPerformanceWarningTypeCounts(params).then((resp) => {
-        if (resp.code === 1000) {
+        if (resp.code === 10000) {
           let curdata = resp.data;
           this.kpiWarningTotal = curdata.kpiWarningTotal;//预警总数;
           this.kpiWarningSolved = curdata.kpiWarningSolved;//已派单消除预警数;
