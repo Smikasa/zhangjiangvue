@@ -159,7 +159,7 @@ export default {
       alarmLevel3: '--', //三级告警数
       alarmLevel4: '--', //四级告警数
       params: {
-        projectId: 136, //项目id
+        projectId: 133, //项目id
       }
     }
   },

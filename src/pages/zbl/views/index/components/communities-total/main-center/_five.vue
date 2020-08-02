@@ -91,8 +91,7 @@ export default {
     }
   },
   mounted() {
-    // 获取左侧列表数据
-    this.getKpiList(this.kpiParams);
+ 
     // 5g
     this.initChart5G();
     this.initChartTB();
@@ -100,6 +99,8 @@ export default {
     this.initChartPUPD();
     this.initChartWXQHSX();
     this.initChartPRB2();
+    // 获取图表数据
+    this.getKpiList(this.kpiParams);
   },
   methods: {
     /**

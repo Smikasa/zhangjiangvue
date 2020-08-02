@@ -153,7 +153,7 @@ export default {
     return {
       params: {
         projectId:136,
-        type: 5
+        type: 4
       },
       kpiParams: {
         projectId: 136,

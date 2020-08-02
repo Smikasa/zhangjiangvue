@@ -15,12 +15,16 @@ import echarts from 'echarts'
 export default {
   data() {
     return {
-      chartAlarm: ''
+      chartAlarm: '',
+      params:{
+        projectId : 136,
+        count:20
+      }
     }
   },
   mounted() {
     this.initChartAlarm();
-    this.getMinutePerformanceAddCounts()
+    this.getMinutePerformanceAddCounts(this.params)
   },
   methods: {
     /**

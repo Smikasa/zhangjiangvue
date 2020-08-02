@@ -5,6 +5,7 @@ import { MessageBox, Message } from 'element-ui'
 const service = axios.create({
     // baseURL: 'https://www.fastmock.site/mock/886958c08bc9eb06260f7ded327e86d0/api', // url = base url + request url //设置基础URL
     // withCredentials: true, // send cookies when cross-domain requests
+    baseURL:window.IMPORT.BASE_URL,
     timeout: 5000, // request timeout
     header:{
         'Content-type':'application/json'

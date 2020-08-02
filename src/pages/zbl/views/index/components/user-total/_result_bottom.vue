@@ -59,8 +59,6 @@ export default {
       tableData: [],
       params: {
         projectId: 132, //项目id
-        studioId: 20, //场馆ID
-        userId: 12,  //用户id
         page: 1, //第几页 page不传默认为1
         size: 10,//每页显示数  size 不传默认为10 page,size都不传查所有
         startTimeMin: this.$moment(new Date).format('YYYY-MM-DD HH:mm:ss'),

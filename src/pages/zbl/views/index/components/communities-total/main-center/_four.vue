@@ -141,7 +141,6 @@
 
 <script>
 import echarts from 'echarts'
-import { chartDataX2 } from '../../../data/data';
 export default {
   data() {
     return {
@@ -166,10 +165,10 @@ export default {
       pdcch_channel_cee_occupancy: '',//PDCCH信道CCE利用率
       srvcc_switch: '',//SRVCC切换成功率
       volte_video_offline_ratio: '',//VOLTE视频掉线率
-      chart1_kpiNameList: ['上行数据流量', '下行数据流量', '无线利用率'], //上下行流量+无线利用率
-      chart2_kpiNameList: ['平均RRC连接数', '小区最大用户数', '无线接通率'],//PRC连接数+峰值用户数+无线接通率
-      chart3_kpiNameList: ['无线掉线率', '切换成功率', '上行干扰平均电平'],//无线掉线率+切换成功率+上行干扰电平
-      chart4_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//PRB上下行利用率
+      chartSX_kpiNameList: ['上行数据流量', '下行数据流量', '无线利用率'], //上下行流量+无线利用率
+      chartPRC_kpiNameList: ['平均RRC连接数', '小区最大用户数', '无线接通率'],//PRC连接数+峰值用户数+无线接通率
+      chartWX_kpiNameList: ['无线掉线率', '切换成功率', '上行干扰平均电平'],//无线掉线率+切换成功率+上行干扰电平
+      chartPRB_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//PRB上下行利用率
     }
   },
   mounted() {
@@ -186,7 +185,6 @@ export default {
   methods: {
     /**
      * 获取左侧KPI
-     * 
      */
     getHourNewKpi(params) {
       this.$api.getHourNewKpi(params).then((resp) => {
@@ -207,16 +205,16 @@ export default {
     getKpiList(params) {
       this.$api.getKpiList(params).then((resp) => {
         let curData = resp.data;
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chartSX_kpiNameList, curData, (xyData) => {
           this.axiosChartSX(xyData);
         })
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chartPRC_kpiNameList, curData, (xyData) => {
           this.axiosChartPRC(xyData);
         })
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chartWX_kpiNameList, curData, (xyData) => {
           this.axiosChartWX(xyData);
         })
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chartPRB_kpiNameList, curData, (xyData) => {
           this.axiosChartPRB(xyData);
         })
       })
@@ -255,9 +253,6 @@ export default {
           y: chartDataY
         })
       })
-      // console.log(chartDataX)
-      // console.log(chartDataY)
-
     },
     /**
      * 数据处理-人数曲线图-获取x y 数据
@@ -300,7 +295,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chart1_kpiNameList
+          data: this.chartSX_kpiNameList
         },
         xAxis: [
           {
@@ -319,6 +314,7 @@ export default {
               color: '#575b61'
             },
             minInterval: 1,// 数值取整
+            min:0,
             scale: true,
             splitLine: {
               show: false //去掉网格线
@@ -329,6 +325,7 @@ export default {
             axisLabel: {
               color: '#575b61'
             },
+            min:0,
             minInterval: 1,// 数值取整
             scale: true,
             splitLine: {
@@ -338,7 +335,7 @@ export default {
         ],
         series: [
           {
-            name: this.chart1_kpiNameList[0],
+            name: this.chartSX_kpiNameList[0],
             type: 'bar',
             yAxisIndex: 1, // 对应坐标轴
             itemStyle: { // 柱条
@@ -347,7 +344,7 @@ export default {
             data: []
           },
           {
-            name: this.chart1_kpiNameList[1],
+            name: this.chartSX_kpiNameList[1],
             type: 'bar',
             itemStyle: { // 柱条
               color: '#0076e3'
@@ -355,7 +352,7 @@ export default {
             data: []
           },
           {
-            name: this.chart1_kpiNameList[2],
+            name: this.chartSX_kpiNameList[2],
             type: 'line',
             smooth:true,
             itemStyle: { // 折线拐点
@@ -418,7 +415,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chart2_kpiNameList
+          data: this.chartPRC_kpiNameList
         },
         xAxis: [
           {
@@ -463,7 +460,7 @@ export default {
         ],
         series: [
           {
-            name: this.chart2_kpiNameList[0],
+            name: this.chartPRC_kpiNameList[0],
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             yAxisIndex: 1, // 对应坐标轴
@@ -473,7 +470,7 @@ export default {
             data: []
           },
           {
-            name: this.chart2_kpiNameList[1],
+            name: this.chartPRC_kpiNameList[1],
             type: 'bar',
             itemStyle: { // 折线拐点
               color: '#189896'
@@ -484,7 +481,7 @@ export default {
             data: []
           },
           {
-            name: this.chart2_kpiNameList[2],
+            name: this.chartPRC_kpiNameList[2],
             type: 'line',
             areaStyle: {
               color: {
@@ -561,7 +558,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chart3_kpiNameList
+          data: this.chartWX_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -625,7 +622,7 @@ export default {
         ],
         series: [
           {
-            name: this.chart3_kpiNameList[0],
+            name: this.chartWX_kpiNameList[0],
             type: 'line',
             smooth:true,
             areaStyle: {
@@ -653,7 +650,7 @@ export default {
             data: []
           },
           {
-            name: this.chart3_kpiNameList[1],
+            name: this.chartWX_kpiNameList[1],
             type: 'line',
             smooth:true,
             areaStyle: {
@@ -682,7 +679,7 @@ export default {
           },
 
           {
-            name: this.chart3_kpiNameList[2],
+            name: this.chartWX_kpiNameList[2],
             type: 'line',
             // xAxisIndex: 1, // 对应坐标轴
             yAxisIndex: 1, // 对应坐标轴
@@ -744,7 +741,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chart4_kpiNameList
+          data: this.chartPRB_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -787,7 +784,7 @@ export default {
         ],
         series: [
           {
-            name: this.chart4_kpiNameList[0],
+            name: this.chartPRB_kpiNameList[0],
             type: 'line',
             areaStyle: {
               color: {
@@ -811,7 +808,7 @@ export default {
             data: []
           },
           {
-            name: this.chart4_kpiNameList[1],
+            name: this.chartPRB_kpiNameList[1],
             type: 'line',
             areaStyle: {
               color: {
