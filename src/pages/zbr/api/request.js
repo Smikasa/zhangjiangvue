@@ -3,7 +3,7 @@ import { MessageBox, Message } from 'element-ui'
 
 // create an axios instance 创建拦截器
 const service = axios.create({
-    baseURL: 'https://www.fastmock.site/mock/886958c08bc9eb06260f7ded327e86d0/api', // url = base url + request url //设置基础URL
+    // baseURL: 'https://www.fastmock.site/mock/886958c08bc9eb06260f7ded327e86d0/api', // url = base url + request url //设置基础URL
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000, // request timeout
     header:{

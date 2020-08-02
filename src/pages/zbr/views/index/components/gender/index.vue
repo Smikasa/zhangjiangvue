@@ -34,8 +34,8 @@
 export default {
   data() {
     return {
-      male: "60%",
-      female: "40%",
+      male: "--",
+      female: "--",
     }
   },
   mounted() {

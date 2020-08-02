@@ -82,11 +82,11 @@ export default {
       chartPUPD: '',
       chartWXQHSX: '',
       chartPRB2: '',
-      chart5G_kpiNameList: ['上行数据流量', '下行数据流量', '无线利用率'], //5G用户量
-      chartTB_kpiNameList: ['平均RRC连接数', '小区最大用户数', '无线接通率'],//上下行流量+无线利用率
-      chartPRC2_kpiNameList: ['无线掉线率', '切换成功率', '上行干扰平均电平'],//PRC连接数+峰值用户数+无线接通率
-      chartPUPD_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//上下PUSCH行流量+下行PDCCH利用率
-      chartWXQHSX_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//无线掉线率+切换成功率+上行干扰电平
+      chart5G_kpiNameList: ['5G用户量'], //5G用户量
+      chartTB_kpiNameList: ['上行流量', '下行流量', '无线接通率'],//上下行流量+无线利用率
+      chartPRC2_kpiNameList: ['PRC连接数', '峰值用户数', '无线接通率'],//PRC连接数+峰值用户数+无线接通率
+      chartPUPD_kpiNameList: ['上下PUSCH行流量', '下行PDCCH利用率'],//上下PUSCH行流量+下行PDCCH利用率
+      chartWXQHSX_kpiNameList: ['无线掉线率', '切换成功率','上行干扰电平'],//无线掉线率+切换成功率+上行干扰电平
       chartPRB2_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//PRB上下行利用率
     }
   },
@@ -108,22 +108,22 @@ export default {
     getKpiList(params) {
       this.$api.getKpiList(params).then((resp) => {
         let curData = resp.data;
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chart5G_kpiNameList, curData, (xyData) => {
           this.axiosChart5G(xyData);
         })
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chartTB_kpiNameList, curData, (xyData) => {
           this.axiosChartTB(xyData);
         })
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chartPRC2_kpiNameList, curData, (xyData) => {
           this.axiosChartPRC2(xyData);
         })
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chartPUPD_kpiNameList, curData, (xyData) => {
           this.axiosChartPUPD(xyData);
         })
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chartWXQHSX_kpiNameList, curData, (xyData) => {
           this.axiosChartWXQHSX(xyData);
         })
-        this.getKpiChartData(this.chart1_kpiNameList, curData, (xyData) => {
+        this.getKpiChartData(this.chartPRB2_kpiNameList, curData, (xyData) => {
           this.axiosChartPRB2(xyData);
         })
       })
@@ -204,7 +204,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['5G用户量']
+          data: this.chart5G_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -254,7 +254,7 @@ export default {
         ],
         series: [
           {
-            name: '5G用户量',
+            name: this.chart5G_kpiNameList[0],
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             // yAxisIndex: 1, // 对应坐标轴
@@ -308,7 +308,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上行', '下行', '无线利用率']
+          data: this.chartTB_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -358,7 +358,7 @@ export default {
         ],
         series: [
           {
-            name: '上行',
+            name: this.chartTB_kpiNameList[0],
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             // yAxisIndex: 1, // 对应坐标轴
@@ -368,7 +368,7 @@ export default {
             data: []
           },
           {
-            name: '下行',
+            name: this.chartTB_kpiNameList[1],
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             // yAxisIndex: 1, // 对应坐标轴
@@ -378,7 +378,7 @@ export default {
             data: []
           },
           {
-            name: '无线利用率',
+            name: this.chartTB_kpiNameList[2],
             type: 'line',
             itemStyle: { // 折线拐点
               color: '#09b395'
@@ -438,7 +438,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['PRC连接数', '峰值用户数', '无线接通率']
+          data: this.chartPRC2_kpiNameList
         },
         xAxis: [
           {
@@ -476,7 +476,7 @@ export default {
         ],
         series: [
           {
-            name: 'PRC连接数',
+            name: this.chartPRC2_kpiNameList[0],
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             // yAxisIndex: 1, // 对应坐标轴
@@ -486,7 +486,7 @@ export default {
             data: []
           },
           {
-            name: '峰值用户数',
+            name: this.chartPRC2_kpiNameList[1],
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             // yAxisIndex: 1, // 对应坐标轴
@@ -496,7 +496,7 @@ export default {
             data: []
           },
           {
-            name: '无线接通率',
+            name: this.chartPRC2_kpiNameList[2],
             type: 'line',
             itemStyle: { // 折线拐点
               color: '#09b395'
@@ -571,7 +571,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上下PUSCH行流量', '下行PDCCH利用率']
+          data: this.chartPUPD_kpiNameList
         },
         xAxis: [
           {
@@ -609,7 +609,7 @@ export default {
         ],
         series: [
           {
-            name: '上下PUSCH行流量',
+            name: this.chartPUPD_kpiNameList[0],
             type: 'line',
             itemStyle: { // 柱条
               color: '#134b76'
@@ -638,7 +638,7 @@ export default {
             data: []
           },
           {
-            name: '下行PDCCH利用率',
+            name: this.chartPUPD_kpiNameList[1],
             type: 'line',
             itemStyle: { // 折线拐点
               color: '#09b395'
@@ -696,7 +696,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['无线掉线率', '切换成功率', '上行干扰电平']
+          data: this.chartWXQHSX_kpiNameList
         },
         xAxis: [
           {
@@ -734,7 +734,7 @@ export default {
         ],
         series: [
           {
-            name: '无线掉线率',
+            name: this.chartWXQHSX_kpiNameList[0],
             type: 'line',
             itemStyle: { // 柱条
               color: '#20868d'
@@ -763,7 +763,7 @@ export default {
             data: []
           },
           {
-            name: '切换成功率',
+            name: this.chartWXQHSX_kpiNameList[1],
             type: 'line',
             itemStyle: { // 柱条
               color: '#145f85'
@@ -792,7 +792,7 @@ export default {
             data: []
           },
           {
-            name: '上行干扰电平',
+            name: this.chartWXQHSX_kpiNameList[2],
             type: 'line',
             itemStyle: { // 折线拐点
               color: '#09b395'
@@ -853,7 +853,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上行', '下行']
+          data: this.chartPRB2_kpiNameList
         },
         xAxis: [
           {
@@ -891,7 +891,7 @@ export default {
         ],
         series: [
           {
-            name: '上行',
+            name: this.chartPRB2_kpiNameList[0],
             type: 'line',
             lineStyle: { // 柱条
               color: '#248bb1'
@@ -920,7 +920,7 @@ export default {
             data: []
           },
           {
-            name: '下行',
+            name: this.chartPRB2_kpiNameList[1],
             type: 'line',
             lineStyle: { // 柱条
               color: '#21568c'

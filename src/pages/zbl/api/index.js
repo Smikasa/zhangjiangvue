@@ -8,7 +8,16 @@ import { MessageBox, Message } from 'element-ui'
  */
 export function getOverview(params) {
     let urlParams = params.studioId ? params.projectId + '/' + params.studioId : params.projectId
-    return request.get('/baseStation/getOverview/' + urlParams);
+    return request.get('/baseStation/getOverview/' + urlParams).then((resp) => {
+        if (resp.code !== 10000) {
+            Message({
+                message: '获取概览接口:'+ resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
 }
 
 /**
@@ -20,7 +29,7 @@ export function getHourNewKpi(params) {
     return request.post('/baseStation/getHourNewKpi?projectId=' + params.projectId + '&type=' + params.type).then((resp) => {
         if (resp.code !== 10000) {
             Message({
-                message: resp.message,
+                message: '4g/语音感知:' + resp.message,
                 type: 'error',
                 duration: 5 * 1000
             })
@@ -73,14 +82,32 @@ export function getEchartData(params) {
  * @param {number} projectId  项目id
  */
 export function getFaultAlarmCountsPandect(params) {
-    return request.post('/faultAlarm/getFaultAlarmCountsPandect?projectId=' + params.projectId);
+    return request.post('/faultAlarm/getFaultAlarmCountsPandect?projectId=' + params.projectId).then((resp) => {
+        if (resp.code !== 10000) {
+            Message({
+                message: resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
 }
 
 /**
  * @description  获取故障告警 新增故障告警接口
  */
 export function getAddAlarmList(params) {
-    return request.get('/faultAlarm/getAddAlarmList' + '/' + params.projectId + '/' + params.count);
+    return request.get('/faultAlarm/getAddAlarmList' + '/' + params.projectId + '/' + params.count).then((resp) => {
+        if (resp.code !== 10000) {
+            Message({
+                message: resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
 }
 
 
@@ -88,15 +115,16 @@ export function getAddAlarmList(params) {
  * @description  获取故障告警 - 所有故障告警信息列表
  */
 export function getAlarmTable(params) {
-    let defaultParams = {
-        projectId: 136, //项目id
-        page: 1, //第几页 page不传默认为1
-        size: 10,//每页显示数  size 不传默认为10 page,size都不传查所有
-        startTimeMin: '',
-        startTimeMax: ''
-    }
-    let queryParams = Object.assign({}, defaultParams, params)
-    return request.post('/faultAlarm/getAlarmTable?projectId=' + queryParams.projectId);
+    return request.post('/faultAlarm/getAlarmTable?projectId=' + params.projectId).then((resp) => {
+        if (resp.code !== 10000) {
+            Message({
+                message: resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
 }
 
 /**
@@ -104,38 +132,48 @@ export function getAlarmTable(params) {
  * @param {number} projectId  项目id
  */
 export function getPerformanceWarningTypeCounts(params) {
-    let defaultParams = {
-        projectId: 136, //项目id
-    }
-    let queryParams = Object.assign({}, defaultParams, params)
-    return request.post('/performanceWarning/getPerformanceWarningTypeCounts?projectId=' + params.projectId);
+    return request.post('/performanceWarning/getPerformanceWarningTypeCounts?projectId=' + params.projectId).then((resp) => {
+        if (resp.code !== 10000) {
+            Message({
+                message: resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
 }
 
 /**
  * @description  获取性能预警 新增性能预警接口-echart
  */
 export function getMinutePerformanceAddCounts(params) {
-    let defaultParams = {
-        projectId: 136, //项目id
-        count: 20, //获取条数
-    }
-    let queryParams = Object.assign({}, defaultParams, params)
-    return request.post('/performanceWarning/getMinutePerformanceAddCounts', { 'params': queryParams });
+    return request.post('/performanceWarning/getMinutePerformanceAddCounts', { 'params': params }).then((resp) => {
+        if (resp.code !== 10000) {
+            Message({
+                message: resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
 }
 
 /**
  * @description  获取性能预警 - 所有性能预警信息列表
  */
 export function getPerformanceList(params) {
-    let defaultParams = {
-        projectId: 136, //项目id
-        page: 1, //第几页 page不传默认为1
-        size: 10,//每页显示数  size 不传默认为10 page,size都不传查所有
-        startTimeMin: '',
-        startTimeMax: ''
-    }
-    let queryParams = Object.assign({}, defaultParams, params)
-    return request.post('/performanceWarning/getPerformanceList?projectId=' + queryParams.projectId);
+    return request.post('/performanceWarning/getPerformanceList?projectId=' + params.projectId).then((resp) => {
+        if (resp.code !== 10000) {
+            Message({
+                message: resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
 }
 
 
@@ -143,17 +181,16 @@ export function getPerformanceList(params) {
  * @description  获取工单总数 工单列表
  */
 export function getTaskList(params) {
-    let defaultParams = {
-        projectId: 136, //项目id
-        studioId: 20, //场馆ID
-        userId: 12,  //用户id
-        page: 1, //第几页 page不传默认为1
-        size: 10,//每页显示数  size 不传默认为10 page,size都不传查所有
-        createTimeMin: '',
-        createTimeMax: ''
-    }
-    let queryParams = Object.assign({}, defaultParams, params)
-    return request.post('/task/getTaskList?projectId=' + queryParams.projectId);
+    return request.post('/task/getTaskList?projectId=' + params.projectId).then((resp) => {
+        if (resp.code !== 1000) {
+            Message({
+                message: resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
 }
 
 
@@ -161,13 +198,16 @@ export function getTaskList(params) {
  * @description  获取到岗人员数 - 场馆重保人员列表
  */
 export function getUsers(params) {
-    let defaultParams = {
-        projectId: 132, //项目id
-        page: 1, //第几页 page不传默认为1
-        size: 10,//每页显示数  size 不传默认为10 page,size都不传查所有
-    }
-    let queryParams = Object.assign({}, defaultParams, params)
-    return request.get('/testInstructions/getUsers', { 'params': queryParams });
+    return request.get('/testInstructions/getUsers', { 'params': params }).then((resp) => {
+        if (resp.code !== 1000) {
+            Message({
+                message: resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
 }
 
 

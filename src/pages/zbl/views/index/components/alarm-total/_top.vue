@@ -187,12 +187,6 @@ export default {
           this.alarmLevel2 = curdata.alarmLevel2;  //二级告警数
           this.alarmLevel3 = curdata.alarmLevel3;  //三级告警数
           this.alarmLevel4 = curdata.alarmLevel4;  //四级告警数
-        } else {
-          this.$message({
-            message: resp.message,
-            type: 'error',
-            duration: 5 * 1000
-          })
         }
       })
     }

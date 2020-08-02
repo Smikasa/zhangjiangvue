@@ -1,5 +1,4 @@
 import request from './request'
-import axios from 'axios'
 
 /**
  * @description  获取概览接口
@@ -8,7 +7,7 @@ import axios from 'axios'
  */
 export function getTotalList(params) {
     let defaultParams = {
-        projectId: 132, 
+        projectId: 136, 
         studioId: 20 
     }
     let queryParams = Object.assign({}, defaultParams, defaultParams)

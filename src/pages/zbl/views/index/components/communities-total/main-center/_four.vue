@@ -357,10 +357,12 @@ export default {
           {
             name: this.chart1_kpiNameList[2],
             type: 'line',
+            smooth:true,
             itemStyle: { // 折线拐点
               color: '#09b395'
             },
             lineStyle: {// 折线
+              type: 'dashed',
               color: '#09b395'
             },
             symbol: "circle",// 实心圆
@@ -461,7 +463,7 @@ export default {
         ],
         series: [
           {
-            name:  this.chart2_kpiNameList[0],
+            name: this.chart2_kpiNameList[0],
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             yAxisIndex: 1, // 对应坐标轴
@@ -471,7 +473,7 @@ export default {
             data: []
           },
           {
-            name:  this.chart2_kpiNameList[1],
+            name: this.chart2_kpiNameList[1],
             type: 'bar',
             itemStyle: { // 折线拐点
               color: '#189896'
@@ -482,7 +484,7 @@ export default {
             data: []
           },
           {
-            name:  this.chart2_kpiNameList[2],
+            name: this.chart2_kpiNameList[2],
             type: 'line',
             areaStyle: {
               color: {
@@ -492,7 +494,9 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#4c94ae' // 0% 处的颜色
+                  offset: 0, color: '#1d7d9f' // 0% 处的颜色
+                }, {
+                  offset: 0.7, color: 'transparent' // 100% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
@@ -500,10 +504,10 @@ export default {
               }
             },
             itemStyle: { // 折线拐点
-              color: '#3ab6d2'
+              color: '#4c93ad'
             },
             lineStyle: {// 折线
-              color: '#3ab6d2'
+              color: '#4c93ad'
             },
             symbol: "circle",// 实心圆
             data: []
@@ -557,7 +561,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data:  this.chart3_kpiNameList
+          data: this.chart3_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -623,20 +627,35 @@ export default {
           {
             name: this.chart3_kpiNameList[0],
             type: 'line',
-            // xAxisIndex: 1, // 对应坐标轴
-            yAxisIndex: 1, // 对应坐标轴
-            itemStyle: { // 柱条
-              color: '#aefbbe'
+            smooth:true,
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: '#0d3054' // 0% 处的颜色
+                }, {
+                  offset: 1, color: 'transparent' // 100% 处的颜色
+                }],
+                global: false // 缺省为 false
+              }
+            },
+            itemStyle: { // 折线拐点
+              color: '#215489'
             },
             lineStyle: {// 折线
-              color: '#3ab6d2',
-              type: "dotted"
+              color: '#215489'
             },
+            symbol: "circle",// 实心圆
             data: []
           },
           {
             name: this.chart3_kpiNameList[1],
             type: 'line',
+            smooth:true,
             areaStyle: {
               color: {
                 type: 'linear',
@@ -661,33 +680,21 @@ export default {
             symbol: "circle",// 实心圆
             data: []
           },
+
           {
             name: this.chart3_kpiNameList[2],
             type: 'line',
-            areaStyle: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: '#238b8f' // 0% 处的颜色
-                }, {
-                  offset: 1, color: 'transparent' // 100% 处的颜色
-                }],
-                global: false // 缺省为 false
-              }
-            },
-            itemStyle: { // 折线拐点
-              color: '#3ab6d2'
+            // xAxisIndex: 1, // 对应坐标轴
+            yAxisIndex: 1, // 对应坐标轴
+            itemStyle: { // 柱条
+              color: '#aefbbe'
             },
             lineStyle: {// 折线
-              color: '#3ab6d2'
+              color: '#aefbbe',
+              type: "dashed"
             },
-            symbol: "circle",// 实心圆
             data: []
-          }
+          },
         ]
       };
       this.chartWX.setOption(option);
@@ -737,7 +744,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data:this.chart4_kpiNameList
+          data: this.chart4_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -762,13 +769,9 @@ export default {
             },
             minInterval: 1,// 数值取整
             scale: true,
-            // name: '',
-            // max: 30,
-            // min: 0,
             splitLine: {
               show: false     //去掉网格线
             },
-            // boundaryGap: [0.2, 0.2]
           },
           {
             type: 'value',
@@ -777,19 +780,15 @@ export default {
             },
             minInterval: 1,// 数值取整
             scale: true,
-            // max: 1200,
-            // min: 0,
             splitLine: {
               show: false     //去掉网格线
             },
-            // boundaryGap: [0.2, 0.2]
           }
         ],
         series: [
           {
             name: this.chart4_kpiNameList[0],
             type: 'line',
-            // xAxisIndex: 1, // 对应坐标轴
             areaStyle: {
               color: {
                 type: 'linear',
@@ -817,10 +816,6 @@ export default {
             areaStyle: {
               color: {
                 type: 'linear',
-                // x: 0,
-                // y: 0,
-                // x2: 0,
-                // y2: 1,
                 colorStops: [{
                   offset: 0, color: '#0a4051' // 0% 处的颜色
                 }, {

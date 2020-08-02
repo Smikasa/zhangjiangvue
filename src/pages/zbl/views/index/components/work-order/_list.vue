@@ -82,7 +82,7 @@ export default {
     return {
       tableData: [],
       params: {
-        projectId: 136, //项目id
+        projectId:136,
         studioId: 20, //场馆ID
         userId: 12,  //用户id
         page: 1, //第几页 page不传默认为1
@@ -104,12 +104,6 @@ export default {
         if (resp.code === 1000) {
           let curdata = resp.data;
           curdata ? this.tableData = curdata : this.tableData = [];
-        } else {
-          this.$message({
-            message: resp.message,
-            type: 'error',
-            duration: 5 * 1000
-          })
         }
       })
     }

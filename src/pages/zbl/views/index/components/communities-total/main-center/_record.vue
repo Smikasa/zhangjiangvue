@@ -63,26 +63,18 @@
 
 <script>
 import echarts from 'echarts'
-import {
-  chartData, chartDataX, chartDataX1, chartData1,
-  chartData2,
-  chartData3,
-  chartData4,
-  chartData5,
-  chartData6,
-  chartData7,
-  chartData8,
-  chartData9,
-  chartData10,
-  chartData11,
-  chartData12,
-  chartData13,
-  chartData14,
-  chartData15,
-} from '../../../data/data.js';
 export default {
   data() {
     return {
+      kpiParams: {
+        projectId: 136,
+        kpiType: 3, //指标类型(1:4G 2:5G 3:数据感知 4：语音感知)不传查所有类型
+      },
+      chartParams: {
+        projectId: 136,  //项目id  
+        kpiIdList: '',// 指标编号 ，由逗号隔开
+        kpiType: 3, // 指标类型, (1:4G  2:5G  3:数据感知 4:Votle语音)
+      },
       //数据感知
       chartHTTP: '',
       chartT: '',
@@ -90,26 +82,106 @@ export default {
       chartKPBS: '',
       chartTCP: '',
       chartTCP2: '',
-
+      // name 
+      chartHTTP_kpiNameList: ['HTTP业务成功率','HTTP平均响应时延'], 
+      chartT_kpiNameList: ['上行流量'],
+      chartB_kpiNameList: ['下行流量'],
+      chartKPBS_kpiNameList: ['下行速率', '下行速率(>500KB)'],
+      chartTCP_kpiNameList: ['TCP建立成功率', 'TCP建立平均时延'],
+      chartTCP2_kpiNameList: ['TCP建立平均时延（无线侧）', 'TCP建立平均时延（核心网）']
     }
   },
   mounted() {
+    // 获取
+    this.getKpiList(this.kpiParams);
     // 数据感知 
 
     this.initChartHTTP();
-    this.axiosChartHTTP();
     this.initChartT();
-    this.axiosChartT();
     this.initChartB();
-    this.axiosChartB();
     this.initChartKPBS();
-    this.axiosChartKPBS();
-    this.initChartTCP();
-    this.axiosChartTCP();
+    this.initChartTCP();     
     this.initChartTCP2();
-    this.axiosChartTCP2();
+
   },
   methods: {
+    /**
+     * 获取图表名称列表
+     */
+    getKpiList(params) {
+      this.$api.getKpiList(params).then((resp) => {
+        let curData = resp.data;
+        this.getKpiChartData(this.chartHTTP_kpiNameList, curData, (xyData) => {
+          this.axiosChartHTTP(xyData);
+        })
+        this.getKpiChartData(this.chartT_kpiNameList, curData, (xyData) => {
+          this.axiosChartT(xyData);
+        })
+        this.getKpiChartData(this.chartB_kpiNameList, curData, (xyData) => {
+          this.axiosChartB(xyData);
+        })
+        this.getKpiChartData(this.chartKPBS_kpiNameList, curData, (xyData) => {
+          this.axiosChartKPBS(xyData);
+        })
+        this.getKpiChartData(this.chartTCP_kpiNameList, curData, (xyData) => {
+          this.axiosChartTCP(xyData);
+        })
+        this.getKpiChartData(this.chartTCP2_kpiNameList, curData, (xyData) => {
+          this.axiosChartTCP2(xyData);
+        })
+      })
+    },
+    /**
+     * 获取图表数据
+     */
+    getKpiChartData(curKpiNames, allKpiNames, callback) {
+      let kpiIds = [];
+      let params = {};
+      let chartDataY = [];
+      let chartDataX = [];
+      curKpiNames.filter((value) => {
+        allKpiNames.filter((item) => {
+          if (value === item.kpi_name) {
+            kpiIds.push(item.kpi_num)
+          }
+        })
+      })
+      params = Object.assign({}, this.chartParams, { kpiIdList: kpiIds.join(',') })
+      this.$api.getEchartData(params).then((resp) => {
+        let curData = resp.data;
+        curKpiNames.filter((value, index) => {
+          let y = []
+          curData.filter((item) => {
+            let num = item['kpiData' + (index + 1)]
+            y.push(num)
+            if (index === 0) {
+              chartDataX.push(item['time'])
+            }
+          })
+          chartDataY.push(y)
+        })
+        callback({
+          x: chartDataX,
+          y: chartDataY
+        })
+      })
+    },
+    /**
+     * 数据处理-人数曲线图-获取x y 数据
+     */
+    geXYData(array) {
+      let x = []
+      let y = [];
+      array.filter(function (value) {
+        x.push(value.realTime)
+        y.push(Number(value.people))
+      })
+      return {
+        x: x,
+        y: y
+      }
+    },
+
     /**
     * @description 初始化-数据感知-HTTP业务成功率+HTTP平均响应延迟
     */
@@ -136,7 +208,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['HTTP业务成功率', 'HTTP平均响应延迟']
+          data: this.chartHTTP_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -186,22 +258,40 @@ export default {
         ],
         series: [
           {
-            name: 'HTTP业务成功率',
-            type: 'bar',
-            // xAxisIndex: 1, // 对应坐标轴
-            // yAxisIndex: 1, // 对应坐标轴
-            itemStyle: { // 柱条
-              color: '#0e6976'
+            name: this.chartHTTP_kpiNameList[0],
+            type: 'line',
+            smooth:true,
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: '#196b91' // 0% 处的颜色
+                }, {
+                  offset: 1, color: 'transparent' // 100% 处的颜色
+                }],
+                global: false // 缺省为 false
+              }
             },
+            itemStyle: { // 折线拐点
+              color: '#4b92ad'
+            },
+            lineStyle: {// 折线
+              color: '#4b92ad'
+            },
+            symbol: "circle",// 实心圆
             data: []
           },
           {
-            name: 'HTTP平均响应延迟',
+            name: this.chartHTTP_kpiNameList[1],
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             // yAxisIndex: 1, // 对应坐标轴
             itemStyle: { // 柱条
-              color: '#0e6976'
+              color: '#00a4c7'
             },
             data: []
           }
@@ -212,15 +302,17 @@ export default {
     /**
     * @description 获取数据-数据感知-HTTP业务成功率+HTTP平均响应延迟
     */
-    axiosChartHTTP(params) {
+    axiosChartHTTP(xyData) {
       this.chartHTTP.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData4
+          data: xyData.y[0]
+        },{
+          data: xyData.y[1]
         }]
       })
     },
@@ -250,7 +342,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上行']
+          data: this.chartT_kpiNameList
         },
         // dataZoom: {
         //     show: false,
@@ -286,8 +378,24 @@ export default {
         ],
         series: [
           {
-            name: '上行',
+            name: this.chartT_kpiNameList[0],
             type: 'line',
+            smooth:true,
+            areaStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [{
+                  offset: 0, color: '#1f7c75' // 0% 处的颜色
+                }, {
+                  offset: 1, color: 'transparent' // 100% 处的颜色
+                }],
+                global: false // 缺省为 false
+              }
+            },
             itemStyle: { // 折线拐点
               color: '#09b395'
             },
@@ -296,7 +404,8 @@ export default {
             },
             symbol: "circle",// 实心圆
             data: []
-          }
+          },
+          
         ]
       };
       this.chartT.setOption(option);
@@ -304,15 +413,15 @@ export default {
     /**
      * @description 初始化-获取数据-上行
      */
-    axiosChartT(params) {
+    axiosChartT(xyData) {
       this.chartT.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData
+          data: xyData.y[0]
         }]
       })
     },
@@ -342,7 +451,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['下行']
+          data: this.chartB_kpiNameList
         },
         xAxis: [
           {
@@ -380,13 +489,14 @@ export default {
         ],
         series: [
           {
-            name: '下行',
+            name: this.chartB_kpiNameList[0],
             type: 'line',
+            smooth:true,
             itemStyle: { // 折线拐点
-              color: '#09b395'
+              color: '#4e98b4'
             },
             lineStyle: {// 折线
-              color: '#09b395'
+              color: '#4e98b4'
             },
             areaStyle: {
               color: {
@@ -396,7 +506,7 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#4c94ae' // 0% 处的颜色
+                  offset: 0, color: '#1678a3' // 0% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
@@ -413,15 +523,15 @@ export default {
     /**
      * @description 获取数据-数据感知-PRC连接数+峰值用户数+无线接通率
      */
-    axiosChartB(params) {
+    axiosChartB(xyData) {
       this.chartB.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData
+          data: xyData.y[0]
         }]
       })
     },
@@ -451,7 +561,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['下行速率', '下行速率(>500k)']
+          data: this.chartKPBS_kpiNameList
         },
         xAxis: [
           {
@@ -489,13 +599,13 @@ export default {
         ],
         series: [
           {
-            name: '下行速率',
+            name: this.chartKPBS_kpiNameList[0],
             type: 'line',
             itemStyle: { // 柱条
-              color: '#134b76'
+              color: '#5591b1'
             },
             lineStyle: { // 柱条
-              color: 'transparent'
+              color: '#5591b1'
             },
             areaStyle: {
               color: {
@@ -505,9 +615,9 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#134b76' // 0% 处的颜色
+                  offset: 0, color: '#134d77' // 0% 处的颜色
                 }, {
-                  offset: 0.5, color: '#134b76' // 100% 处的颜色
+                  offset: 0.5, color: '#134d77' // 100% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
@@ -518,13 +628,13 @@ export default {
             data: []
           },
           {
-            name: '下行速率(>500k)',
+            name: this.chartKPBS_kpiNameList[1],
             type: 'line',
             itemStyle: { // 折线拐点
-              color: '#09b395'
+              color: '#37a3b3'
             },
             lineStyle: {// 折线
-              color: '#09b395'
+              color: '#37a3b3'
             },
             symbol: "circle",// 实心圆
             data: []
@@ -536,17 +646,17 @@ export default {
     /**
      * @description 获取数据-数据感知-上下PUSCH行流量+下行PDCCH利用率
      */
-    axiosChartKPBS(params) {
+    axiosChartKPBS(xyData) {
       this.chartKPBS.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData10
+          data: xyData.y[0]
         }, {
-          data: chartData11
+          data: xyData.y[1]
         }]
       })
     },
@@ -576,7 +686,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['TCP建立成功率', 'TCP建立平均延时']
+          data: this.chartTCP_kpiNameList
         },
         xAxis: [
           {
@@ -614,13 +724,14 @@ export default {
         ],
         series: [
           {
-            name: 'TCP建立成功率',
+            name: this.chartTCP_kpiNameList[0],
             type: 'line',
+            smooth:true,
             itemStyle: { // 柱条
-              color: '#20868d'
+              color: '#4a8fa9'
             },
             lineStyle: {
-              color: 'transparent'
+              color: '#4a8fa9'
             },
             areaStyle: {
               color: {
@@ -630,9 +741,9 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#20868d' // 0% 处的颜色
+                  offset: 0, color: '#207da1' // 0% 处的颜色
                 }, {
-                  offset: 0.5, color: '#20868d' // 100% 处的颜色
+                  offset: 0.5, color: '#207da1' // 100% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
@@ -643,14 +754,14 @@ export default {
             data: []
           },
           {
-            name: 'TCP建立平均延时',
+            name: this.chartTCP_kpiNameList[1],
             type: 'line',
             itemStyle: { // 折线拐点
-              color: '#09b395'
+              color: '#aefbbe'
             },
 
             lineStyle: {// 折线
-              color: '#09b395'
+              color: '#aefbbe'
             },
             symbol: "circle",// 实心圆
             data: []
@@ -662,17 +773,17 @@ export default {
     /**
      * @description 获取数据-数据感知-TCP建立成功率+TCP建立平均延时
      */
-    axiosChartTCP(params) {
+    axiosChartTCP(xyData) {
       this.chartTCP.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData9
+          data: xyData.y[0]
         }, {
-          data: chartData1
+          data: xyData.y[1]
         }]
       })
     },
@@ -702,7 +813,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['TCP建立时延无线侧', 'TCP建立时延核心侧']
+          data: this.chartTCP2_kpiNameList
         },
         xAxis: [
           {
@@ -740,7 +851,7 @@ export default {
         ],
         series: [
           {
-            name: '上行',
+            name: this.chartTCP2_kpiNameList[0],
             type: 'line',
             lineStyle: { // 柱条
               color: '#248bb1'
@@ -769,13 +880,13 @@ export default {
             data: []
           },
           {
-            name: '下行',
+            name: this.chartTCP2_kpiNameList[1],
             type: 'line',
             lineStyle: { // 柱条
-              color: '#21568c'
+              color: '#235890'
             },
             itemStyle: {
-              color: '#21568c'
+              color: '#235890'
             },
             areaStyle: {
               color: {
@@ -785,9 +896,9 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#21568c' // 0% 处的颜色
+                  offset: 0, color: '#235890' // 0% 处的颜色
                 }, {
-                  offset: 0.5, color: '#21568c' // 100% 处的颜色
+                  offset: 0.5, color: '#235890' // 100% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
@@ -804,17 +915,17 @@ export default {
     /**
     * @description 初始化-数据感知-TCP建立时延无线侧+TCP建立时延核心侧
     */
-    axiosChartTCP2(params) {
+    axiosChartTCP2(xyData) {
       this.chartTCP2.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData5
+          data: xyData.y[0]
         }, {
-          data: chartData12
+          data: xyData.y[1]
         }]
       })
     },

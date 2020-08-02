@@ -148,29 +148,21 @@
 
 <script>
 import echarts from 'echarts'
-import {
-  chartData, chartDataX, chartDataX1, chartData1,
-  chartData2,
-  chartData3,
-  chartData4,
-  chartData5,
-  chartData6,
-  chartData7,
-  chartData8,
-  chartData9,
-  chartData10,
-  chartData11,
-  chartData12,
-  chartData13,
-  chartData14,
-  chartData15,
-} from '../../../data/data.js';
 export default {
   data() {
     return {
       params: {
         projectId:136,
-        type: 4
+        type: 5
+      },
+      kpiParams: {
+        projectId: 136,
+        kpiType: 4, //指标类型(1:4G 2:5G 3:数据感知 4：语音感知)不传查所有类型
+      },
+      chartParams: {
+        projectId: 136,  //项目id  
+        kpiIdList: '',// 指标编号 ，由逗号隔开
+        kpiType: 4, // 指标类型, (1:4G  2:5G  3:数据感知 4:Votle语音)
       },
       volte_voice_erl: '',  //VoLTE语音话务量
       volte_begin_call_time_vv: '', //VoLTE始呼接续时长vv
@@ -184,22 +176,24 @@ export default {
       chartAV: '',
       chartAV1: '',
       chartSRVCC: '',
-      chartLOSS: ''
+      chartLOSS: '',
+      chartAV_kpiNameList: ['VoLTE语音接通率', 'VoLTE视频接通率'], 
+      chartAV1_kpiNameList: ['VoLTE语音掉话率', 'VoLTE视频掉话率'],
+      chartSRVCC_kpiNameList: ['SRVCC切换成功率'],
+      chartLOSS_kpiNameList: ['RTP上行丢包率']
 
     }
   },
   mounted() {
-    // 获取kpi
-    this.getHourNewKpi(this.params);
     // 数据感知 
     this.initChartAV();
-    this.axiosChartAV();
     this.initChartAV1();
-    this.axiosChartAV1();
     this.initChartSRVCC();
-    this.axiosChartSRVCC();
     this.initChartLOSS();
-    this.axiosChartLOSS();
+     // 获取kpi
+    this.getHourNewKpi(this.params);
+     // 获取kpi
+    this.getKpiList(this.kpiParams);
   },
   methods: {
     /**
@@ -219,6 +213,79 @@ export default {
         this.upload_mos_rtp = curData.upload_mos_rtp;
         this.srvcc_switch_time = curData.srvcc_switch_time;
       })
+    },
+    /**
+     * 获取图表名称列表
+     */
+    getKpiList(params) {
+      this.$api.getKpiList(params).then((resp) => {
+        let curData = resp.data;
+        this.getKpiChartData(this.chartAV_kpiNameList, curData, (xyData) => {
+          this.axiosChartAV(xyData);
+        })
+        this.getKpiChartData(this.chartAV1_kpiNameList, curData, (xyData) => {
+          this.axiosChartAV1(xyData);
+        })
+        this.getKpiChartData(this.chartSRVCC_kpiNameList, curData, (xyData) => {
+          this.axiosChartSRVCC(xyData);
+        })
+        this.getKpiChartData(this.chartLOSS_kpiNameList, curData, (xyData) => {
+          this.axiosChartLOSS(xyData);
+        })
+      })
+    },
+    /**
+     * 获取图表数据
+     */
+    getKpiChartData(curKpiNames, allKpiNames, callback) {
+      let kpiIds = [];
+      let params = {};
+      let chartDataY = [];
+      let chartDataX = [];
+      curKpiNames.filter((value) => {
+        allKpiNames.filter((item) => {
+          if (value === item.kpi_name) {
+            kpiIds.push(item.kpi_num)
+          }
+        })
+      })
+      params = Object.assign({}, this.chartParams, { kpiIdList: kpiIds.join(',') })
+      this.$api.getEchartData(params).then((resp) => {
+        let curData = resp.data;
+        curKpiNames.filter((value, index) => {
+          let y = []
+          curData.filter((item) => {
+            let num = item['kpiData' + (index + 1)]
+            y.push(num)
+            if (index === 0) {
+              chartDataX.push(item['time'])
+            }
+          })
+          chartDataY.push(y)
+        })
+        callback({
+          x: chartDataX,
+          y: chartDataY
+        })
+      })
+      // console.log(chartDataX)
+      // console.log(chartDataY)
+
+    },
+    /**
+     * 数据处理-人数曲线图-获取x y 数据
+     */
+    geXYData(array) {
+      let x = []
+      let y = [];
+      array.filter(function (value) {
+        x.push(value.realTime)
+        y.push(Number(value.people))
+      })
+      return {
+        x: x,
+        y: y
+      }
     },
     /**
      * @description 初始化-语音感知-语音接通率+视频接通率
@@ -246,7 +313,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['语音接通率', '视频接通率']
+          data: this.chartAV_kpiNameList
         },
         xAxis: [
           {
@@ -284,13 +351,13 @@ export default {
         ],
         series: [
           {
-            name: '语音接通率',
+            name: this.chartAV_kpiNameList[0],
             type: 'line',
             itemStyle: { // 折线拐点
-              color: '#09b395'
+              color: '#2288ad'
             },
             lineStyle: {// 折线
-              color: '#09b395'
+              color: '#2288ad'
             },
             areaStyle: {
               color: {
@@ -300,7 +367,7 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#4c94ae' // 0% 处的颜色
+                  offset: 0, color: '#2288ad' // 0% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
@@ -310,13 +377,14 @@ export default {
             symbol: "circle",// 实心圆
             data: []
           }, {
-            name: '视频接通率',
+            name: this.chartAV_kpiNameList[1],
             type: 'line',
+            smooth:true,
             itemStyle: { // 折线拐点
-              color: '#09b395'
+              color: '#22558a'
             },
             lineStyle: {// 折线
-              color: '#09b395'
+              color: '#22558a'
             },
             areaStyle: {
               color: {
@@ -326,7 +394,7 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#4c94ae' // 0% 处的颜色
+                  offset: 0, color: '#22558a' // 0% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
@@ -343,15 +411,15 @@ export default {
     /**
      * @description 获取数据-语音感知-语音接通率+视频接通率
      */
-    axiosChartAV(params) {
+    axiosChartAV(xyData) {
       this.chartAV.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData
+          data: xyData.y[0]
         }]
       })
     },
@@ -381,7 +449,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['语音掉线率', '视频掉线率']
+          data: this.chartAV1_kpiNameList
         },
         xAxis: [
           {
@@ -419,46 +487,21 @@ export default {
         ],
         series: [
           {
-            name: '下行速率',
-            type: 'line',
+            name: this.chartAV1_kpiNameList[0],
+            type: 'bar',
             itemStyle: { // 柱条
-              color: '#134b76'
+              color: '#4896ee'
             },
-            lineStyle: { // 柱条
-              color: 'transparent'
-            },
-            areaStyle: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: '#134b76' // 0% 处的颜色
-                }, {
-                  offset: 0.5, color: '#134b76' // 100% 处的颜色
-                }, {
-                  offset: 1, color: 'transparent' // 100% 处的颜色
-                }],
-                global: false // 缺省为 false
-              }
-            },
-            symbol: "circle",
             data: []
           },
           {
-            name: '下行速率(>500k)',
-            type: 'line',
-            itemStyle: { // 折线拐点
-              color: '#09b395'
+            name: this.chartAV1_kpiNameList[0],
+            type: 'bar',
+            itemStyle: { // 柱条
+              color: '#189896'
             },
-            lineStyle: {// 折线
-              color: '#09b395'
-            },
-            symbol: "circle",// 实心圆
             data: []
-          }
+          },
         ]
       };
       this.chartAV1.setOption(option);
@@ -466,17 +509,17 @@ export default {
     /**
      * @description 获取数据-语音感知-语音掉线率+视频掉线率
      */
-    axiosChartAV1(params) {
+    axiosChartAV1(xyData) {
       this.chartAV1.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData10
+          data: xyData.y[0]
         }, {
-          data: chartData11
+          data: xyData.y[1]
         }]
       })
     },
@@ -506,7 +549,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['SRVCC切换成功率']
+          data: this.chartSRVCC_kpiNameList
         },
         xAxis: [
           {
@@ -533,8 +576,9 @@ export default {
         ],
         series: [
           {
-            name: 'SRVCC切换成功率',
+            name: this.chartSRVCC_kpiNameList[0],
             type: 'line',
+            smooth:true,
             itemStyle: { // 柱条
               color: '#20868d'
             },
@@ -568,15 +612,15 @@ export default {
     /**
      * @description 获取数据-语音感知-SRVCC切换成功率
      */
-    axiosChartSRVCC(params) {
+    axiosChartSRVCC(xyData) {
       this.chartSRVCC.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData11
+          data: xyData.y[0]
         }]
       })
     },
@@ -606,7 +650,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: ['上行丢包率']
+          data: this.chartLOSS_kpiNameList
         },
         xAxis: [
           {
@@ -633,13 +677,14 @@ export default {
         ],
         series: [
           {
-            name: '上行丢包率',
+            name: this.chartLOSS_kpiNameList[0],
             type: 'line',
+             smooth:true,
             lineStyle: { // 柱条
-              color: '#248bb1'
+              color: '#166c93'
             },
             itemStyle: {
-              color: '#248bb1'
+              color: '#166c93'
             },
             areaStyle: {
               color: {
@@ -649,9 +694,9 @@ export default {
                 x2: 0,
                 y2: 1,
                 colorStops: [{
-                  offset: 0, color: '#248bb1' // 0% 处的颜色
+                  offset: 0, color: '#166c93' // 0% 处的颜色
                 }, {
-                  offset: 0.5, color: '#248bb1' // 100% 处的颜色
+                  offset: 0.5, color: '#166c93' // 100% 处的颜色
                 }, {
                   offset: 1, color: 'transparent' // 100% 处的颜色
                 }],
@@ -668,15 +713,15 @@ export default {
     /**
     * @description 初始化-语音感知-上行丢包率
     */
-    axiosChartLOSS(params) {
+    axiosChartLOSS(xyData) {
       this.chartLOSS.setOption({
         xAxis: [
           {
-            data: chartDataX1
+            data: xyData.x
           }
         ],
         series: [{
-          data: chartData5
+          data: xyData.y[0]
         }]
       })
     },

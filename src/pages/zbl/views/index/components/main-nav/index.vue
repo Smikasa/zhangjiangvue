@@ -117,13 +117,6 @@ export default {
           _.forIn(this.spread, (item, index) => {
             this.show_num1(Number(curdata[index]), '#total' + index);
           })
-
-        } else {
-          this.$message({
-            message: resp.message,
-            type: 'error',
-            duration: 5 * 1000
-          })
         }
       })
     }
