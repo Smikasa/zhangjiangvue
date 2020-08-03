@@ -29,7 +29,7 @@ export function getHourNewKpi(params) {
     return request.post('/baseStation/getHourNewKpi?projectId=' + params.projectId + '&type=' + params.type).then((resp) => {
         if (resp.code !== 10000) {
             Message({
-                message:resp.message,
+                message: resp.message,
                 type: 'error',
                 duration: 5 * 1000
             })
@@ -157,7 +157,7 @@ export function getPerformanceWarningTypeCounts(params) {
  * @param {number} count : 17，  //获取条数
  */
 export function getMinutePerformanceAddCounts(params) {
-    return request.post('/performanceWarning/getMinutePerformanceAddCounts', { 'params': params }).then((resp) => {
+    return request.post('/performanceWarning/getMinutePerformanceAddCounts?projectId=' + params.projectId + '&count=' + params.count).then((resp) => {
         if (resp.code !== 10000) {
             Message({
                 message: resp.message,
@@ -202,8 +202,8 @@ export function getPerformanceList(params) {
  * @param {string} createTimeMax : YY-MM-dd HH:mm:ss   ,创建时间最大值
  */
 export function getTaskList(params) {
-    return request.post('/task/getTaskList?projectId=' + params.projectId).then((resp) => {
-        if (resp.code !== 1000) {
+    return request.post('/workTask/getTaskList?projectId=' + params.projectId).then((resp) => {
+        if (resp.code !== 10000) {
             Message({
                 message: resp.message,
                 type: 'error',
@@ -218,13 +218,15 @@ export function getTaskList(params) {
 /**
  * @description  获取到岗人员数 - 场馆重保人员列表
  * @param {number}projectId:1,  //项目id   
- * @param {number}studioId:20//场馆id（不传场馆ID返回全网信息）
  * @param {number}page : 1, //第几页
  * @param {number}size : 10 ,//每页显示数
  */
 export function getUsers(params) {
-    return request.get('/testInstructions/getUsers', { 'params': params }).then((resp) => {
-        if (resp.code !== 1000) {
+    return request.post('/onDutyperson/getOnDutypersonList?projectId=' + params.projectId
+        + '&page=' + params.page
+        + '&size=' + params.size
+    ).then((resp) => {
+        if (resp.code !== 10000) {
             Message({
                 message: resp.message,
                 type: 'error',

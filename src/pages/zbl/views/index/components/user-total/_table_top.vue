@@ -41,47 +41,22 @@
             label="人员名称"
           >
           </el-table-column>
-          <el-table-column label="在线状态">
-            <template slot-scope="scope">
-              <div>{{ scope.row.isOnline }}</div>
-            </template>
-            <template slot-scope="scope">
-              <div
-                v-if="scope.row.isOnline === 0 "
-                class="red"
-              >
-                离线
-              </div>
-              <div
-                v-else-if="scope.row.isOnline === 1 "
-                class="cyan"
-              >
-                在线
-              </div>
-              <div
-                v-else
-                class=""
-              >
-                {{ scope.row.isOnline }}
-              </div>
-            </template>
-          </el-table-column>
           <el-table-column label="签到状态">
             <template slot-scope="scope">
               <div
-                v-if="scope.row.isSignIn === 0 "
+                v-if="Number(scope.row.state) === 0 "
                 class="red"
               >
                 无
               </div>
               <div
-                v-else-if="scope.row.isSignIn === 1 "
+                v-else-if="Number(scope.row.state) === 1 "
                 class="cyan"
               >
                 签到
               </div>
               <div
-                v-else-if="scope.row.isSignIn === 2 "
+                v-else-if="Number(scope.row.state) === 2 "
                 class="orange"
               >
                 签退
@@ -90,13 +65,13 @@
                 v-else
                 class=""
               >
-                {{ scope.row.isSignIn }}
+                {{ scope.row.state }}
               </div>
             </template>
           </el-table-column>
           <el-table-column
-            prop="cellId"
-            label="主服小区id"
+            prop="ecg"
+            label="小区ECG"
           >
           </el-table-column>
           <el-table-column
@@ -105,12 +80,12 @@
           >
           </el-table-column>
           <el-table-column
-            prop="cellSinr"
+            prop="sinr"
             label="主服小区信号质量（4G：SINR，5G，SS-SINR）"
           >
           </el-table-column>
           <el-table-column
-            prop="cellRsrp"
+            prop="rsrp"
             label="主服小区信号强度（4G：RSRP，5G，SS-RSRP）"
           >
           </el-table-column>
@@ -150,11 +125,16 @@ export default {
   data() {
     return {
       curTabsName: "1",
-      tableData: []
+      tableData: [],
+      params: {
+        projectId: 136,  //项目id   
+        page: 1, //第几页
+        size: 10,//每页显示数
+      }
     }
   },
   mounted() {
-    this.getUsers()
+    this.getUsers(this.params)
   },
   methods: {
     tabsChange(tab) {
@@ -165,15 +145,9 @@ export default {
    */
     getUsers(params) {
       this.$api.getUsers(params).then((resp) => {
-        if (resp.code === 1000) {
+        if (resp.code === 10000) {
           let curdata = resp.data;
           curdata ? this.tableData = curdata : this.tableData = [];
-        } else {
-          this.$message({
-            message: resp.message,
-            type: 'error',
-            duration: 5 * 1000
-          })
         }
       })
     }
