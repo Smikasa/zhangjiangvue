@@ -236,6 +236,29 @@ export function getUsers(params) {
         return resp
     });
 }
+/**
+ * @description  获取到岗人员数 - 场馆重保人员列表
+ * @param {number}projectId:1,  //项目id   
+ * @param {number}floor : 1F, //(楼层  1F 2F 3F)
+ * @param {number}zhibiao : 35 ,//指标ID
+ */
+export function getFloorKpiValue(params) {
+    return request.post('/baseStation/getFloorKpiValue?projectId=' + params.projectId
+        + '&floor=' + params.floor
+        + '&zhibiao=' + params.zhibiao
+    ).then((resp) => {
+        if (resp.code !== 10000) {
+            Message({
+                message: resp.message,
+                type: 'error',
+                duration: 5 * 1000
+            })
+        }
+        return resp
+    });
+}
+
+
 
 
 

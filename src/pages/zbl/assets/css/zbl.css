@@ -110,5 +110,8 @@
   
   .select-ul .select-li:hover {
     color: #d19328;
-    /* background-color: #f5f7fa; */
+  }
+
+  .select-ul .select-li.active {
+    color: #d19328;
   }

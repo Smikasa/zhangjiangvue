@@ -420,6 +420,9 @@ export default {
         ],
         series: [{
           data: xyData.y[0]
+        },
+        {
+          data: xyData.y[1]
         }]
       })
     },

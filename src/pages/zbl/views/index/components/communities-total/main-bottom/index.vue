@@ -11,9 +11,9 @@
             <div
               class="select-name"
               :class="[!isShowSelect ? 'select-open' : 'select-close']"
-              @click="controlSelctBottom"
+              @click="controlSelctBottom(params.floor)"
             >
-              2F
+              {{ params.floor }}
             </div>
             <div
               v-show="isShowSelect"
@@ -21,19 +21,22 @@
             >
               <div
                 class="select-li"
-                @click="controlSelctBottom"
+                :class="[params.floor === '1F' ? 'active' : '']"
+                @click="controlSelctBottom('1F')"
               >
                 1F
               </div>
               <div
                 class="select-li"
-                @click="controlSelctBottom"
+                :class="[params.floor === '2F' ? 'active' : '']"
+                @click="controlSelctBottom('2F')"
               >
                 2F
               </div>
               <div
-                class="select-li"
-                @click="controlSelctBottom"
+                class="select-li "
+                :class="[params.floor === '3F' ? 'active' : '']"
+                @click="controlSelctBottom('3F')"
               >
                 3F
               </div>
@@ -43,64 +46,18 @@
       </ul>
     </div>
     <div class="main-bottom-contain clearfix">
-      <div class="fl">
+      <div
+        v-for="(item,index) in pieData"
+        :key="index"
+        class="chatr-contain"
+      >
         <div
-          id="chartPIE1"
+          :id="'chartPIE'+index"
           class="chart"
         ></div>
         <div class="bbm">
-          <img src="@/assets/img/bb1.png" />
-          <span>2F2号馆</span>
-        </div>
-      </div>
-      <div class="fl">
-        <div
-          id="chartPIE2"
-          class="chart"
-        ></div>
-        <div class="bbm">
-          <img src="@/assets/img/bb5.png" />
-          <span>2F商业圈</span>
-        </div>
-      </div>
-      <div class="fl">
-        <div
-          id="chartPIE3"
-          class="chart"
-        ></div>
-        <div class="bbm">
-          <img src="@/assets/img/bb2.png" />
-          <span>2F宴会厅</span>
-        </div>
-      </div>
-      <div class="fl">
-        <div
-          id="chartPIE4"
-          class="chart"
-        ></div>
-        <div class="bbm">
-          <img src="@/assets/img/bb3.png" />
-          <span>2F办公区</span>
-        </div>
-      </div>
-      <div class="fl">
-        <div
-          id="chartPIE5"
-          class="chart"
-        ></div>
-        <div class="bbm">
-          <img src="@/assets/img/bb1.png" />
-          <span>2F2号馆</span>
-        </div>
-      </div>
-      <div class="fl">
-        <div
-          id="chartPIE6"
-          class="chart"
-        ></div>
-        <div class="bbm">
-          <img src="@/assets/img/bb1.png" />
-          <span>2F2号馆</span>
+          <img :src="require('@/assets/img/bb'+ renderIndex(index) +'.png')" />
+          <span>{{ item.scene }}</span>
         </div>
       </div>
     </div>
@@ -109,49 +66,18 @@
 
 <script>
 import echarts from 'echarts'
-import {
-  chartData, chartDataX, chartDataX1, pie1,
-  pie2,
-  pie3,
-  pie4,
-  pie5,
-  pie6,
-  pie7,
-  pie8,
-  pie9,
-  pie10,
-} from '../../../data/data.js';
 export default {
   data() {
     return {
       isShowSelect: false,
-      chartPIE1: '',
-      chartPIE2: '',
-      chartPIE3: '',
-      chartPIE4: '',
-      chartPIE5: '',
-      chartPIE6: '',
-    }
-  },
-  mounted() {
-    this.initChartPIE();
-    this.$nextTick(() => {
-      this.axiosChartPIE();
-    })
-
-  },
-  methods: {
-    /**
-       * @description 饼图
-       */
-    initChartPIE() {
-      this.chartPIE1 = echarts.init(document.getElementById('chartPIE1'));
-      this.chartPIE2 = echarts.init(document.getElementById('chartPIE2'));
-      this.chartPIE3 = echarts.init(document.getElementById('chartPIE3'));
-      this.chartPIE4 = echarts.init(document.getElementById('chartPIE4'));
-      this.chartPIE5 = echarts.init(document.getElementById('chartPIE5'));
-      this.chartPIE6 = echarts.init(document.getElementById('chartPIE6'));
-      let option = {
+      pieData: [],
+      pieCharts: [],
+      params: {
+        projectId: 136,
+        floor: '1F',
+        zhibiao: 35
+      },
+      option: {
         tooltip: null,
         animation: false,
         legend: null,
@@ -197,252 +123,73 @@ export default {
             ]
           }
         ]
-      };
-      this.chartPIE1.setOption(option);
-      this.chartPIE2.setOption(option);
-      this.chartPIE3.setOption(option);
-      this.chartPIE4.setOption(option);
-      this.chartPIE5.setOption(option);
-      this.chartPIE6.setOption(option);
-    },
+      }
+    }
+  },
+  mounted() {
+    this.axiosChartPIE(this.params);
+  },
+  methods: {
     /**
     * 获取数据-饼图组
     */
     axiosChartPIE(params) {
-      this.chartPIE1.setOption({
-        series: [
-          {
-            data: [
-              {
-                itemStyle: {
-                  color: '#0079b7',
-                },
-                selected: false,
-                label: {
-                  position: 'center',
-                  formatter: '{d}%',
-                  color: "#fff",
-                  fontSize: 28,
-                },
-                value: pie1,
-                name: '底色'
-              },
-              {
-                markPoint: {
-                  itemStyle: {
-                    color: '#0079b7',
-                    barBorderRadius: 23,
-                  },
-                },
-                itemStyle: {
-                  color: '#01283d',
-                  borderColor: "#0079b7",
-                  borderWidth: 1,
-                },
-                value: pie2,
-                name: '底色'
-              },
-            ]
-          }
-        ]
-      });
-      this.chartPIE2.setOption({
-        series: [
-          {
-            data: [
-              {
-                itemStyle: {
-                  color: '#0079b7',
-                },
-                selected: false,
-                label: {
-                  position: 'center',
-                  formatter: '{d}%',
-                  color: "#fff",
-                  fontSize: 28,
-                },
-                value: pie3,
-                name: '底色'
-              },
-              {
-                markPoint: {
-                  itemStyle: {
-                    color: '#0079b7',
-                    barBorderRadius: 23,
-                  },
-                },
-                itemStyle: {
-                  color: '#01283d',
-                  borderColor: "#0079b7",
-                  borderWidth: 1,
-                },
-                value: pie4,
-                name: '底色'
-              },
-            ]
-          }
-        ]
-      });
-      this.chartPIE3.setOption({
-        series: [
-          {
-            data: [
-              {
-                itemStyle: {
-                  color: '#0079b7',
-                },
-                selected: false,
-                label: {
-                  position: 'center',
-                  formatter: '{d}%',
-                  color: "#fff",
-                  fontSize: 28,
-                },
-                value: pie1,
-                name: '底色'
-              },
-              {
-                markPoint: {
-                  itemStyle: {
-                    color: '#0079b7',
-                    barBorderRadius: 23,
-                  },
-                },
-                itemStyle: {
-                  color: '#01283d',
-                  borderColor: "#0079b7",
-                  borderWidth: 1,
-                },
-                value: pie2,
-                name: '底色'
-              },
-            ]
-          }
-        ]
-      });
-      this.chartPIE4.setOption({
-        series: [
-          {
-            data: [
-              {
-                itemStyle: {
-                  color: '#0079b7',
-                },
-                selected: false,
-                label: {
-                  position: 'center',
-                  formatter: '{d}%',
-                  color: "#fff",
-                  fontSize: 28,
-                },
-                value: pie1,
-                name: '底色'
-              },
-              {
-                markPoint: {
-                  itemStyle: {
-                    color: '#0079b7',
-                    barBorderRadius: 23,
-                  },
-                },
-                itemStyle: {
-                  color: '#01283d',
-                  borderColor: "#0079b7",
-                  borderWidth: 1,
-                },
-                value: pie2,
-                name: '底色'
-              },
-            ]
-          }
-        ]
-      });
-      this.chartPIE5.setOption({
-        series: [
-          {
-            data: [
-              {
-                itemStyle: {
-                  color: '#0079b7',
-                },
-                selected: false,
-                label: {
-                  position: 'center',
-                  formatter: '{d}%',
-                  color: "#fff",
-                  fontSize: 28,
-                },
-                value: pie1,
-                name: '底色'
-              },
-              {
-                markPoint: {
-                  itemStyle: {
-                    color: '#0079b7',
-                    barBorderRadius: 23,
-                  },
-                },
-                itemStyle: {
-                  color: '#01283d',
-                  borderColor: "#0079b7",
-                  borderWidth: 1,
-                },
-                value: pie2,
-                name: '底色'
-              },
-            ]
-          }
-        ]
-      });
-      this.chartPIE6.setOption({
-        series: [
-          {
-            data: [
-              {
-                itemStyle: {
-                  color: '#0079b7',
-                },
-                selected: false,
-                label: {
-                  position: 'center',
-                  formatter: '{d}%',
-                  color: "#fff",
-                  fontSize: 28,
-                },
-                value: pie1,
-                name: '底色'
-              },
-              {
-                markPoint: {
-                  itemStyle: {
-                    color: '#0079b7',
-                    barBorderRadius: 23,
-                  },
-                },
-                itemStyle: {
-                  color: '#01283d',
-                  borderColor: "#0079b7",
-                  borderWidth: 1,
-                },
-                value: pie2,
-                name: '底色'
-              },
-            ]
-          }
-        ]
-      });
+      this.$api.getFloorKpiValue(params).then((resp) => {
+        if (resp.code === 10000) {
+          let curdata = resp.data;
+          curdata ? this.pieData = curdata : this.pieData = [];
+          this.$nextTick(() => {
+            _.forEach(this.pieData, (item, index) => {
+              let chart = echarts.init(document.getElementById('chartPIE' + index));
+              this.pieCharts.push(chart)
+              this.option.series[0].data[0].value = Number(item.kpiData)
+              this.option.series[0].data[1].value = 100 -  Number(item.kpiData)
+              chart.setOption(this.option);
+            })
+          })
+        }
+      })
     },
     /**
      * 点击其他区域select收起公共事件
      */
-    controlSelctBottom() {
+    controlSelctBottom(value) {
       this.isShowSelect = !this.isShowSelect;
+      this.params.floor = value;
+      this.axiosChartPIE(this.params)
     },
+    /**
+     * 处理图片index
+     */
+    renderIndex(index) {
+      if (index > 4) {
+        return 5
+      } else {
+        return index + 1
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
+.main-bottom-contain {
+  width: 1800px;
+  display: flex;
+  overflow: auto;
+}
+.main-bottom-contain .chatr-contain {
+  margin-right: 100px;
+  margin-bottom: 22px;
+  /* display: inline-block; */
+}
+.main-bottom-contain .fl:last-child {
+  margin-right: 0;
+}
+
+
+
+
 .main-bottom-contain .chart {
   width: 195px;
   height: 195px;
@@ -463,12 +210,7 @@ export default {
   vertical-align: middle;
   margin-left: 12px;
 }
-.main-bottom-contain .fl {
-  margin-right: 110px;
-}
-.main-bottom-contain .fl:last-child {
-  margin-right: 0;
-}
+
 
 #zlbb {
   width: 100%;
@@ -493,4 +235,5 @@ export default {
 .select-ul {
   width: 120px;
 }
+
 </style>
