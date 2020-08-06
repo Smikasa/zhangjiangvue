@@ -3,7 +3,7 @@
     <div class="clearfix">
       <div class="fl chart-contain">
         <div class="chart-title">
-          5G用户量
+          下行最大激活DRB数+下行平均激活DRB数
         </div>
         <div
           id="chart5G"
@@ -12,7 +12,7 @@
       </div>
       <div class="fl chart-contain">
         <div class="chart-title">
-          上下行流量+无线利用率
+          小区最大发射功率+小区平均发射功率
         </div>
         <div
           id="chartTB"
@@ -21,7 +21,7 @@
       </div>
       <div class="fl">
         <div class="chart-title">
-          PRC连接数+峰值用户数+无线接通率
+          小区RB上行平均干扰电平
         </div>
         <div
           id="chartPRC2"
@@ -32,7 +32,7 @@
     <div class="clearfix">
       <div class="fl chart-contain">
         <div class="chart-title">
-          上下PUSCH行流量+下行PDCCH利用率
+          上行PRB占用率+下行PRB占用率
         </div>
         <div
           id="chartPUPD"
@@ -41,7 +41,7 @@
       </div>
       <div class="fl chart-contain">
         <div class="chart-title">
-          无线掉线率+切换成功率+上行干扰电平
+          干扰_全带宽+干扰_D1+干扰_D2
         </div>
         <div
           id="chartWXQHSX"
@@ -50,7 +50,7 @@
       </div>
       <div class="fl">
         <div class="chart-title">
-          PRB上下行利用率
+          pdcp下行流量+pdcp上行流量
         </div>
         <div
           id="chartPRB2"
@@ -82,16 +82,17 @@ export default {
       chartPUPD: '',
       chartWXQHSX: '',
       chartPRB2: '',
-      chart5G_kpiNameList: ['5G用户量'], //5G用户量
-      chartTB_kpiNameList: ['上行流量', '下行流量', '无线接通率'],//上下行流量+无线利用率
-      chartPRC2_kpiNameList: ['PRC连接数', '峰值用户数', '无线接通率'],//PRC连接数+峰值用户数+无线接通率
-      chartPUPD_kpiNameList: ['上下PUSCH行流量', '下行PDCCH利用率'],//上下PUSCH行流量+下行PDCCH利用率
-      chartWXQHSX_kpiNameList: ['无线掉线率', '切换成功率','上行干扰电平'],//无线掉线率+切换成功率+上行干扰电平
-      chartPRB2_kpiNameList: ['上行PRB利用率', '下行PRB利用率'],//PRB上下行利用率
+      chart5G_kpiNameList: ['下行最大激活DRB数', '下行平均激活DRB数'],
+      chartTB_kpiNameList: ['小区最大发射功率', '小区平均发射功率'],
+      chartPRC2_kpiNameList_show: ['全带宽', 'D1', 'D2', 'D4', 'D5', 'D6'],
+      chartPRC2_kpiNameList: ['小区RB上行平均干扰电平_全带宽', '小区RB上行平均干扰电平_D1', '小区RB上行平均干扰电平_D2', '小区RB上行平均干扰电平_D4', '小区RB上行平均干扰电平_D5', '小区RB上行平均干扰电平_D6'],
+      chartPUPD_kpiNameList: ['上行业务信息PRB占用率', '下行业务信息PRB占用率'],
+      chartWXQHSX_kpiNameList: ['是否存在干扰_全带宽', '是否存在干扰_D1', '是否存在干扰_D2'],
+      chartPRB2_kpiNameList: ['pdcp下行流量', 'pdcp上行流量'],
     }
   },
   mounted() {
- 
+
     // 5g
     this.initChart5G();
     this.initChartTB();
@@ -263,6 +264,16 @@ export default {
               color: '#0e6976'
             },
             data: []
+          },
+          {
+            name: this.chart5G_kpiNameList[1],
+            type: 'bar',
+            // xAxisIndex: 1, // 对应坐标轴
+            // yAxisIndex: 1, // 对应坐标轴
+            itemStyle: { // 柱条
+              color: '#0076e3'
+            },
+            data: []
           }
         ]
       };
@@ -280,7 +291,10 @@ export default {
         ],
         series: [{
           data: xyData.y[0]
-        }]
+        },
+        {
+          data: xyData.y[1]
+        },]
       })
     },
     /**
@@ -370,16 +384,6 @@ export default {
           },
           {
             name: this.chartTB_kpiNameList[1],
-            type: 'bar',
-            // xAxisIndex: 1, // 对应坐标轴
-            // yAxisIndex: 1, // 对应坐标轴
-            itemStyle: { // 柱条
-              color: '#0076e3'
-            },
-            data: []
-          },
-          {
-            name: this.chartTB_kpiNameList[2],
             type: 'line',
             itemStyle: { // 折线拐点
               color: '#09b395'
@@ -408,8 +412,6 @@ export default {
           data: xyData.y[0]
         }, {
           data: xyData.y[1]
-        }, {
-          data: xyData.y[2]
         }]
       })
     },
@@ -439,7 +441,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chartPRC2_kpiNameList
+          data: this.chartPRC2_kpiNameList_show
         },
         xAxis: [
           {
@@ -477,52 +479,66 @@ export default {
         ],
         series: [
           {
-            name: this.chartPRC2_kpiNameList[0],
-            type: 'bar',
-            // xAxisIndex: 1, // 对应坐标轴
-            // yAxisIndex: 1, // 对应坐标轴
-            itemStyle: { // 柱条
-              color: '#4896ee'
-            },
-            data: []
-          },
-          {
-            name: this.chartPRC2_kpiNameList[1],
-            type: 'bar',
-            // xAxisIndex: 1, // 对应坐标轴
-            // yAxisIndex: 1, // 对应坐标轴
-            itemStyle: { // 柱条
-              color: '#189896'
-            },
-            data: []
-          },
-          {
-            name: this.chartPRC2_kpiNameList[2],
+            name: this.chartPRC2_kpiNameList_show[0],
             type: 'line',
-            itemStyle: { // 折线拐点
-              color: '#09b395'
+            // xAxisIndex: 1, // 对应坐标轴
+            // yAxisIndex: 1, // 对应坐标轴
+            itemStyle: { // 柱条
+              // color: '#4896ee'
             },
-            lineStyle: {// 折线
-              color: '#09b395'
-            },
-            areaStyle: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0, color: '#4c94ae' // 0% 处的颜色
-                }, {
-                  offset: 1, color: 'transparent' // 100% 处的颜色
-                }],
-                global: false // 缺省为 false
-              }
-            },
-            symbol: "circle",// 实心圆
+            data: []
+          },
+          {
+            name: this.chartPRC2_kpiNameList_show[1],
+            type: 'line',
+            // xAxisIndex: 1, // 对应坐标轴
+            // yAxisIndex: 1, // 对应坐标轴
+            // itemStyle: { // 柱条
+            //   color: '#189896'
+            // },
+            data: []
+          },
+          {
+            name: this.chartPRC2_kpiNameList_show[2],
+            type: 'line',
+            // xAxisIndex: 1, // 对应坐标轴
+            // yAxisIndex: 1, // 对应坐标轴
+            // itemStyle: { // 柱条
+            //   color: '#189896'
+            // },
+            data: []
+          },
+          {
+            name: this.chartPRC2_kpiNameList_show[3],
+            type: 'line',
+            // xAxisIndex: 1, // 对应坐标轴
+            // yAxisIndex: 1, // 对应坐标轴
+            // itemStyle: { // 柱条
+            //   color: '#189896'
+            // },
+            data: []
+          },
+          {
+            name: this.chartPRC2_kpiNameList_show[4],
+            type: 'line',
+            // xAxisIndex: 1, // 对应坐标轴
+            // yAxisIndex: 1, // 对应坐标轴
+            // itemStyle: { // 柱条
+            //   color: '#189896'
+            // },
+            data: []
+          },
+          {
+            name: this.chartPRC2_kpiNameList_show[5],
+            type: 'line',
+            // xAxisIndex: 1, // 对应坐标轴
+            // yAxisIndex: 1, // 对应坐标轴
+            // itemStyle: { // 柱条
+            //   color: '#189896'
+            // },
             data: []
           }
+
         ]
       };
       this.chartPRC2.setOption(option);
@@ -543,6 +559,12 @@ export default {
           data: xyData.y[1]
         }, {
           data: xyData.y[2]
+        }, {
+          data: xyData.y[3]
+        }, {
+          data: xyData.y[4]
+        }, {
+          data: xyData.y[5]
         }]
       })
     },
@@ -980,7 +1002,7 @@ export default {
   box-sizing: content-box;
 }
 .chart-contain {
-  margin-right: 143px;
+  margin-right: 135px;
   margin-bottom: 136px;
 }
 

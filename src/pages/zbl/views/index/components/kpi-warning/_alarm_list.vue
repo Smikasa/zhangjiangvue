@@ -78,12 +78,6 @@ export default {
         if (resp.code === 10000) {
           let curdata = resp.data;
           curdata ? this.tableData = curdata : this.tableData = [];
-        } else {
-          this.$message({
-            message: resp.message,
-            type: 'error',
-            duration: 5 * 1000
-          })
         }
       })
     }

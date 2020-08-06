@@ -137,12 +137,6 @@ export default {
               data: this.getXYData(curdata).y
             }]
           })
-        } else {
-          this.$message({
-            message: resp.message,
-            type: 'error',
-            duration: 5 * 1000
-          })
         }
       })
 

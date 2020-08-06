@@ -71,19 +71,13 @@ export default {
   },
   methods: {
     /**
-     * 获取总览数据
+     * 获取
     */
     getPerformanceList(params) {
       this.$api.getPerformanceList(params).then((resp) => {
-        if (resp.code === 1000) {
+        if (resp.code === 10000) {
           let curdata = resp.data;
           curdata ? this.tableData = curdata : this.tableData = [];
-        } else {
-          this.$message({
-            message: resp.message,
-            type: 'error',
-            duration: 5 * 1000
-          })
         }
       })
     }

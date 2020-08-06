@@ -115,12 +115,6 @@ export default {
           this.KpiWarning5G = curdata.KpiWarning5G; //5G性能预警数
           this.KpiWarning4GDataAware = curdata.KpiWarning4GDataAware; //4G数据感知预警数
           this.KpiWarningVolte = curdata.KpiWarningVolte; //volte语音感知预警数
-        } else {
-          this.$message({
-            message: resp.message,
-            type: 'error',
-            duration: 5 * 1000
-          })
         }
       })
     }

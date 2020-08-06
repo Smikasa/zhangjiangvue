@@ -10,11 +10,11 @@ export function getOverview(params) {
     let urlParams = params.studioId ? params.projectId + '/' + params.studioId : params.projectId
     return request.get('/baseStation/getOverview/' + urlParams).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -28,11 +28,11 @@ export function getOverview(params) {
 export function getHourNewKpi(params) {
     return request.post('/baseStation/getHourNewKpi?projectId=' + params.projectId + '&type=' + params.type).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -47,11 +47,11 @@ export function getKpiList(params) {
     let kpiTypeUrl = params.kpiType ? '&kpiType=' + params.kpiType : '';
     return request.post('/baseStation/getKpiList?projectId=' + params.projectId + kpiTypeUrl).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -66,11 +66,11 @@ export function getKpiList(params) {
 export function getEchartData(params) {
     return request.get('/baseStation/getEchartData/' + params.projectId + '/' + params.kpiType + '/' + params.kpiIdList).then((resp) => {
         if (resp.code !== 1000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -84,11 +84,11 @@ export function getEchartData(params) {
 export function getFaultAlarmCountsPandect(params) {
     return request.post('/faultAlarm/getFaultAlarmCountsPandect?projectId=' + params.projectId).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -102,11 +102,11 @@ export function getFaultAlarmCountsPandect(params) {
 export function getAddAlarmList(params) {
     return request.get('/faultAlarm/getAddAlarmList' + '/' + params.projectId + '/' + params.count).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -124,11 +124,11 @@ export function getAddAlarmList(params) {
 export function getAlarmTable(params) {
     return request.post('/faultAlarm/getAlarmTable?projectId=' + params.projectId).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -141,11 +141,11 @@ export function getAlarmTable(params) {
 export function getPerformanceWarningTypeCounts(params) {
     return request.post('/performanceWarning/getPerformanceWarningTypeCounts?projectId=' + params.projectId).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -159,11 +159,11 @@ export function getPerformanceWarningTypeCounts(params) {
 export function getMinutePerformanceAddCounts(params) {
     return request.post('/performanceWarning/getMinutePerformanceAddCounts?projectId=' + params.projectId + '&count=' + params.count).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -181,11 +181,11 @@ export function getMinutePerformanceAddCounts(params) {
 export function getPerformanceList(params) {
     return request.post('/performanceWarning/getPerformanceList?projectId=' + params.projectId).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -204,11 +204,11 @@ export function getPerformanceList(params) {
 export function getTaskList(params) {
     return request.post('/workTask/getTaskList?projectId=' + params.projectId).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -227,11 +227,11 @@ export function getUsers(params) {
         + '&size=' + params.size
     ).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
@@ -248,11 +248,11 @@ export function getFloorKpiValue(params) {
         + '&zhibiao=' + params.zhibiao
     ).then((resp) => {
         if (resp.code !== 10000) {
-            Message({
-                message: resp.message,
-                type: 'error',
-                duration: 5 * 1000
-            })
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
         }
         return resp
     });
