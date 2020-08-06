@@ -88,7 +88,7 @@ export default {
       chartB_kpiNameList: ['下行流量'],
       chartKPBS_kpiNameList: ['下行速率', '下行速率(>500KB)'],
       chartTCP_kpiNameList: ['TCP建立成功率', 'TCP建立平均时延'],
-      chartTCP2_kpiNameList: ['TCP建立平均时延（无线侧）', 'TCP建立平均时延（核心网）']
+      chartTCP2_kpiNameList: ['TCP建立平均时延(无线侧)', 'TCP建立平均时延(核心网)']
     }
   },
   mounted() {
