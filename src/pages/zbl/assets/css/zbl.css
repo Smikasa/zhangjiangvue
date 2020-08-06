@@ -115,3 +115,27 @@
   .select-ul .select-li.active {
     color: #d19328;
   }
+
+  .page__div {
+    text-align: right;
+  }
+
+  .page__div  .el-pagination .btn-next, 
+  .page__div .el-pagination .btn-prev, 
+  .page__div .el-pagination .el-pager li {
+    background-color: transparent;
+  }
+
+  .page__div .el-pagination .el-pager li:not(.disabled).active {
+    /* color: #062b57; */
+    background-color:#062b57 ;
+  }
+
+  .page__div  .el-pagination .el-pager li:not(.disabled):hover {
+    color: #fff;
+  }
+  .title__zj {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }

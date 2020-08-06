@@ -21,6 +21,16 @@
           </div>
         </li>
       </ul>
+      <div class="page__div">
+        <el-pagination
+          layout="prev, pager, next"
+          :current-page.sync="params.page"
+          :size="params.size"
+          :total="tableData.length"
+          @current-change="changePage"
+        >
+        </el-pagination>
+      </div>
     </div>
     <div class="main-contain">
       <div class="el-table__zj">
@@ -150,6 +160,9 @@ export default {
           curdata ? this.tableData = curdata : this.tableData = [];
         }
       })
+    },
+    changePage(page) {
+      this.getUsers(this.params)
     }
   }
 }
@@ -161,8 +174,13 @@ export default {
   height: 83px;
   line-height: 83px;
   margin-bottom: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
-
+.page__div {
+  padding-top: 37px;
+}
 .main-title ul {
   list-style-type: none;
   position: relative;

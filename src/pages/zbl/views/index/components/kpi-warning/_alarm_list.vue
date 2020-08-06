@@ -2,6 +2,16 @@
   <div>
     <div class="title__zj">
       已派单预警列表
+      <div class="page__div">
+        <el-pagination
+          layout="prev, pager, next"
+          :current-page.sync="params.page" 
+          :size="params.size"
+          :total="tableData.length"
+          @current-change="changePage"
+        >
+        </el-pagination>
+      </div>
     </div>
     <div class="el-table__zj">
       <el-table
@@ -80,6 +90,9 @@ export default {
           curdata ? this.tableData = curdata : this.tableData = [];
         }
       })
+    },
+    changePage(page){
+      this.getPerformanceList(this.params)
     }
   }
 }
