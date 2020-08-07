@@ -869,6 +869,7 @@ export default {
 
 .main-center-contain-left ul.zcl-last{
   padding-top: 55px;
+  margin-bottom: 0;
 }
 
 .main-center-contain-left ul.zcl > li {

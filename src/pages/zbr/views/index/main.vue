@@ -46,8 +46,8 @@ export default {
 
 <style scoped>
 .main__div {
-  width: 2100px;
-  padding: 87px 79px 80px 252px;
+  width: 2080px;
+  padding: 82px 79px 78px 251px;
   line-height: 1;
 }
 .top__div {
@@ -60,7 +60,7 @@ export default {
 }
 
 .left-top__div {
-  margin-bottom: 94px;
+  margin-bottom: 40px;
 }
 
 .people__div {
@@ -68,7 +68,7 @@ export default {
 }
 
 .left-center__div {
-  margin-bottom: 75px;
+  margin-bottom: 40px;
 }
 .left-bottom__div {
   color: white;

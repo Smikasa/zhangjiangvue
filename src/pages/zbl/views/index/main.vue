@@ -89,6 +89,6 @@ export default {
 
 .main-bottom__div {
   height: 443px;
-  margin-bottom: 161px;
+  margin-bottom: 148px;
 }
 </style>

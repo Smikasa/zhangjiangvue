@@ -88,6 +88,7 @@ export default {
   width: 50%;
   color: #636666;
   background-color: #010817;
+  cursor: pointer;
 }
 
 .tab-pane.active {

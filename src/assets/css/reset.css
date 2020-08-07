@@ -93,7 +93,7 @@ select option {
 }
   /*滚动条凹槽的颜色，还可以设置边框属性*/
 ::-webkit-scrollbar-track-piece {
-    background-color: #f8f8f8;
+    background-color: transparent;
 }
     
 ::-webkit-scrollbar {
@@ -101,14 +101,14 @@ select option {
     width:8px ;
     height:8px ;
     border-radius: 4px;
+    background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: grey;
-/*   background-clip:padding-box; */
-/*   min-height:28px; */
+    background-color: #0f264e;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background-color:grey;
+    background-color:#0f264e;
+    cursor: pointer;
 }
        
        

@@ -73,6 +73,7 @@ export default {
   border: 1px solid transparent;
   color: #656565;
   background-color: #020c1a;
+  cursor: pointer;
 }
 
 
