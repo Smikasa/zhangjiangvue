@@ -122,7 +122,11 @@ export function getAddAlarmList(params) {
  * @param {string} startTimeMax : YY-MM-dd HH:mm:ss   ,开始时间最大值
  */
 export function getAlarmTable(params) {
-    return request.post('/faultAlarm/getAlarmTable?projectId=' + params.projectId).then((resp) => {
+    return request.post('/faultAlarm/getAlarmTable?projectId=' 
+    + params.projectId 
+    + '&page='+params.page
+    + '&size='+params.size
+    ).then((resp) => {
         if (resp.code !== 10000) {
             // Message({
             //     message: resp.message,

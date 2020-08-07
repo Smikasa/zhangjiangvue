@@ -36,7 +36,7 @@
             <div
               class="select-name"
               :class="[!isShowSelect ? 'select-open' : 'select-close']"
-              @click="controlSelct"
+              @click.stop="controlSelct"
             >
               颗粒度选择
             </div>
@@ -108,6 +108,11 @@ export default {
       curTabsName: "0",
       isShowSelect: false,
     }
+  },
+  mounted(){
+     window.addEventListener('click',()=>{
+      this.isShowSelect = false
+    })
   },
   methods: {
     tabsChange(name) {

@@ -23,12 +23,13 @@
         <el-table-column
           prop="alarmId"
           label="告警ID"
-          width="180"
+          width="120"
         >
         </el-table-column>
         <el-table-column
           prop="orgSeverity"
           label="告警级别"
+          width="120"
         >
         </el-table-column>
         <el-table-column
@@ -54,11 +55,13 @@
         <el-table-column
           prop="lastTime"
           label="持续时间(分钟)"
+          width="120"
         >
         </el-table-column>
         <el-table-column
           prop="activeStatus"
           label="告警状态"
+          width="120"
         >
           <template slot-scope="scope">
             {{ Number(scope.row.activeStatus) === 1 ? '已消除' : '未消除' }}
@@ -67,11 +70,13 @@
         <el-table-column
           prop="taskId"
           label="工单ID"
+          width="120"
         >
         </el-table-column>
         <el-table-column
           prop="enb_ci"
           label="enb_ci"
+          width="120"
         >
         </el-table-column>
       </el-table>

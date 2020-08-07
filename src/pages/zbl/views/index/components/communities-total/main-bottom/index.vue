@@ -11,7 +11,7 @@
             <div
               class="select-name"
               :class="[!isShowSelect ? 'select-open' : 'select-close']"
-              @click="controlSelctBottom(params.floor)"
+              @click.stop="controlSelctBottom(params.floor)"
             >
               {{ params.floor }}
             </div>
@@ -44,8 +44,22 @@
           </div>
         </li>
       </ul>
+      <div
+        v-if="pieAllData.length > size"
+        class="page__div"
+      >
+        <el-pagination
+          layout="prev, pager, next"
+          :current-page.sync="page"
+          :page-size="size"
+          :total="total"
+          @current-change="changePage"
+        >
+        </el-pagination>
+      </div>
     </div>
     <div class="main-bottom-contain clearfix">
+      {{ total }}
       <div
         v-for="(item,index) in pieData"
         :key="index"
@@ -70,6 +84,7 @@ export default {
   data() {
     return {
       isShowSelect: false,
+      pieAllData: [],
       pieData: [],
       pieCharts: [],
       params: {
@@ -77,6 +92,9 @@ export default {
         floor: '1F',
         zhibiao: 35
       },
+      page: 1,
+      size: 6,
+      total: 0,
       option: {
         tooltip: null,
         animation: false,
@@ -128,27 +146,49 @@ export default {
   },
   mounted() {
     this.axiosChartPIE(this.params);
+    window.addEventListener('click',()=>{
+      this.isShowSelect = false
+    })
   },
   methods: {
     /**
     * 获取数据-饼图组
     */
     axiosChartPIE(params) {
+      this.page = 1;
       this.$api.getFloorKpiValue(params).then((resp) => {
         if (resp.code === 10000) {
           let curdata = resp.data;
-          curdata ? this.pieData = curdata : this.pieData = [];
-          this.$nextTick(() => {
-            _.forEach(this.pieData, (item, index) => {
-              let chart = echarts.init(document.getElementById('chartPIE' + index));
-              this.pieCharts.push(chart)
-              this.option.series[0].data[0].value = Number(item.kpiData)
-              this.option.series[0].data[1].value = 100 -  Number(item.kpiData)
-              chart.setOption(this.option);
-            })
-          })
+          curdata ? this.pieAllData = curdata : this.pieAllData = [];
+          this.total = this.pieAllData.length;
+          if (this.pieAllData.length > 0) {
+            this.pieData = this.pieAllData.slice((this.page - 1) * this.size, this.page * this.size)
+          }
+          this.renderPie()
         }
       })
+    },
+    /**
+     * 渲染 pie
+     */
+    renderPie() {
+      this.$nextTick(() => {
+        _.forEach(this.pieData, (item, index) => {
+          let chart = echarts.init(document.getElementById('chartPIE' + index));
+          this.pieCharts.push(chart)
+          this.option.series[0].data[0].value = Number(item.kpiData)
+          this.option.series[0].data[1].value = 100 - Number(item.kpiData)
+          chart.setOption(this.option);
+        })
+      })
+
+    },
+    /**
+     * 分页
+     */
+    changePage() {
+      this.pieData = this.pieAllData.slice((this.page - 1) * this.size, this.page * this.size)
+      this.renderPie()
     },
     /**
      * 点击其他区域select收起公共事件
@@ -177,6 +217,12 @@ export default {
   width: 1800px;
   display: flex;
   overflow: auto;
+}
+.main-bottom-title {
+  display: flex;
+}
+.page__div {
+  padding-top: 20px;
 }
 .main-bottom-contain .chatr-contain {
   margin-right: 100px;
@@ -209,7 +255,6 @@ export default {
   margin-left: 12px;
 }
 
-
 #zlbb {
   width: 100%;
   list-style-type: none;
@@ -233,5 +278,4 @@ export default {
 .select-ul {
   width: 120px;
 }
-
 </style>

@@ -23,17 +23,19 @@
         <el-table-column
           prop="taskId"
           label="工单ID"
-          width="180"
+          width="120"
         >
         </el-table-column>
         <el-table-column
           prop="taskTitle"
-          label="姓名"
+          label="任务名"
+          width="180"
         >
         </el-table-column>
         <el-table-column
           prop="taskClass"
           label="任务类型"
+          width="120"
         >
         </el-table-column>
         <el-table-column
@@ -56,11 +58,11 @@
           label="工单处理时长（分钟）"
         >
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="userId"
           label="处理人ID"
         >
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           prop="userName"
           label="处理人名称"
@@ -73,7 +75,7 @@
         </el-table-column>
         <el-table-column
           prop="alarmUniqueId"
-          label="故障告警指纹id"
+          label="故障告警指纹ID"
         >
         </el-table-column>
         <el-table-column

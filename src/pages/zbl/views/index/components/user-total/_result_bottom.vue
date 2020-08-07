@@ -23,39 +23,47 @@
         <el-table-column
           prop="kpiWarningId"
           label="预警ID"
-        />
-        <el-table-column
-          prop="kpiWarningType"
-          label="预警类"
-        />
-        <el-table-column
-          prop="kpiWarningState"
-          label="预警状态"
-        />
-        <el-table-column
-          prop="startTime"
-          label="开始时间"
-        />
-        <el-table-column
-          prop="lastTime"
-          label="结束时间"
-        />
-        <el-table-column
-          prop="lastTime"
-          label="持续时间"
+          width="120"
         />
         <el-table-column
           prop="taskId"
           label="工单ID"
-          width="180"
-        />
-        <el-table-column
-          prop="kpiWarningDescribe"
-          label="预警描述"
+          width="120"
         />
         <el-table-column
           prop="cellId"
           label="小区ID"
+          width="120"
+        />
+        <el-table-column
+          prop="kpiWarningType"
+          label="预警类"
+          width="240"
+        />
+        <el-table-column
+          prop="kpiWarningState"
+          label="预警状态"
+          width="120"
+        />
+        <el-table-column
+          prop="startTime"
+          label="开始时间"
+          width="160"
+        />
+        <el-table-column
+          prop="lastTime"
+          label="结束时间"
+          width="120"
+        />
+        <el-table-column
+          prop="lastTime"
+          label="持续时间"
+          width="120"
+        />
+        
+        <el-table-column
+          prop="kpiWarningDescribe"
+          label="预警描述"
         />
       </el-table>
     </div>
@@ -70,7 +78,7 @@ export default {
       params: {
         projectId: 132, //项目id
         page: 1, //第几页 page不传默认为1
-        size: 10,//每页显示数  size 不传默认为10 page,size都不传查所有
+        size: 8,//每页显示数  size 不传默认为10 page,size都不传查所有
         startTimeMin: this.$moment(new Date).format('YYYY-MM-DD HH:mm:ss'),
         startTimeMax: this.$moment(new Date).format('YYYY-MM-DD HH:mm:ss')
       }
