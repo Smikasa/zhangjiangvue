@@ -208,8 +208,8 @@ export default {
 }
 
 .main-info-contain /deep/ .t_num i {
-  width: 30px;
-  height: 50px;
+  width: 30PX;
+  height: 50PX;
   display: inline-block;
   background: url("~@/assets/img/num.png") no-repeat;
   background-position: 0 0;
@@ -218,9 +218,9 @@ export default {
 
 .main-info-contain /deep/ .t_num {
   display: block;
-  height: 50px;
+  height: 50PX;
   /* float: left; */
-  font-size: 46px;
+  font-size: 46PX;
   color: white;
 }
 </style>

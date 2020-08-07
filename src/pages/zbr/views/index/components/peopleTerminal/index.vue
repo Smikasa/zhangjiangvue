@@ -24,7 +24,7 @@
       </div>
       <peopel :cur-time="curTime"></peopel>
     </div>
-    <div class="fr left-top-terminal">
+    <div class="fl left-top-terminal">
       <div class="top-title">
         终端型号分布
       </div>

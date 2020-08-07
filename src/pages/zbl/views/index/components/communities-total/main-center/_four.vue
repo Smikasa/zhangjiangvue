@@ -69,8 +69,7 @@
         </li>
       </ul>
       <ul
-        class="zcl"
-        style="padding-top: 55px;"
+        class="zcl zcl-last"
       >
         <li>
           <img
@@ -867,6 +866,11 @@ export default {
   padding: 20px 0;
   box-sizing: border-box;
 }
+
+.main-center-contain-left ul.zcl-last{
+  padding-top: 55px;
+}
+
 .main-center-contain-left ul.zcl > li {
   height: 50px;
   padding-left: 15px;

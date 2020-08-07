@@ -187,9 +187,6 @@ export default {
   margin-right: 0;
 }
 
-
-
-
 .main-bottom-contain .chart {
   width: 195px;
   height: 195px;
@@ -199,6 +196,7 @@ export default {
   text-align: center;
   height: 40px;
   line-height: 40px;
+  display: flex;
 }
 .bbm img {
   vertical-align: middle;
