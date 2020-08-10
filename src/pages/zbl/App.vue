@@ -22,7 +22,7 @@ export default {
   /* background: url(../img/zblRight.png) no-repeat; */
   background-size: cover;
   /* padding:60px 0 132px 40px; */
-  background: url("~@/assets/img/bg.png") no-repeat;
+  /* background: url("~@/assets/img/bg.png") no-repeat; */
   background-size: cover;
   overflow: auto;
 }

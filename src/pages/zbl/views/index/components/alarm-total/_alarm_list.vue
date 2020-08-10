@@ -111,7 +111,9 @@ export default {
       this.$api.getAlarmTable(params).then((resp) => {
         if (resp.code === 10000) {
           let curdata = resp.data;
-          curdata ? this.tableData = curdata : this.tableData = [];
+          let a = [].concat(curdata,curdata,curdata)
+          // curdata ? this.tableData = curdata : this.tableData = [];
+          this.tableData = a
         }
       })
     },

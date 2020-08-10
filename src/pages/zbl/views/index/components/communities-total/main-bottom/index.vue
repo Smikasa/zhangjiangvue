@@ -59,7 +59,6 @@
       </div>
     </div>
     <div class="main-bottom-contain clearfix">
-      {{ total }}
       <div
         v-for="(item,index) in pieData"
         :key="index"
