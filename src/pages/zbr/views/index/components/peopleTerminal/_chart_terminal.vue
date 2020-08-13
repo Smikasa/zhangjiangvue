@@ -2,7 +2,7 @@
   <div
     id="terminal"
     class="terminal"
-    style="width: 519px;height: 423px;"
+    style="width: 537px;height: 486px;"
   ></div>
 </template>
 

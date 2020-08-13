@@ -17,9 +17,9 @@ export default {
 #app {
   height: 100%;
   width: 100%;
-  /* background-color: #0e1928; */
+  background-color: #0a1524;
   /* background-color: transparent; */
-  /* background: url("~@/assets/img/bg.png") no-repeat; */
+  background: url("~@/assets/img/bg-right.png") no-repeat;
   background-size: cover;
   overflow: auto;
 }

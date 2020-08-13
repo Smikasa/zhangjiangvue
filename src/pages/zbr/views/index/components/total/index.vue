@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="total clearfix fl">
+    <div class="total clearfix">
       <div class="total-icon fl"></div>
       <div class="fl">
         <div class="total-title">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="fr spread-contain">
+    <div class="spread-contain">
       <div
         v-for="(item,index) in spread"
         :key="index"
@@ -134,9 +134,9 @@ export default {
 </script>
 
 <style>
-.total {
+/* .total {
   margin-right: 110px;
-}
+} */
 
 .spread-contain {
   width: 1257px;
@@ -219,5 +219,15 @@ export default {
   line-height: 55px;
   float: left;
   margin-left: 15px;
+}
+
+.top-bottom {
+    position: absolute;
+    width: 100%;
+    margin: 0 auto;
+    background-size: 100% 100%;
+    bottom: 0px;
+    height: 150px;
+    background-image: url("~@/assets/img/top-bg.png");
 }
 </style>

@@ -5,19 +5,11 @@
       <img src="@/assets/img/r2.png" />
       <img src="@/assets/img/r3.png" />
     </div>
-    <div class="top__div">
-      <total></total>
-    </div>
+    <total class="top__div"></total>
     <div class="left__div">
-      <div class="left-top__div clearfix">
-        <peopleTerminal></peopleTerminal>
-      </div>
-      <div class="left-center__div">
-        <spread></spread>
-      </div>
-      <div class="left-bottom__div">
-        <gender></gender>
-      </div>
+      <peopleTerminal class="left-top__div clearfix"></peopleTerminal>
+      <spread class="left-center__div"></spread>
+      <gender class="left-bottom__div"></gender>
     </div>
     <div class="right__div">
     </div>
@@ -46,13 +38,17 @@ export default {
 
 <style scoped>
 .main__div {
-  width: 2080px;
-  padding: 82px 79px 78px 251px;
+  width: 1769px;
+  padding: 79px 79px 78px 252px;
   line-height: 1;
+  box-sizing: content-box;
+  position: relative;
 }
 .top__div {
-  height: 238px;
+  height: 239px;
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 .left__div {
@@ -68,7 +64,7 @@ export default {
 }
 
 .left-center__div {
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 }
 .left-bottom__div {
   color: white;
@@ -77,12 +73,12 @@ export default {
 
 .rightThree{
     position: absolute;
-    right:80px;
+    right:79px;
     top:325px;
     height:1640px;
 }
 .rightThree img{
-    width: 665px;
+    width: 655px;
     display: block;
     margin-bottom:50px;
 }

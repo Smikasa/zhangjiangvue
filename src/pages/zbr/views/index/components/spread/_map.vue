@@ -584,7 +584,7 @@ export default {
 .totalPerson {
     position: absolute;
     bottom: 20px;
-    right: 80px;
+    right: 25px;
     color: #fff;
     font-size: 28px;
     z-index: 10000;

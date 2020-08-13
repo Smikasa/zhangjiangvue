@@ -4,24 +4,22 @@
       <div class="top-title">
         人数曲线图
       </div>
-      <div>
-        <ul class="clearfix tab">
-          <li
-            class="tab-pane fl"
-            :class="[curPeopleNumber === 5 ?'active':'']"
-            @click="changCurPeopleNumber(5)"
-          >
-            5分钟
-          </li>
-          <li
-            class="tab-pane fl"
-            :class="[curPeopleNumber === 15 ?'active':'']"
-            @click="changCurPeopleNumber(15)"
-          >
-            15分钟
-          </li>
-        </ul>
-      </div>
+      <ul class="clearfix tab">
+        <li
+          class="tab-pane fl"
+          :class="[curPeopleNumber === 5 ?'active':'']"
+          @click="changCurPeopleNumber(5)"
+        >
+          5分钟
+        </li>
+        <li
+          class="tab-pane fl"
+          :class="[curPeopleNumber === 15 ?'active':'']"
+          @click="changCurPeopleNumber(15)"
+        >
+          15分钟
+        </li>
+      </ul>
       <peopel :cur-time="curTime"></peopel>
     </div>
     <div class="fl left-top-terminal">
@@ -67,13 +65,13 @@ export default {
 
 <style scoped>
 .left-top-number {
-  margin-right: 37px;
+  margin-right: 23px;
 }
 
 .top-title {
   font-size: 30px;
   color: white;
-  margin-bottom: 48px;
+  margin-bottom: 46px;
 }
 .tab {
   height: 46px;
