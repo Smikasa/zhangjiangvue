@@ -916,6 +916,7 @@ export default {
   font-weight: 700;
   float: right;
   margin-right: 42px;
+  font-family: 'fontNumber';
 }
 
 .main-center-contain-right .chart-left-contain-top {
