@@ -31,40 +31,6 @@
         >
           <div>语音感知</div>
         </li>
-        <li class="tab r1">
-          <div class="select">
-            <div
-              class="select-name"
-              :class="[!isShowSelect ? 'select-open' : 'select-close']"
-              @click.stop="controlSelct"
-            >
-              颗粒度选择
-            </div>
-            <div
-              v-show="isShowSelect"
-              class="select-ul"
-            >
-              <div
-                class="select-li"
-                @click="controlSelct"
-              >
-                颗粒度选择
-              </div>
-              <div
-                class="select-li"
-                @click="controlSelct"
-              >
-                颗粒度选择
-              </div>
-              <div
-                class="select-li"
-                @click="controlSelct"
-              >
-                颗粒度选择
-              </div>
-            </div>
-          </div>
-        </li>
       </ul>
     </div>
     <!-- 4G性能 -->
@@ -106,23 +72,11 @@ export default {
   data() {
     return {
       curTabsName: "0",
-      isShowSelect: false,
     }
-  },
-  mounted(){
-     window.addEventListener('click',()=>{
-      this.isShowSelect = false
-    })
   },
   methods: {
     tabsChange(name) {
       this.curTabsName = name;
-    },
-    /**
-     * 右侧筛选栏点击select弹出公共事件
-     */
-    controlSelct() {
-      this.isShowSelect = !this.isShowSelect;
     },
   }
 }

@@ -135,35 +135,8 @@ export default {
      * 获取图表数据
      */
     getKpiChartData(curKpiNames, allKpiNames, callback) {
-      let kpiIds = [];
-      let params = {};
-      let chartDataY = [];
-      let chartDataX = [];
-      curKpiNames.filter((value) => {
-        allKpiNames.filter((item) => {
-          if (value === item.kpi_name) {
-            kpiIds.push(item.kpi_num)
-          }
-        })
-      })
-      params = Object.assign({}, this.chartParams, { kpiIdList: kpiIds.join(',') })
-      this.$api.getEchartData(params).then((resp) => {
+      this.$api.getEchartData3({'projectId':this.chartParams.projectId}).then((resp) => {
         let curData = resp.data;
-        curKpiNames.filter((value, index) => {
-          let y = []
-          curData.filter((item) => {
-            let num = item['kpiData' + (index + 1)]
-            y.push(num)
-            if (index === 0) {
-              chartDataX.push(item['time'])
-            }
-          })
-          chartDataY.push(y)
-        })
-        callback({
-          x: chartDataX,
-          y: chartDataY
-        })
       })
     },
     /**

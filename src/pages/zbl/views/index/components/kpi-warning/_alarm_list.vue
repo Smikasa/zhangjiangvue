@@ -23,12 +23,10 @@
         <el-table-column
           prop="kpiWarningId"
           label="预警ID"
-          width="120"
         />
         <el-table-column
           prop="kpiWarningType"
           label="预警类"
-          width="140"
         />
         <el-table-column
           prop="kpiWarningState"
@@ -38,7 +36,6 @@
         <el-table-column
           prop="cellId"
           label="小区ID"
-          width="120"
         />
         <el-table-column
           prop="taskId"
@@ -64,6 +61,20 @@
           prop="kpiWarningDescribe"
           label="预警描述"
         />
+        <el-table-column
+          label="操作"
+          width="100"
+        >
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClick(scope.row)"
+            >
+              查看详情
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -100,7 +111,11 @@ export default {
     },
     changePage(page){
       this.getPerformanceList(this.params)
-    }
+    },
+    /**
+     * 查看详情
+     */
+    handleClick(row) {},
   }
 }
 </script>

@@ -58,6 +58,23 @@ export function getKpiList(params) {
 }
 
 /**
+ * @description  获取小区 -  数据感知图表接口 
+ * @param {number} projectId  项目id
+ */
+export function getEchartData3(params) {
+    return request.post('/baseStation/getDataKpiValue?projectId=' + params.projectId ).then((resp) => {
+        if (resp.code !== 10000) {
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
+        }
+        return resp
+    });
+}
+
+/**
  * @description  获取小区 -  所有图表通用接口 - 数据
  * @param {number} projectId  项目id
  * @param {} kpiIdList  // 指标编号 ，由逗号隔开

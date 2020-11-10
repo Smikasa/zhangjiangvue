@@ -5,7 +5,7 @@
       <div class="page__div">
         <el-pagination
           layout="prev, pager, next"
-          :current-page.sync="params.page" 
+          :current-page.sync="params.page"
           :size="params.size"
           :total="tableData.length"
           @current-change="changePage"
@@ -64,7 +64,7 @@
           width="120"
         >
           <template slot-scope="scope">
-            {{ Number(scope.row.activeStatus) === 1 ? '已消除' : '未消除' }}
+            {{ Number(scope.row.activeStatus) === 1 ? "已消除" : "未消除" }}
           </template>
         </el-table-column>
         <el-table-column
@@ -79,6 +79,20 @@
           width="120"
         >
         </el-table-column>
+        <el-table-column
+          label="操作"
+          width="100"
+        >
+          <template slot-scope="scope">
+            <el-button
+              type="text"
+              size="small"
+              @click="handleClick(scope.row)"
+            >
+              查看详情
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -92,13 +106,13 @@ export default {
       params: {
         projectId: 136, //项目id
         studioId: 20, //场馆ID
-        userId: 12,  //用户id
+        userId: 12, //用户id
         page: 1, //第几页 page不传默认为1
-        size: 10,//每页显示数  size 不传默认为10 page,size都不传查所有
-        startTimeMin: this.$moment(new Date).format('YYYY-MM-DD HH:mm:ss'),
-        startTimeMax: this.$moment(new Date).format('YYYY-MM-DD HH:mm:ss')
-      }
-    }
+        size: 10, //每页显示数  size 不传默认为10 page,size都不传查所有
+        startTimeMin: this.$moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+        startTimeMax: this.$moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+      },
+    };
   },
   mounted() {
     this.getAlarmTable(this.params);
@@ -106,22 +120,26 @@ export default {
   methods: {
     /**
      * 获取总览数据
-    */
+     */
     getAlarmTable(params) {
       this.$api.getAlarmTable(params).then((resp) => {
         if (resp.code === 10000) {
           let curdata = resp.data;
-          let a = [].concat(curdata,curdata,curdata)
+          let a = [].concat(curdata, curdata, curdata);
           // curdata ? this.tableData = curdata : this.tableData = [];
-          this.tableData = a
+          this.tableData = a;
         }
-      })
+      });
     },
-    changePage(page){
-      this.getAlarmTable(this.params)
-    }
-  }
-}
+    changePage(page) {
+      this.getAlarmTable(this.params);
+    },
+    /**
+     * 查看详情
+     */
+    handleClick(row) {},
+  },
+};
 </script>
 
 <style scoped>
