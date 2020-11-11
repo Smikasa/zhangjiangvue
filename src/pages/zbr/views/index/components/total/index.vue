@@ -3,13 +3,13 @@
     <div class="total clearfix">
       <div class="total-icon fl"></div>
       <div class="fl">
-        <div class="total-title">
+        <div class="total-title fontTitle">
           {{ allNum.name }}
         </div>
         <div class="total-info">
           <div class="am_num">
             <div id="total-text">
-              <span class="t_num t_num1">
+              <span class="t_num t_num1 fontNumber">
                 00000
               </span>
             </div>
@@ -23,15 +23,15 @@
         :key="index"
         class="spread fl"
       >
-        <div class="spread-title">
+        <div class="spread-title fontTitle">
           {{ item.name }}
         </div>
         <div class="spread-info">
           <div class="am_num">
             <!-- style="overflow: hidden;" -->
             <div :id="'total'+index">
-              <span class="t_num t_num1">00000</span>
-              <span class="spread-per t_text">({{ item.percentage }})</span>
+              <span class="t_num t_num1 fontNumber">00000</span>
+              <span class="spread-per t_text">(<span class="fontNumber">{{ item.percentage }}</span>)</span>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div class="top-bottom"></div>
+    <div class="top-bottom fontNumber"></div>
   </div>
 </template>
 
@@ -167,10 +167,10 @@ export default {
   font-size: 26px;
 }
 .total-title {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 .spread-title {
-  margin-bottom: 22px;
+  margin-bottom: 12px;
 }
 
 .total-number,

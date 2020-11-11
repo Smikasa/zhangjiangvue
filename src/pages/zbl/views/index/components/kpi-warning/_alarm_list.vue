@@ -115,7 +115,16 @@ export default {
     /**
      * 查看详情
      */
-    handleClick(row) {},
+    handleClick(row) {
+       if(window.performanceDetail){
+        window.performanceDetail(row);
+      }else {
+        this.$message({
+          message: '未定义性能详情函数performanceDetail',
+          type: 'warning'
+        });
+      }
+    },
   }
 }
 </script>

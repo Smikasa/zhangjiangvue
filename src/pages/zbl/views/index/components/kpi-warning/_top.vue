@@ -9,7 +9,7 @@
           >
           <p class="zl-box">
             <span class="list-name">预警总数</span>
-            <span class="list-data">{{ kpiWarningTotal }}</span>
+            <span class="list-data fontNumber">{{ kpiWarningTotal }}</span>
           </p>
         </li>
         <li>
@@ -19,7 +19,7 @@
           >
           <p class="zl-box">
             <span class="list-name">已派单目消除预警数</span>
-            <span class="list-data">{{ kpiWarningSolved }}</span>
+            <span class="list-data fontNumber">{{ kpiWarningSolved }}</span>
           </p>
         </li>
         <li>
@@ -29,7 +29,7 @@
           >
           <p class="zl-box">
             <span class="list-name">已派单未消除预警数</span>
-            <span class="list-data">{{ kpiWarningTask }}</span>
+            <span class="list-data fontNumber">{{ kpiWarningTask }}</span>
           </p>
         </li>
       </ul>
@@ -41,7 +41,7 @@
           >
           <p class="zl-box">
             <span class="list-name">4G性能预警数</span>
-            <span class="list-data">{{ KpiWarning4G }}</span>
+            <span class="list-data fontNumber">{{ KpiWarning4G }}</span>
           </p>
         </li>
         <li>
@@ -51,7 +51,7 @@
           >
           <p class="zl-box">
             <span class="list-name">5G性能预警数</span>
-            <span class="list-data">{{ KpiWarning5G }}</span>
+            <span class="list-data fontNumber">{{ KpiWarning5G }}</span>
           </p>
         </li>
       </ul>
@@ -63,7 +63,7 @@
           >
           <p class="zl-box">
             <span class="list-name">volte语音感知预警数</span>
-            <span class="list-data">{{ KpiWarning4GDataAware }}</span>
+            <span class="list-data fontNumber">{{ KpiWarning4GDataAware }}</span>
           </p>
         </li>
         <li>
@@ -73,7 +73,7 @@
           >
           <p class="zl-box">
             <span class="list-name">4G数据感知预警数</span>
-            <span class="list-data">{{ KpiWarning4GDataAware }}</span>
+            <span class="list-data fontNumber">{{ KpiWarning4GDataAware }}</span>
           </p>
         </li>
       </ul>

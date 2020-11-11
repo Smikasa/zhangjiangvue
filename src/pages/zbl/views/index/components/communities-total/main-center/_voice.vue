@@ -12,7 +12,7 @@
           />
           <p class="zl-box">
             <span class="list-name">VOLTE活跃用户数</span>
-            <span class="list-data">{{ volte_active_user_num }}</span>
+            <span class="list-data fontNumber">{{ volte_active_user_num }}</span>
           </p>
         </li>
         <li>
@@ -22,7 +22,7 @@
           />
           <p class="zl-box">
             <span class="list-name">VOLTE语音话务量</span>
-            <span class="list-data">{{ volte_voice_erl }}</span>
+            <span class="list-data fontNumber">{{ volte_voice_erl }}</span>
           </p>
         </li>
         <li>
@@ -32,7 +32,7 @@
           />
           <p class="zl-box">
             <span class="list-name">VOLTE视频话务量</span>
-            <span class="list-data">{{ volte_video_erl }}</span>
+            <span class="list-data fontNumber">{{ volte_video_erl }}</span>
           </p>
         </li>
       </ul>
@@ -44,7 +44,7 @@
           />
           <p class="zl-box">
             <span class="list-name">接续时长（V-V）</span>
-            <span class="list-data">{{ volte_begin_call_time_vv }}</span>
+            <span class="list-data fontNumber">{{ volte_begin_call_time_vv }}</span>
           </p>
         </li>
         <li>
@@ -54,7 +54,7 @@
           />
           <p class="zl-box">
             <span class="list-name">接续时长（V-A）</span>
-            <span class="list-data">{{ volte_begin_call_time_va }}</span>
+            <span class="list-data fontNumber">{{ volte_begin_call_time_va }}</span>
           </p>
         </li>
         <li>
@@ -64,7 +64,7 @@
           />
           <p class="zl-box">
             <span class="list-name">SRVVC切换时长</span>
-            <span class="list-data">{{ srvcc_switch_time }}</span>
+            <span class="list-data fontNumber">{{ srvcc_switch_time }}</span>
           </p>
         </li>
       </ul>
@@ -76,7 +76,7 @@
           />
           <p class="zl-box">
             <span class="list-name">MOS</span>
-            <span class="list-data">{{ mos_rtcp }}</span>
+            <span class="list-data fontNumber">{{ mos_rtcp }}</span>
           </p>
         </li>
         <li>
@@ -86,7 +86,7 @@
           />
           <p class="zl-box">
             <span class="list-name">上行MOS</span>
-            <span class="list-data">{{ upload_mos_rtp }}</span>
+            <span class="list-data fontNumber">{{ upload_mos_rtp }}</span>
           </p>
         </li>
         <li>
@@ -96,7 +96,7 @@
           />
           <p class="zl-box">
             <span class="list-name">下行MOS</span>
-            <span class="list-data">{{ download_mos_rtp }}</span>
+            <span class="list-data fontNumber">{{ download_mos_rtp }}</span>
           </p>
         </li>
       </ul>

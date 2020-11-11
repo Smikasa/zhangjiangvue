@@ -7,7 +7,9 @@
           :class="[curTabsName === '0' ? 'active' : '']"
           @click="tabsChange('0')"
         >
-          <div>4G性能</div>
+          <div class="fontTitle">
+            4G性能
+          </div>
           <!-- <img src="img/yelloLog.png" /> -->
         </li>
         <li
@@ -15,21 +17,27 @@
           :class="[curTabsName === '1' ? 'active' : '']"
           @click="tabsChange('1')"
         >
-          <div>5G性能</div>
+          <div class="fontTitle">
+            5G性能
+          </div>
         </li>
         <li
           class="tab"
           :class="[curTabsName === '2' ? 'active' : '']"
           @click="tabsChange('2')"
         >
-          <div>数据感知</div>
+          <div class="fontTitle">
+            数据感知
+          </div>
         </li>
         <li
           class="tab"
           :class="[curTabsName === '3' ? 'active' : '']"
           @click="tabsChange('3')"
         >
-          <div>语音感知</div>
+          <div class="fontTitle">
+            语音感知
+          </div>
         </li>
       </ul>
     </div>

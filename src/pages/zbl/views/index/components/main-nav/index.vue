@@ -18,7 +18,7 @@
         >
           <span class="t_num t_num1">00000</span>
         </div>
-        <div class="main-info-title">
+        <div class="main-info-title fontTitle">
           {{ value.name }}
         </div>
       </div>
@@ -168,6 +168,7 @@ export default {
 }
 .main-info-icon.main-info-icon-communities1 {
   background-image: url("~@/assets/img/zll5.png");
+  top: 36px;
   /* background-size: 130%;
   background-position: -12px -25px; */
 }

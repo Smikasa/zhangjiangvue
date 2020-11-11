@@ -2,7 +2,7 @@
 
 /* 大标题及一级标题用 */
 @font-face{
-    font-family: 'fontMain';
+    font-family: 'fontTitle';
     src : url('../font/PangMenZhengDaoBiaoTiTi-1.ttf');
 }
 /* 数字 */   
@@ -15,7 +15,18 @@
     font-family: 'fontCommon';
     /* src : url('../font/PingFang.ttc'); */
 }
-  
+
+.fontTitle {
+    font-family: 'fontTitle','SimHei',sans-serif;
+}
+
+.fontNumber {
+    font-family: 'fontNumber','SimHei',sans-serif;
+}
+
+.fontCommon {
+    font-family: 'fontCommon','SimHei',sans-serif;
+}
 
 body,html{
     width:100%;

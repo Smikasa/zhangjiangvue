@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bottom-title">
+    <div class="bottom-title fontTitle">
       性别分布
     </div>
     <div class="clearfix">

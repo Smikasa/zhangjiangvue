@@ -9,7 +9,7 @@
           >
           <p class="zl-box">
             <span class="list-name">告警总数</span>
-            <span class="list-data">{{ alarmTotal }}</span>
+            <span class="list-data fontNumber">{{ alarmTotal }}</span>
           </p>
         </li>
         <li>
@@ -19,7 +19,7 @@
           >
           <p class="zl-box">
             <span class="list-name">已消除告警数</span>
-            <span class="list-data">{{ alarmSolved }}</span>
+            <span class="list-data fontNumber">{{ alarmSolved }}</span>
           </p>
         </li>
         <li>
@@ -29,7 +29,7 @@
           >
           <p class="zl-box">
             <span class="list-name">已派单告警数</span>
-            <span class="list-data">{{ alarmTaskSend }}</span>
+            <span class="list-data fontNumber">{{ alarmTaskSend }}</span>
           </p>
         </li>
         <li>
@@ -39,7 +39,7 @@
           >
           <p class="zl-box">
             <span class="list-name">未派单告警数</span>
-            <span class="list-data">{{ alarmNoTask }}</span>
+            <span class="list-data fontNumber">{{ alarmNoTask }}</span>
           </p>
         </li>
       </ul>
@@ -51,7 +51,7 @@
           >
           <p class="zl-box">
             <span class="list-name">无线网告警数</span>
-            <span class="list-data">{{ alarmWirelessNetwork }}</span>
+            <span class="list-data fontNumber">{{ alarmWirelessNetwork }}</span>
           </p>
         </li>
         <li>
@@ -61,7 +61,7 @@
           >
           <p class="zl-box">
             <span class="list-name">核心网告警数</span>
-            <span class="list-data">{{ alarmCoreNetwork }}</span>
+            <span class="list-data fontNumber">{{ alarmCoreNetwork }}</span>
           </p>
         </li>
         <li>
@@ -71,7 +71,7 @@
           >
           <p class="zl-box">
             <span class="list-name">传输告警数</span>
-            <span class="list-data">{{ alarmTransfer }}</span>
+            <span class="list-data fontNumber">{{ alarmTransfer }}</span>
           </p>
         </li>
         <li>
@@ -81,7 +81,7 @@
           >
           <p class="zl-box">
             <span class="list-name">家宽告警数</span>
-            <span class="list-data">{{ alarmHomewire }}</span>
+            <span class="list-data fontNumber">{{ alarmHomewire }}</span>
           </p>
         </li>
         <li>
@@ -91,7 +91,7 @@
           >
           <p class="zl-box">
             <span class="list-name">动环告警数</span>
-            <span class="list-data">{{ alarmPowerAround }}</span>
+            <span class="list-data fontNumber">{{ alarmPowerAround }}</span>
           </p>
         </li>
       </ul>
@@ -103,7 +103,7 @@
           >
           <p class="zl-box">
             <span class="list-name">一级告警数</span>
-            <span class="list-data">{{ alarmLevel1 }}</span>
+            <span class="list-data fontNumber">{{ alarmLevel1 }}</span>
           </p>
         </li>
         <li>
@@ -113,7 +113,7 @@
           >
           <p class="zl-box">
             <span class="list-name">二级告警数</span>
-            <span class="list-data">{{ alarmLevel2 }}</span>
+            <span class="list-data fontNumber">{{ alarmLevel2 }}</span>
           </p>
         </li>
         <li>
@@ -123,7 +123,7 @@
           >
           <p class="zl-box">
             <span class="list-name">三级告警数</span>
-            <span class="list-data">{{ alarmLevel3 }}</span>
+            <span class="list-data fontNumber">{{ alarmLevel3 }}</span>
           </p>
         </li>
         <li>
@@ -133,7 +133,7 @@
           >
           <p class="zl-box">
             <span class="list-name">四级告警数</span>
-            <span class="list-data">{{ alarmLevel4 }}</span>
+            <span class="list-data fontNumber">{{ alarmLevel4 }}</span>
           </p>
         </li>
       </ul>

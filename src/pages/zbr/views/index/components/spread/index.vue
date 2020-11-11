@@ -3,14 +3,14 @@
     <div>
       <ul class="clearfix tab">
         <li
-          class="tab-pane fl"
+          class="tab-pane fl fontTitle"
           :class="[curPeopleSpread === 0 ?'active':'']"
           @click="changCurPeopleSpread(0)"
         >
           地图
         </li>
         <li
-          class="tab-pane fr"
+          class="tab-pane fr fontTitle"
           :class="[curPeopleSpread === 1 ?'active':'']"
           @click="changCurPeopleSpread(1)"
         >

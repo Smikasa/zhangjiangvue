@@ -12,7 +12,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE语音话务量</span>
-            <span class="list-data">{{ volte_voice_erl }}</span>
+            <span class="list-data fontNumber">{{ volte_voice_erl }}</span>
           </p>
         </li>
         <li>
@@ -22,7 +22,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE语音接通率</span>
-            <span class="list-data">{{ volte_voice_connect_ratio }}%</span>
+            <span class="list-data fontNumber">{{ volte_voice_connect_ratio }}%</span>
           </p>
         </li>
         <li>
@@ -32,7 +32,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE语音掉线率</span>
-            <span class="list-data">{{ volte_voice_offline_ratio }}%</span>
+            <span class="list-data fontNumber">{{ volte_voice_offline_ratio }}%</span>
           </p>
         </li>
       </ul>
@@ -44,7 +44,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE视频话务量</span>
-            <span class="list-data">{{ volte_video_erl }}</span>
+            <span class="list-data fontNumber">{{ volte_video_erl }}</span>
           </p>
         </li>
         <li>
@@ -54,7 +54,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE视频接通率</span>
-            <span class="list-data">{{ volte_video_connect_ratio }}%</span>
+            <span class="list-data fontNumber">{{ volte_video_connect_ratio }}%</span>
           </p>
         </li>
         <li>
@@ -64,7 +64,7 @@
           >
           <p class="zl-box">
             <span class="list-name">VOLTE视频掉线率</span>
-            <span class="list-data">{{ volte_video_offline_ratio }}%</span>
+            <span class="list-data fontNumber">{{ volte_video_offline_ratio }}%</span>
           </p>
         </li>
       </ul>
@@ -78,7 +78,7 @@
           >
           <p class="zl-box">
             <span class="list-name">SRVCC切换成功率</span>
-            <span class="list-data">{{ srvcc_switch }}%</span>
+            <span class="list-data fontNumber">{{ srvcc_switch }}%</span>
           </p>
         </li>
         <li>
@@ -88,7 +88,7 @@
           >
           <p class="zl-box">
             <span class="list-name">PDCCH信道CCE利用率</span>
-            <span class="list-data">{{ pdcch_channel_cee_occupancy }}%</span>
+            <span class="list-data fontNumber">{{ pdcch_channel_cee_occupancy }}%</span>
           </p>
         </li>
       </ul>
@@ -916,7 +916,6 @@ export default {
   font-weight: 700;
   float: right;
   margin-right: 42px;
-  font-family: 'fontNumber';
 }
 
 .main-center-contain-right .chart-left-contain-top {

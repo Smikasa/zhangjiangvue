@@ -5,7 +5,9 @@
         id="zlbb"
         class="clearfix"
       >
-        <li>PRB上行利用率</li>
+        <li class="fontTitle">
+          PRB上行利用率
+        </li>
         <li>
           <div class="select">
             <div

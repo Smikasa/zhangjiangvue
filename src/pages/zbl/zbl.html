@@ -36,6 +36,14 @@
     window.onresize = function () {
       setRem()
     }
+    // 故障告警详情函数
+    window.alarmDetail = function (data) {
+      alert('故障告警：'+JSON.stringify(data))
+    }
+    // 性能预警详情函数
+    window.performanceDetail = function (data) {
+      alert('性能预警：'+JSON.stringify(data))
+    }
   </script>
 </body>
 

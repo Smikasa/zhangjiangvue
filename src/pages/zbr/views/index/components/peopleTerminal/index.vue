@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="fl left-top-number">
-      <div class="top-title">
+      <div class="top-title fontTitle">
         人数曲线图
       </div>
       <ul class="clearfix tab">
@@ -23,7 +23,7 @@
       <peopel :cur-time="curTime"></peopel>
     </div>
     <div class="fl left-top-terminal">
-      <div class="top-title">
+      <div class="top-title fontTitle">
         终端型号分布
       </div>
       <div>

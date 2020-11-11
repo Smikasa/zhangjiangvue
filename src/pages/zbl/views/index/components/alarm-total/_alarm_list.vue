@@ -137,7 +137,16 @@ export default {
     /**
      * 查看详情
      */
-    handleClick(row) {},
+    handleClick(row) {
+      if(window.alarmDetail){
+        window.alarmDetail(row);
+      }else {
+        this.$message({
+          message: '未定义故障告警详情函数alarmDetail',
+          type: 'warning'
+        });
+      }
+    },
   },
 };
 </script>
