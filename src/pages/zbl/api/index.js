@@ -113,7 +113,7 @@ export function getFaultAlarmCountsPandect(params) {
 
 /**
  * @description  获取故障告警 新增故障告警接口
- * @param {number} projectId:133,  //项目id 
+ * @param {number} projectId:136,  //项目id 
  * @param {number} count : 17，  //获取条数
  */
 export function getAddAlarmList(params) {
@@ -174,7 +174,7 @@ export function getPerformanceWarningTypeCounts(params) {
 
 /**
  * @description  获取性能预警 新增性能预警接口-echart
- * @param {number} projectId:133,  //项目id 
+ * @param {number} projectId:136,  //项目id 
  * @param {number} count : 17，  //获取条数
  */
 export function getMinutePerformanceAddCounts(params) {

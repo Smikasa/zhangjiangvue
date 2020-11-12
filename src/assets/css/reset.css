@@ -13,7 +13,7 @@
 /* 数字 */
 @font-face{
     font-family: 'fontCommon';
-    /* src : url('../font/PingFang.ttc'); */
+    src : url('../font/PingFang.ttf');
 }
 
 .fontTitle {

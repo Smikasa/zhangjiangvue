@@ -71,7 +71,6 @@ export default {
   height: 2100px;
   padding: 60px 254px 0 46px;
   line-height: 1;
-  font-family: "Microsoft YaHei", sans-serif;
 }
 .main-time__div {
   height: 112px;

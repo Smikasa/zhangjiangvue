@@ -120,6 +120,7 @@ export default {
                   formatter: '{d}%',
                   color: "#fff",
                   fontSize: 28,
+                  fontFamily:"fontNumber"
                 },
                 value: 40.21,
                 name: '底色'

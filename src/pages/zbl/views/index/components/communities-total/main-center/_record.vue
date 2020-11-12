@@ -1,5 +1,5 @@
 <template>
-  <div class=" clearfix">
+  <div class="clearfix">
     <div class="clearfix chart__main">
       <div class="fl chart-contain">
         <div class="chart-title">
@@ -19,7 +19,7 @@
           class="chart"
         ></div>
       </div>
-      <div class="fl ">
+      <div class="fl">
         <div class="chart-title">
           下行流量
         </div>
@@ -48,7 +48,7 @@
           class="chart"
         ></div>
       </div>
-      <div class="fl ">
+      <div class="fl">
         <div class="chart-title">
           TCP建立时延无线侧+TCP建立时延核心侧
         </div>
@@ -83,19 +83,18 @@ export default {
       chartTCP: '',
       chartTCP2: '',
       // name 
-      chartHTTP_kpiNameList: ['HTTP业务成功率','HTTP平均响应时延'], 
-      chartT_kpiNameList: ['上行流量'],
-      chartB_kpiNameList: ['下行流量'],
-      chartKPBS_kpiNameList: ['下行速率', '下行速率(>500KB)'],
-      chartTCP_kpiNameList: ['TCP建立成功率', 'TCP建立平均时延'],
-      chartTCP2_kpiNameList: ['TCP建立平均时延(无线侧)', 'TCP建立平均时延(核心网)']
+      chartHTTP_kpiNameList:[{name:"HTTP业务成功率",key:"http_service_success_rate"},{name:"HTTP平均响应时延",key:"http_avg_respones_delay"}],
+      chartT_kpiNameList:[{name:"上行流量",key:"upload_flow"}],
+      chartB_kpiNameList:[{name:"下行流量",key:"download_flow"}],
+      chartKPBS_kpiNameList:[{name:"下行速率", key:"download_speed"}, {name:"下行速率(>500KB)",key:"download_speed_500"}],
+      chartTCP_kpiNameList:[{name:"TCP建立成功率",key:"tcp_build_success_rate"},{ name:"TCP建立平均时延",key:"tcp_build_avg_delay"}],
+      chartTCP2_kpiNameList:[{name:"TCP建立平均时延(无线侧)",key:"tcp_build_avg_delay_wireless"},{name:"TCP建立平均时延(核心网)",key:"tcp_build_avg_delay_core_network"}],
     }
   },
   mounted() {
     // 获取
-    this.getKpiList(this.kpiParams);
+    // this.initData(this.kpiParams);
     // 数据感知 
-
     this.initChartHTTP();
     this.initChartT();
     this.initChartB();
@@ -103,58 +102,93 @@ export default {
     this.initChartTCP();     
     this.initChartTCP2();
 
+     this.initData(this.kpiParams);
+
   },
   methods: {
-    /**
-     * 获取图表名称列表
-     */
-    getKpiList(params) {
-      this.$api.getKpiList(params).then((resp) => {
+    /*数据获取 */
+    initData(data) {
+       this.$api.getEchartData3({'projectId':this.chartParams.projectId}).then((resp) => {
         let curData = resp.data;
-        this.getKpiChartData(this.chartHTTP_kpiNameList, curData, (xyData) => {
-          this.axiosChartHTTP(xyData);
-        })
-        this.getKpiChartData(this.chartT_kpiNameList, curData, (xyData) => {
-          this.axiosChartT(xyData);
-        })
-        this.getKpiChartData(this.chartB_kpiNameList, curData, (xyData) => {
-          this.axiosChartB(xyData);
-        })
-        this.getKpiChartData(this.chartKPBS_kpiNameList, curData, (xyData) => {
-          this.axiosChartKPBS(xyData);
-        })
-        this.getKpiChartData(this.chartTCP_kpiNameList, curData, (xyData) => {
-          this.axiosChartTCP(xyData);
-        })
-        this.getKpiChartData(this.chartTCP2_kpiNameList, curData, (xyData) => {
-          this.axiosChartTCP2(xyData);
-        })
+        this.initChartData(curData)
       })
+      // let curData = [{
+      //   http_request_total_num:1123,// 		HTTP请求总次数
+      //   http_service_success_num:1123,// 		HTTP业务成功次数
+      //   http_service_success_rate:1123,// 	HTTP业务成功率
+      //   http_response_total_delay:1123,// 		HTTP相应总时延
+      //   http_avg_respones_delay:1123,// 		HTTP平均响应时延
+      //   // upload_flow:1123,// 		上行流量
+      //   download_flow:1123,// 		下行流量
+      //   download_speed:1123,// 		下行速率
+      //   download_speed_500:1123,// 		下行速率（500KB)
+      //   tcp_build_success_num:1123,// 	TCP建立成功次数
+      //   tcp_build_request_num:1123,// 	TCP建立请求次数
+      //   tcp_build_success_rate:1123,// 		TCP建立成功率
+      //   tcp_build_total_delay:1123,// 	TCP建立总时延
+      //   tcp_build_avg_delay:1123,// 	TCP建立平均时延
+      //   tcp_build_total_delay_wireless:1123,// 	TCP建立总时延（无线侧）	
+      //   tcp_build_avg_delay_wireless:1123,// 		TCP建立总时延（无线侧）
+      //   tcp_build_total_delay_core_network:1123,// 	TCP建立总时延（核心网）
+      //   tcp_build_avg_delay_core_network:1123,// 	TCP建立总时延（核心网）
+      //   dtcreatetime:"9:00"
+      // }]
+
+      //  this.initChartData(curData)
     },
     /**
-     * 获取图表数据
+     * 图标赋值
      */
-    getKpiChartData(curKpiNames, allKpiNames, callback) {
-      this.$api.getEchartData3({'projectId':this.chartParams.projectId}).then((resp) => {
-        let curData = resp.data;
+    initChartData(data){
+       this.handleXYData(data,this.chartHTTP_kpiNameList, (xyData) => {
+          this.axiosChartHTTP(xyData);
+        })
+        this.handleXYData(data,this.chartT_kpiNameList, (xyData) => {
+          this.axiosChartT(xyData);
+        })
+        this.handleXYData(data,this.chartB_kpiNameList, (xyData) => {
+          this.axiosChartB(xyData);
+        })
+        this.handleXYData(data,this.chartKPBS_kpiNameList, (xyData) => {
+          this.axiosChartKPBS(xyData);
+        })
+        this.handleXYData(data,this.chartTCP_kpiNameList, (xyData) => {
+          this.axiosChartTCP(xyData);
+        })
+        this.handleXYData(data,this.chartTCP2_kpiNameList, (xyData) => {
+          this.axiosChartTCP2(xyData);
+        })
+    },
+    /**
+     * 获取图例名称
+     */
+    getlegendNames(array){
+      let arr = [];
+      array.filter((value,index)=>{
+        arr.push(value.name)
       })
     },
     /**
      * 数据处理-人数曲线图-获取x y 数据
      */
-    geXYData(array) {
-      let x = []
-      let y = [];
-      array.filter(function (value) {
-        x.push(value.realTime)
-        y.push(Number(value.people))
+    handleXYData(array,curKpiObj, callback) {
+      let chartDataX = []
+      let chartDataY = [];
+      curKpiObj.filter((obj,i)=>{
+        let x = [];
+        let y = [];
+        array.filter(function (value) {
+          x.push(value.dtcreatetime)
+          y.push(Number(value[obj.key] ? value[obj.key] : 0))
+        })
+        chartDataX = x;
+        chartDataY.push(y)
       })
-      return {
-        x: x,
-        y: y
-      }
+      callback({
+        x: chartDataX,
+        y: chartDataY
+      })
     },
-
     /**
     * @description 初始化-数据感知-HTTP业务成功率+HTTP平均响应延迟
     */
@@ -181,7 +215,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chartHTTP_kpiNameList
+          data: this.getlegendNames(this.chartHTTP_kpiNameList)
         },
         // dataZoom: {
         //     show: false,
@@ -231,7 +265,7 @@ export default {
         ],
         series: [
           {
-            name: this.chartHTTP_kpiNameList[0],
+            name: this.chartHTTP_kpiNameList[0].name,
             type: 'line',
             smooth:true,
             areaStyle: {
@@ -259,7 +293,7 @@ export default {
             data: []
           },
           {
-            name: this.chartHTTP_kpiNameList[1],
+            name: this.chartHTTP_kpiNameList[1].name,
             type: 'bar',
             // xAxisIndex: 1, // 对应坐标轴
             // yAxisIndex: 1, // 对应坐标轴
@@ -315,7 +349,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chartT_kpiNameList
+          data:  this.getlegendNames(this.chartT_kpiNameList)
         },
         // dataZoom: {
         //     show: false,
@@ -351,7 +385,7 @@ export default {
         ],
         series: [
           {
-            name: this.chartT_kpiNameList[0],
+            name: this.chartT_kpiNameList[0].name,
             type: 'line',
             smooth:true,
             areaStyle: {
@@ -424,7 +458,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chartB_kpiNameList
+          data: this.getlegendNames(this.chartB_kpiNameList)
         },
         xAxis: [
           {
@@ -462,7 +496,7 @@ export default {
         ],
         series: [
           {
-            name: this.chartB_kpiNameList[0],
+            name: this.chartB_kpiNameList[0].name,
             type: 'line',
             smooth:true,
             itemStyle: { // 折线拐点
@@ -534,7 +568,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chartKPBS_kpiNameList
+          data:  this.getlegendNames(this.chartKPBS_kpiNameList)
         },
         xAxis: [
           {
@@ -572,7 +606,7 @@ export default {
         ],
         series: [
           {
-            name: this.chartKPBS_kpiNameList[0],
+            name: this.chartKPBS_kpiNameList[0].name,
             type: 'line',
             itemStyle: { // 柱条
               color: '#5591b1'
@@ -601,7 +635,7 @@ export default {
             data: []
           },
           {
-            name: this.chartKPBS_kpiNameList[1],
+            name: this.chartKPBS_kpiNameList[1].name,
             type: 'line',
             itemStyle: { // 折线拐点
               color: '#37a3b3'
@@ -659,7 +693,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chartTCP_kpiNameList
+          data:  this.getlegendNames(this.chartTCP_kpiNameList)
         },
         xAxis: [
           {
@@ -697,7 +731,7 @@ export default {
         ],
         series: [
           {
-            name: this.chartTCP_kpiNameList[0],
+            name: this.chartTCP_kpiNameList[0].name,
             type: 'line',
             smooth:true,
             itemStyle: { // 柱条
@@ -727,7 +761,7 @@ export default {
             data: []
           },
           {
-            name: this.chartTCP_kpiNameList[1],
+            name: this.chartTCP_kpiNameList[1].name,
             type: 'line',
             itemStyle: { // 折线拐点
               color: '#aefbbe'
@@ -786,7 +820,7 @@ export default {
           left: 0,
           itemGap: 35,
           inactiveColor: '#575b61',// 图例关闭时颜色
-          data: this.chartTCP2_kpiNameList
+          data:  this.getlegendNames(this.chartTCP2_kpiNameList)
         },
         xAxis: [
           {
@@ -824,7 +858,7 @@ export default {
         ],
         series: [
           {
-            name: this.chartTCP2_kpiNameList[0],
+            name: this.chartTCP2_kpiNameList[0].name,
             type: 'line',
             lineStyle: { // 柱条
               color: '#248bb1'
@@ -853,7 +887,7 @@ export default {
             data: []
           },
           {
-            name: this.chartTCP2_kpiNameList[1],
+            name: this.chartTCP2_kpiNameList[1].name,
             type: 'line',
             lineStyle: { // 柱条
               color: '#235890'
