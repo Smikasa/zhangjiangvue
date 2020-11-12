@@ -54,11 +54,11 @@ export default {
 
 <style scoped>
 .tab {
-  height: 56px;
-  line-height: 56px;
+  height: 66px;
+  line-height: 66px;
   font-size: 26px;
   width: 486px;
-  margin-bottom: 7px;
+  margin-bottom: 27px;
   cursor: pointer;
   text-align: center;
 }

@@ -16,6 +16,10 @@
     src : url('../font/PingFang.ttf');
 }
 
+button {
+    font-family: 'fontCommon','SimHei',sans-serif;
+}
+
 .fontTitle {
     font-family: 'fontTitle','SimHei',sans-serif;
 }

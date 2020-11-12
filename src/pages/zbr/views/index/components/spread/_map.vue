@@ -555,7 +555,7 @@ export default {
 }
 .map {
   width: 1042px;
-  height: 760px;
+  height: 860px;
 }
 
 .map-btns {

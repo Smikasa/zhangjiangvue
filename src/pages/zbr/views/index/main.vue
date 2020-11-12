@@ -9,7 +9,7 @@
     <div class="left__div">
       <peopleTerminal class="left-top__div clearfix"></peopleTerminal>
       <spread class="left-center__div"></spread>
-      <gender class="left-bottom__div"></gender>
+      <!-- <gender class="left-bottom__div"></gender> -->
     </div>
     <div class="right__div">
     </div>
@@ -20,13 +20,13 @@
 import total from './components/total/index.vue';
 import peopleTerminal from './components/peopleTerminal/index.vue';
 import spread from './components/spread/index.vue';
-import gender from './components/gender/index';
+// import gender from './components/gender/index';
 export default {
   components: {
     total,
     peopleTerminal,
     spread,
-    gender,
+    // gender,
   },
   data() {
     return {
@@ -56,7 +56,7 @@ export default {
 }
 
 .left-top__div {
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 }
 
 .people__div {
@@ -64,7 +64,7 @@ export default {
 }
 
 .left-center__div {
-  margin-bottom: 70px;
+  margin-bottom: 60px;
 }
 .left-bottom__div {
   color: white;

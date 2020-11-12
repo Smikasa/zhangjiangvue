@@ -71,11 +71,11 @@ export default {
 .top-title {
   font-size: 30px;
   color: white;
-  margin-bottom: 46px;
+  margin-bottom: 56px;
 }
 .tab {
-  height: 46px;
-  line-height: 46px;
+  height: 56px;
+  line-height: 56px;
   font-size: 26px;
   width: 486px;
   margin-bottom: 60px;

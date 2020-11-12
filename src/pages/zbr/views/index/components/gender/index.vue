@@ -10,9 +10,9 @@
           <div class="sex-info-per">
             {{ male }}
           </div>
-          <div class="sex-info-type">
+          <!-- <div class="sex-info-type">
             男性
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="clearfix fl woman">
@@ -21,9 +21,9 @@
           <div class="sex-info-per">
             {{ female }}
           </div>
-          <div class="sex-info-type">
+          <!-- <div class="sex-info-type">
             女性
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -59,7 +59,7 @@ export default {
 .bottom-title {
   font-size: 30px;
   color: white;
-  margin-bottom: 58px;
+  margin-bottom: 38px;
 }
 
 .sex-icon {

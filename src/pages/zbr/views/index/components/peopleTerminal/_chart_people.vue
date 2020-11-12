@@ -2,7 +2,7 @@
   <div
     id="peopleNumber"
     class="people-number"
-    style="width: 515px;height: 396px;"
+    style="width: 515px;height: 447px;"
   ></div>
 </template>
 
