@@ -242,10 +242,31 @@ export function getTaskList(params) {
  * @param {number}page : 1, //第几页
  * @param {number}size : 10 ,//每页显示数
  */
-export function getUsers(params) {
+export function getOnDutypersonList(params) {
     return request.post('/onDutyperson/getOnDutypersonList?projectId=' + params.projectId
         + '&page=' + params.page
         + '&size=' + params.size
+    ).then((resp) => {
+        if (resp.code !== 10000) {
+            // Message({
+            //     message: resp.message,
+            //     type: 'error',
+            //     duration: 5 * 1000
+            // })
+        }
+        return resp
+    });
+}
+/**
+ * @description  获取到岗人员数 - 车辆备件
+ * @param {number}projectId:1,  //项目id   
+ * @param {number}page : 1, //第几页
+ * @param {number}size : 10 ,//每页显示数
+ */
+export function getOnDutyCarList(params) {
+    return request.post('/onDutyperson/getOnDutyCarList?projectId=' + params.projectId
+        // + '&page=' + params.page
+        // + '&size=' + params.size
     ).then((resp) => {
         if (resp.code !== 10000) {
             // Message({

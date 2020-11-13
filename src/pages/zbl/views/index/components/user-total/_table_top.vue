@@ -23,154 +23,95 @@
       </ul>
       <div class="page__div">
         <el-pagination
+          v-show="curTabsName === '1'"
           layout="prev, pager, next"
-          :current-page.sync="params.page"
-          :size="params.size"
-          :total="tableData.length"
-          @current-change="changePage"
+          :current-page.sync="personParams.page"
+          :size="personParams.size"
+          :total="personTableData.length"
+          @current-change="changePersonPage"
         >
         </el-pagination>
+        <!-- <el-pagination
+          v-show="curTabsName === '2'"
+          layout="prev, pager, next"
+          :current-page.sync="carParams.page"
+          :size="carParams.size"
+          :total="carTableData.length"
+          @current-change="changeCarPage"
+        >
+        </el-pagination> -->
+        <!-- :total="carTableData.length" -->
       </div>
     </div>
     <div class="main-contain">
-      <div class="el-table__zj">
-        <el-table
-          :data="tableData"
-          :border="false"
-          :height="650"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="userId"
-            label="人员ID"
-            width="100"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="userName"
-            label="人员名称"
-            width="100"
-          >
-          </el-table-column>
-          <el-table-column 
-            label="签到状态"
-            width="100"
-          >
-            <template slot-scope="scope">
-              <div
-                v-if="Number(scope.row.state) === 0 "
-                class="red"
-              >
-                无
-              </div>
-              <div
-                v-else-if="Number(scope.row.state) === 1 "
-                class="cyan"
-              >
-                签到
-              </div>
-              <div
-                v-else-if="Number(scope.row.state) === 2 "
-                class="orange"
-              >
-                签退
-              </div>
-              <div
-                v-else
-                class=""
-              >
-                {{ scope.row.state }}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="ecg"
-            label="小区ECG"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="cellName"
-            label="主服小区名称"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="sinr"
-            label="主服小区信号质量"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="rsrp"
-            label="主服小区信号强度"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="scene"
-            label="人员所处场景名称"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="taskTotal"
-            label="工单总数"
-            width="120"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="solvedTask"
-            label="已处理工单数"
-            width="120"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="processingTask"
-            label="处理中工单数"
-            width="120"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="pendingTask"
-            label="待处理工单数"
-            width="120"
-          >
-          </el-table-column>
-        </el-table>
-      </div>
+      <personTable
+        v-show="curTabsName === '1'"
+        :table-data="personTableData"
+      />  
+      <carTable
+        v-show="curTabsName === '2'"
+        :table-data="carTableData"
+      />  
     </div>
   </div>
 </template>
 
 <script>
+import carTable from './_car_table'
+import personTable from './_person_table'
 export default {
+  components:{
+    carTable,
+    personTable
+  },
   data() {
     return {
       curTabsName: "1",
-      tableData: [],
-      params: {
+      personTableData: [],
+      carTableData:[],
+      carParams: {
+        projectId: 136,  //项目id   
+        // page: 1, //第几页
+        // size: 10,//每页显示数
+      },
+      personParams:{
         projectId: 136,  //项目id   
         page: 1, //第几页
         size: 10,//每页显示数
       }
     }
   },
-  mounted() {
-    this.getUsers(this.params)
+  mounted(){
+    this.getOnDutypersonList(this.personParams);
+    this.getOnDutyCarList(this.carParams);
   },
   methods: {
     tabsChange(tab) {
       this.curTabsName = tab;
     },
-    /**
-    * 获取总览数据
-   */
-    getUsers(params) {
-      this.$api.getUsers(params).then((resp) => {
-        if (resp.code === 10000) {
+    changePersonPage(page) {
+      this.getOnDutypersonList(this.personParams) 
+    },
+    changeCarPage(page) {
+      this.getOnDutyCarList(this.carParams)
+    },
+    // 获取人员
+    getOnDutypersonList(params) {
+      this.$api.getOnDutypersonList(params).then((resp) => {
+          if (resp.code === 10000) {
           let curdata = resp.data;
-          curdata ? this.tableData = curdata : this.tableData = [];
-        }
+          curdata ? this.personTableData = curdata : this.personTableData = [];
+          }
       })
     },
-    changePage(page) {
-      this.getUsers(this.params)
+    // 获取车辆备件
+    getOnDutyCarList(params) {
+      this.$api.getOnDutyCarList(params).then((resp) => {
+          if (resp.code === 10000) {
+          let curdata = resp.data;
+          curdata ? this.carTableData = curdata : this.carTableData = [];
+          }
+      })
     }
   }
 }
@@ -232,13 +173,5 @@ export default {
 .main-contain {
   margin-bottom: 35px;
 }
-.cyan {
-  color: rgba(1, 241, 255);
-}
-.orange {
-  color: rgb(255, 134, 0);
-}
-.red {
-  color: rgb(187, 46, 59);
-}
+
 </style>

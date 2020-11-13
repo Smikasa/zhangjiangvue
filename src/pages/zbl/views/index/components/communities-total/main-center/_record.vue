@@ -112,29 +112,6 @@ export default {
         let curData = resp.data;
         this.initChartData(curData)
       })
-      // let curData = [{
-      //   http_request_total_num:1123,// 		HTTP请求总次数
-      //   http_service_success_num:1123,// 		HTTP业务成功次数
-      //   http_service_success_rate:1123,// 	HTTP业务成功率
-      //   http_response_total_delay:1123,// 		HTTP相应总时延
-      //   http_avg_respones_delay:1123,// 		HTTP平均响应时延
-      //   // upload_flow:1123,// 		上行流量
-      //   download_flow:1123,// 		下行流量
-      //   download_speed:1123,// 		下行速率
-      //   download_speed_500:1123,// 		下行速率（500KB)
-      //   tcp_build_success_num:1123,// 	TCP建立成功次数
-      //   tcp_build_request_num:1123,// 	TCP建立请求次数
-      //   tcp_build_success_rate:1123,// 		TCP建立成功率
-      //   tcp_build_total_delay:1123,// 	TCP建立总时延
-      //   tcp_build_avg_delay:1123,// 	TCP建立平均时延
-      //   tcp_build_total_delay_wireless:1123,// 	TCP建立总时延（无线侧）	
-      //   tcp_build_avg_delay_wireless:1123,// 		TCP建立总时延（无线侧）
-      //   tcp_build_total_delay_core_network:1123,// 	TCP建立总时延（核心网）
-      //   tcp_build_avg_delay_core_network:1123,// 	TCP建立总时延（核心网）
-      //   dtcreatetime:"9:00"
-      // }]
-
-      //  this.initChartData(curData)
     },
     /**
      * 图标赋值
