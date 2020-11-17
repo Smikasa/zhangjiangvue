@@ -22,7 +22,7 @@ export function getPeopleCount(params) {
         projectId: 133,
     }
     let queryParams = Object.assign({}, defaultParams, params)
-    return request.post('/passengerFlow/getPeopleCountingByTime?projectId=' + queryParams.projectId);
+    return request.post('/passengerFlow/getPeopleCountingByTime?projectId=' + queryParams.projectId+ '&lidu=' + queryParams.lidu);
 }
 
 /**
@@ -68,3 +68,19 @@ export function passengerDistribution(params) {
     let queryParams = Object.assign({}, defaultParams, params)
     return request.post('/passengerFlow/passengerDistribution?projectId=' + queryParams.projectId + '&type=' + queryParams.type);
 }
+
+/**
+ * @description  楼层场景人数（目前数据只到了机场楼层和会展场馆
+ * @param {number} projectId  项目id
+ * @param {number} floor //楼层 1
+ */
+export function floorScenePeopleDistribution(params) {
+    let defaultParams = {
+        projectId: 133,
+        floor: 1,
+        // studioId: 20 
+    }
+    let queryParams = Object.assign({}, defaultParams, params)
+    return request.post('/passengerFlow/floorScenePeopleDistribution?projectId=' + queryParams.projectId + '&floor=' + queryParams.floor);
+}
+

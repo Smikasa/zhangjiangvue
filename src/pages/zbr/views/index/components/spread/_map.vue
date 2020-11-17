@@ -239,7 +239,6 @@ export default {
           series: this.getMapSeries(this.area, this.mapData),
         });
       } else if (this.area === "province") {
-        this.totalPersonNum = 710;
         let data = this.beijingData;
         this.mapPeopleSpread.setOption({
           geo: {
@@ -583,7 +582,7 @@ export default {
     getTotal(array) {
       let num = 0;
       array.map(function (item) {
-        num += item.value;
+        num += parseInt(item[1].value);
       });
       this.totalPersonNum = num;
     },
@@ -730,5 +729,6 @@ export default {
 .totalPerson .numT {
   font-size: 32px;
   color: #d59301;
+  padding: 0 8px;
 }
 </style>

@@ -90,29 +90,15 @@ export default {
   },
   methods: {
     axiosTotal() {
-      // this.$api.getTotalList().then((resp) => {
-      let resp = {
-        success: true,
-        code: 10000,
-        data: {
-          indoor: "84", //今日馆内人数
-          yesterdayIndoor: "67", //昨日馆内人数
-          china: "92", //今日境内人数
-          yesterdayChina: "100", //昨日境内人数
-          world: "94", //今日境外人数
-          yesterdayWorld: "92", //昨日境外人数
-          outdoor: 0, //今日馆外人数
-          yesterdayOutdoor: 0, //昨日日馆外人数
-        },
-      };
-      if (resp.code === 10000) {
-        this.spread = _.merge({}, this.spread, this.transferData(resp.data));
-        _.forIn(this.spread, (item, index) => {
-          this.show_num1(item.Num, "#total" + index);
-        });
-        this.show_num1(this.allNum.number, "#total-text");
-      }
-      // })
+      this.$api.getTotalList().then((resp) => {
+        if (resp.code === 10000) {
+          this.spread = _.merge({}, this.spread, this.transferData(resp.data));
+          _.forIn(this.spread, (item, index) => {
+            this.show_num1(item.Num, "#total" + index);
+          });
+          this.show_num1(this.allNum.number, "#total-text");
+        }
+      });
     },
     // 数据转换
     transferData(object) {

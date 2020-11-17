@@ -1,78 +1,35 @@
 <template>
   <div class="main__div">
-    <div class="rightThree">
-      <div style="position:relative">
-        <img src="@/assets/img/r1.png" />
-        <div
-          style="width: 25px;
-                height: 25px;
-                border-radius: 50%;
-                background-color: #1bdc1b;
-                position: absolute;
-                top: 336px;
-                left: 126px;"
-        ></div>
-        <div
-          style="width: 25px;
-                height: 25px;
-                border-radius: 50%;
-                background-color: #1bdc1b;
-                position: absolute;
-                top: 296px;
-                left: 244px;"
-        ></div>
-        <div
-          style="width: 25px;
-                height: 25px;
-                border-radius: 50%;
-                background-color: #1bdc1b;
-                position: absolute;
-                top: 336px;
-                left: 326px;"
-        ></div>
-        <div
-          style="width: 25px;
-                height: 25px;
-                border-radius: 50%;
-                background-color: #1bdc1b;
-                position: absolute;
-                top: 336px;
-                left: 426px;"
-        ></div>
-      </div>
-   
-      <img src="@/assets/img/r2.png" />
-      <img src="@/assets/img/r3.png" />
-    </div>
+    <floor class="rightThree" />
     <total class="top__div"></total>
     <div class="left__div">
       <peopleTerminal class="left-top__div clearfix"></peopleTerminal>
       <spread class="left-center__div"></spread>
       <!-- <gender class="left-bottom__div"></gender> -->
     </div>
-    <div class="right__div">
-    </div>
+    <div class="right__div"></div>
   </div>
 </template>
 
 <script>
-import total from './components/total/index.vue';
-import peopleTerminal from './components/peopleTerminal/index.vue';
-import spread from './components/spread/index.vue';
+import total from "./components/total/index.vue";
+import peopleTerminal from "./components/peopleTerminal/index.vue";
+import spread from "./components/spread/index.vue";
+import floor from "./components/floor/floor.vue";
 // import gender from './components/gender/index';
 export default {
   components: {
     total,
     peopleTerminal,
     spread,
-    // gender,
+    floor,
   },
   data() {
-    return {
-
-    }
-  }
-}
+    return {};
+  },
+  methods: {
+  },
+};
 </script>
 
 <style scoped>
@@ -110,15 +67,10 @@ export default {
   margin-bottom: 0px;
 }
 
-.rightThree{
-    position: absolute;
-    right:79px;
-    top:325px;
-    height:1640px;
-}
-.rightThree img{
-    width: 655px;
-    display: block;
-    margin-bottom:50px;
+.rightThree {
+  position: absolute;
+  right: 79px;
+  top: 325px;
+  height: 1640px;
 }
 </style>
