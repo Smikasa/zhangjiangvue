@@ -151,95 +151,66 @@ export default {
      * 获取数据-终端型号图
      */
     axiosPhoneModelList(params) {
-      // this.$api.getPhoneModelList(params).then((resp) => {
-      let resp = {
-        success: true,
-        code: 10000,
-        data: [
-          {
-            MOBILEBRAND_2_NUM: 15,
-            MOBILEBRAND_5_NUM: 10,
-            MOBILEBRAND_7_NUM: 7,
-            MOBILEBRAND_3_NUM: 14,
-            MOBILEBRAND_1: "华为",
-            MOBILEBRAND_1_NUM: 17,
-            MOBILEBRAND_10: "锤子",
-            MOBILEBRAND_8_NUM: 5,
-            MOBILEBRAND_6_NUM: 9,
-            MOBILEBRAND_7: "中兴",
-            MOBILEBRAND_9_NUM: 4,
-            MOBILEBRAND_4_NUM: 12,
-            MOBILEBRAND_6: "荣耀",
-            MOBILEBRAND_9: "联想",
-            MOBILEBRAND_8: "魅族",
-            MOBILEBRAND_3: "小米",
-            MOBILEBRAND_2: "iphone",
-            MOBILEBRAND_10_NUM: 2,
-            MOBILEBRAND_5: "oppo",
-            MOBILEBRAND_4: "vivo",
-          },
-        ],
-      };
-     this.transferData(resp.data)
-      if (resp.code === 10000) {
-        let curData = resp.data;
-        let seriesData = this.transferData(curData).seriesData;
-        let indicator = this.transferData(curData).indicator;
-        if (seriesData.length && indicator.length) {
-          this.charTerminal.setOption({
-            tooltip: {
-              formatter: function (obj) {
-                var el = "";
-                for (var i = 0; i < indicator.length; i++) {
-                  el += indicator[i].name + "：" + obj.value[i] + "</br> ";
-                }
-                return el;
+      this.$api.getPhoneModelList(params).then((resp) => {
+        if (resp.code === 10000) {
+          let curData = resp.data;
+          let seriesData = this.transferData(curData).seriesData;
+          let indicator = this.transferData(curData).indicator;
+          if (seriesData.length && indicator.length) {
+            this.charTerminal.setOption({
+              tooltip: {
+                formatter: function (obj) {
+                  var el = "";
+                  for (var i = 0; i < indicator.length; i++) {
+                    el += indicator[i].name + "：" + obj.value[i] + "</br> ";
+                  }
+                  return el;
+                },
               },
-            },
-            radar: {
-              indicator: indicator,
-            },
-            series: [
-              {
-                data: [
-                  {
-                    value: seriesData,
-                    name: "",
-                  },
-                ],
+              radar: {
+                indicator: indicator,
               },
-            ],
-          });
+              series: [
+                {
+                  data: [
+                    {
+                      value: seriesData,
+                      name: "",
+                    },
+                  ],
+                },
+              ],
+            });
+          }
         }
-      }
-      // })
+      });
     },
     // 数据转换
-    transferData(data){
+    transferData(data) {
       let curObj = data[0];
-      let tmplArr = [];// 获取长度
-      let curObjLength = Object.keys(curObj).length/2;
+      let tmplArr = []; // 获取长度
+      let curObjLength = Object.keys(curObj).length / 2;
       let max = 0;
       let seriesData = [];
       let indicator = [];
-      for (let index = 1; index < curObjLength+1; index++) {
-        tmplArr.push(curObj['MOBILEBRAND_' + index + '_NUM']);
+      for (let index = 1; index < curObjLength + 1; index++) {
+        tmplArr.push(curObj["MOBILEBRAND_" + index + "_NUM"]);
       }
-      max = Math.max(...tmplArr)
-      for (let index = 1; index < curObjLength+1; index++) {
-         let obj = {
-            name: curObj['MOBILEBRAND_' + index],
-            max: max,
+      max = Math.max(...tmplArr);
+      for (let index = 1; index < curObjLength + 1; index++) {
+        let obj = {
+          name: curObj["MOBILEBRAND_" + index],
+          max: max,
         };
         indicator.push(obj);
-        seriesData.push(curObj['MOBILEBRAND_' + index + '_NUM']);
+        seriesData.push(curObj["MOBILEBRAND_" + index + "_NUM"]);
       }
-       return {
+      return {
         seriesData: seriesData,
         indicator: indicator,
       };
-    }
-  }
+    },
+  },
 };
 </script>
 

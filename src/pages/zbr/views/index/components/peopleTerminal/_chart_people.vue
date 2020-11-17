@@ -38,80 +38,35 @@ export default {
      * 获取数据-人数曲线图
      */
     axiosPeopleNumberByTime(params) {
-      // this.$api.getPeopleCount(params).then((resp) => {
-      let resp = {
-        success: true,
-        code: 10000,
-        data: {
-          yesterdayList: [
-            //昨日同时间数据
-            {
-              SDATE: "20201112110000",
-              NUMS: 89,
-            },
-            {
-              SDATE: "20201112105500",
-              NUMS: 65,
-            },
-            {
-              SDATE: "20201112104000",
-              NUMS: 57,
-            },
-          ],
-          todayList: [
-            //今日同时间数据
-            {
-              SDATE: "20201113110000",
-              NUMS: 117,
-            },
-            {
-              SDATE: "20201113105500",
-              NUMS: 29,
-            },
-            {
-              SDATE: "20201113104000",
-              NUMS: 30,
-            },
-            {
-              SDATE: "20201113102500",
-              NUMS: 24,
-            },
-            {
-              SDATE: "20201113101000",
-              NUMS: 59,
-            },
-          ],
-        },
-      };
-
-      if (resp.code === 10000) {
-        let todayList = resp.data.todayList;
-        let yesterdayList = resp.data.yesterdayList;
-        let Today = {
-          x: this.getPeopleNumberXYData(todayList, yesterdayList).x,
-          y: this.getPeopleNumberXYData(todayList, yesterdayList).todayY,
-        };
-        let Yesterday = {
-          x: this.getPeopleNumberXYData(todayList, yesterdayList).x,
-          y: this.getPeopleNumberXYData(todayList, yesterdayList).yesY,
-        };
-        this.chartPeopleNumber.setOption({
-          xAxis: [
-            {
-              data: Today.x,
-            },
-          ],
-          series: [
-            {
-              data: Today.y,
-            },
-            {
-              data: Yesterday.y,
-            },
-          ],
-        });
-      }
-      // })
+      this.$api.getPeopleCount(params).then((resp) => {
+        if (resp.code === 10000) {
+          let todayList = resp.data.todayList;
+          let yesterdayList = resp.data.yesterdayList;
+          let Today = {
+            x: this.getPeopleNumberXYData(todayList, yesterdayList).x,
+            y: this.getPeopleNumberXYData(todayList, yesterdayList).todayY,
+          };
+          let Yesterday = {
+            x: this.getPeopleNumberXYData(todayList, yesterdayList).x,
+            y: this.getPeopleNumberXYData(todayList, yesterdayList).yesY,
+          };
+          this.chartPeopleNumber.setOption({
+            xAxis: [
+              {
+                data: Today.x,
+              },
+            ],
+            series: [
+              {
+                data: Today.y,
+              },
+              {
+                data: Yesterday.y,
+              },
+            ],
+          });
+        }
+      });
     },
     /**
      * 数据处理-人数曲线图-获取x y 数据

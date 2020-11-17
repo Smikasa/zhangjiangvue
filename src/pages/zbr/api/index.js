@@ -6,7 +6,7 @@ import request from './request'
  */
 export function getTotalList(params) {
     let defaultParams = {
-        projectId: 132, 
+        projectId: 132,
     }
     let queryParams = Object.assign({}, defaultParams, defaultParams)
     return request.post('/passengerFlow/getPassengerNums?projectId=' + queryParams.projectId);
@@ -36,7 +36,7 @@ export function getPhoneModelList(params) {
         // studioId: 20 
     }
     let queryParams = Object.assign({}, defaultParams, params)
-       return request.post('/passengerFlow/terminalModelDistribution?projectId=' + queryParams.projectId);
+    return request.post('/passengerFlow/terminalModelDistribution?projectId=' + queryParams.projectId);
 }
 
 /**
@@ -47,10 +47,10 @@ export function getPhoneModelList(params) {
 export function getSex(params) {
     let defaultParams = {
         projectId: 132,
-        studioId: 20 
+        studioId: 20
     }
     let queryParams = Object.assign({}, defaultParams, params)
-       return request.get('/people/getSex', {'params':queryParams});
+    return request.get('/people/getSex', { 'params': queryParams });
 }
 
 /**
@@ -62,9 +62,9 @@ export function getSex(params) {
 export function passengerDistribution(params) {
     let defaultParams = {
         projectId: 133,
-        type:1, 
+        type: 1,
         // studioId: 20 
     }
     let queryParams = Object.assign({}, defaultParams, params)
-    return request.post('/passengerFlow/passengerDistribution', queryParams);
+    return request.post('/passengerFlow/passengerDistribution?projectId=' + queryParams.projectId + '&type=' + queryParams.type);
 }

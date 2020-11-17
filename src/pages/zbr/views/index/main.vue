@@ -1,7 +1,46 @@
 <template>
   <div class="main__div">
     <div class="rightThree">
-      <img src="@/assets/img/r1.png" />
+      <div style="position:relative">
+        <img src="@/assets/img/r1.png" />
+        <div
+          style="width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background-color: #1bdc1b;
+                position: absolute;
+                top: 336px;
+                left: 126px;"
+        ></div>
+        <div
+          style="width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background-color: #1bdc1b;
+                position: absolute;
+                top: 296px;
+                left: 244px;"
+        ></div>
+        <div
+          style="width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background-color: #1bdc1b;
+                position: absolute;
+                top: 336px;
+                left: 326px;"
+        ></div>
+        <div
+          style="width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background-color: #1bdc1b;
+                position: absolute;
+                top: 336px;
+                left: 426px;"
+        ></div>
+      </div>
+   
       <img src="@/assets/img/r2.png" />
       <img src="@/assets/img/r3.png" />
     </div>
