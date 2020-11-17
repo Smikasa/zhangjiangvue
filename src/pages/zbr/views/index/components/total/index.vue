@@ -9,9 +9,7 @@
         <div class="total-info">
           <div class="am_num">
             <div id="total-text">
-              <span class="t_num t_num1 fontNumber">
-                00000
-              </span>
+              <span class="t_num t_num1 fontNumber"> 00000 </span>
             </div>
           </div>
         </div>
@@ -19,7 +17,7 @@
     </div>
     <div class="spread-contain">
       <div
-        v-for="(item,index) in spread"
+        v-for="(item, index) in spread"
         :key="index"
         class="spread fl"
       >
@@ -29,13 +27,15 @@
         <div class="spread-info">
           <div class="am_num">
             <!-- style="overflow: hidden;" -->
-            <div :id="'total'+index">
+            <div :id="'total' + index">
               <span class="t_num t_num1 fontNumber">00000</span>
-              <span class="spread-per t_text">(<span class="fontNumber">{{ item.percentage }}</span>)</span>
+              <span
+                class="spread-per t_text"
+              >(<span class="fontNumber">{{ item.percentage }}</span>)</span>
             </div>
           </div>
         </div>
-        <div v-if="item.hasOwnProperty('comparedWithYesterday') && item.comparedWithYesterday">
+        <div>
           <span class="spread-yes">昨日</span>
           <span class="spread-diff">{{ item.comparedWithYesterday }}</span>
         </div>
@@ -50,71 +50,108 @@ export default {
   data() {
     return {
       allNum: {
-        name: '实时总人数',
+        name: "实时总人数",
         number: 0,
       },
       spread: {
         insideVenue: {
-          id: 'insideVenue',
-          name: '今日馆内人数',
+          id: "insideVenue",
+          name: "今日馆内人数",
           Num: 0,
-          percentage: '0%',
-          comparedWithYesterday: "-0"
+          percentage: "0%",
+          comparedWithYesterday: "0",
         },
         outVenue: {
-          id: 'outVenue',
-          name: '今日馆外人数',
+          id: "outVenue",
+          name: "今日馆外人数",
           Num: 0,
-          percentage: '0%',
-          comparedWithYesterday: "-0"
+          percentage: "0%",
+          comparedWithYesterday: "0",
         },
         chinese: {
-          id: 'chinese',
-          name: '今日境内人数',
+          id: "chinese",
+          name: "今日境内人数",
           Num: 0,
-          percentage: '0%',
-          comparedWithYesterday: "-0"
+          percentage: "0%",
+          comparedWithYesterday: "0",
         },
         abroad: {
-          id: 'abroad',
-          name: '今日境外人数',
+          id: "abroad",
+          name: "今日境外人数",
           Num: 0,
-          percentage: '0%',
-          comparedWithYesterday: "-10"
+          percentage: "0%",
+          comparedWithYesterday: "0",
         },
       },
-    }
+    };
   },
   mounted() {
     this.axiosTotal();
   },
   methods: {
     axiosTotal() {
-      this.$api.getTotalList().then((resp) => {
-        if (resp.code === 10000) {
-          let data = resp.data;
-          this.spread = _.merge({}, this.spread, data);
-          _.forIn(this.spread, (item, index) => {
-            if (index === 'insideVenue') {
-              this.show_num1(Number(item.insideVenuePeople), '#total' + index);
-              this.show_num1(Number(item.allVenuePeople), '#total-text');
-            }
-            if (index === 'outVenue') {
-              this.show_num1(Number(item.outVenuePeople), '#total' + index);
-            }
-            if (index === 'chinese') {
-              this.show_num1(Number(item.chinese), '#total' + index);
-            }
-            if (index === 'abroad') {
-              this.show_num1(Number(item.abroadPeople), '#total' + index);
-            }
-          })
-        }
-      })
+      // this.$api.getTotalList().then((resp) => {
+      let resp = {
+        success: true,
+        code: 10000,
+        data: {
+          indoor: "84", //今日馆内人数
+          yesterdayIndoor: "67", //昨日馆内人数
+          china: "92", //今日境内人数
+          yesterdayChina: "100", //昨日境内人数
+          world: "94", //今日境外人数
+          yesterdayWorld: "92", //昨日境外人数
+          outdoor: 0, //今日馆外人数
+          yesterdayOutdoor: 0, //昨日日馆外人数
+        },
+      };
+      if (resp.code === 10000) {
+        this.spread = _.merge({}, this.spread, this.transferData(resp.data));
+        _.forIn(this.spread, (item, index) => {
+          this.show_num1(item.Num, "#total" + index);
+        });
+        this.show_num1(this.allNum.number, "#total-text");
+      }
+      // })
+    },
+    // 数据转换
+    transferData(object) {
+      for (const key in object) {
+        object[key] = Number(object[key]);
+      }
+      this.allNum.number =
+        object.indoor + object.china + object.outdoor + object.world;
+      let obj = {
+        insideVenue: {
+          Num: object.indoor,
+          percentage: this.toNumber(object.indoor, this.allNum.number),
+          comparedWithYesterday: object.yesterdayIndoor,
+        },
+        outVenue: {
+          Num: object.outdoor,
+          percentage: this.toNumber(object.outdoor, this.allNum.number),
+          comparedWithYesterday: object.yesterdayOutdoor,
+        },
+        chinese: {
+          Num: object.china,
+          percentage: this.toNumber(object.china, this.allNum.number),
+          comparedWithYesterday: object.yesterdayChina,
+        },
+        abroad: {
+          Num: object.world,
+          percentage: this.toNumber(object.world, this.allNum.number),
+          comparedWithYesterday: object.yesterdayWorld,
+        },
+      };
+      return obj;
+    },
+    toNumber(num, total) {
+      let pro = Number((num / total) * 100).toFixed(2);
+      return pro + "%";
     },
     show_num1: function (n, ele) {
       var len = String(n).length;
-      $(ele + " .t_num1").html('');
+      $(ele + " .t_num1").html("");
       for (var i = 0; i < len; i++) {
         $(ele + " .t_num1").append("<i></i>");
         var num = String(n).charAt(i);
@@ -126,11 +163,11 @@ export default {
         // }, 'slow', 'swing', function () {
         //   console.log('a')
         // });
-        obj.css({ 'backgroundPosition': '-148px ' + String(y) + 'px' })
+        obj.css({ backgroundPosition: "-148px " + String(y) + "px" });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
@@ -195,6 +232,7 @@ export default {
 .spread-diff {
   color: #ba822a;
   font-size: 26px;
+  padding-left: 8px;
 }
 
 .t_num i {
@@ -222,12 +260,12 @@ export default {
 }
 
 .top-bottom {
-    position: absolute;
-    width: 100%;
-    margin: 0 auto;
-    background-size: 100% 100%;
-    bottom: 0px;
-    height: 150px;
-    background-image: url("~@/assets/img/top-bg.png");
+  position: absolute;
+  width: 100%;
+  margin: 0 auto;
+  background-size: 100% 100%;
+  bottom: 0px;
+  height: 150px;
+  background-image: url("~@/assets/img/top-bg.png");
 }
 </style>

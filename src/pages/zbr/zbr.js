@@ -6,6 +6,10 @@ import '@/assets/css/reset.css';
 
 import * as Api from './api/index'
 
+import moment  from 'moment';
+
+Vue.prototype.$moment = moment;
+
 Vue.config.productionTip = false;
 
 Vue.prototype.$api = Api;

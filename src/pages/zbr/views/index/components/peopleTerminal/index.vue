@@ -74,11 +74,11 @@ export default {
   margin-bottom: 56px;
 }
 .tab {
-  height: 56px;
-  line-height: 56px;
+  height: 46px;
+  line-height: 46px;
   font-size: 26px;
   width: 486px;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
   cursor: pointer;
   text-align: center;
 }
