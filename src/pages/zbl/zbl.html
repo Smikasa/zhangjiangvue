@@ -42,11 +42,13 @@
     }
     // 故障告警详情函数
     window.alarmDetail = function (data) {
-      ue4("WarningClick",data);//传点击告警查看详情打印的数据
+      var curId = data.alarmId;
+      ue4("WarningClick",curId);//传点击告警查看详情打印的数据
     }
     // 性能预警详情函数
     window.performanceDetail = function (data) {
-      ue4("EarlyWarningClick",data);//传点击性能预警查看详情打印的数据
+      var curId = data.kpiWarningId;
+      ue4("EarlyWarningClick",curId);//传点击性能预警查看详情打印的数据
     }
   </script>
 </body>
